@@ -1,0 +1,48 @@
+﻿@model EntityLayer.Concrete.CashCase
+
+@{
+    ViewBag.Title = "Kasa Düzenle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center my-4 fw-bold text-primary">Kasa Düzenle</h2>
+
+@using (Html.BeginForm("EditCash", "Cash", FormMethod.Post, new { @class = "row g-3 mt-3" }))
+{
+    @Html.HiddenFor(m => m.CaseId)
+
+    <div class="col-md-4">
+        @Html.LabelFor(m => m.CaseName, "Kasa Adı", htmlAttributes: new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.CaseName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CaseName, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4">
+        @Html.LabelFor(m => m.CaseCode, "Kasa Kodu", htmlAttributes: new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.CaseCode, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CaseCode, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4">
+        @Html.LabelFor(m => m.Currency, "Para Birimi", htmlAttributes: new { @class = "form-label" })
+        @Html.DropDownListFor(m => m.Currency,
+            new SelectList(new[]
+            {
+                "TRY","USD","EUR","GBP","CHF","CAD","AUD","JPY","CNY","AED","SAR","RUB","SEK","NOK","DKK","INR","ZAR","BRL","MXN","KRW"
+            }, Model.Currency),
+            "Seçiniz",
+            new { @class = "form-select" })
+        @Html.ValidationMessageFor(m => m.Currency, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-12">
+        <div class="form-check">
+            <input type="checkbox" name="Status" value="1" @(Model.Status == 1 ? "checked" : "") class="form-check-input" />
+            <label class="form-check-label">Aktif olarak kullanılsın</label>
+        </div>
+    </div>
+
+    <div class="col-12 mt-3">
+        <button type="submit" class="btn btn-success w-100">Kaydet</button>
+    </div>
+}

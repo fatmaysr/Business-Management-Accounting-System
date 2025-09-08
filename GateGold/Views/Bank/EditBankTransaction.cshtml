@@ -1,0 +1,77 @@
+﻿@model EntityLayer.Concrete.BankTransaction
+
+@{
+    ViewBag.Title = "Banka Hareketi Düzenle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4 text-primary text-center">Banka Hareketi Düzenle</h2>
+
+<form method="post" action="@Url.Action("EditBankTransaction", "Bank")" class="row g-3">
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="col-md-6">
+        <label for="Date" class="form-label">Tarih</label>
+        @Html.TextBoxFor(m => m.Date, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+    </div>
+
+    <div class="col-md-6">
+        <label for="BankId" class="form-label">Banka ID</label>
+        @Html.TextBoxFor(m => m.BankId, new { @class = "form-control" })
+    </div>
+
+    <div class="col-md-6">
+        <label for="CustomerId" class="form-label">Müşteri ID</label>
+        @Html.TextBoxFor(m => m.CustomerId, new { @class = "form-control" })
+    </div>
+
+    <div class="col-md-6">
+        <label for="BankAccountId" class="form-label">Banka Hesap ID</label>
+        @Html.TextBoxFor(m => m.BankAccountId, new { @class = "form-control" })
+    </div>
+
+    <div class="col-md-6">
+        <label for="Cuurency" class="form-label">Para Birimi</label>
+        @Html.TextBoxFor(m => m.Cuurency, new { @class = "form-control" })
+    </div>
+
+    <div class="col-md-6">
+        <label for="Price" class="form-label">Tutar</label>
+        @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+    </div>
+
+    <div class="col-md-6">
+        <label for="Type" class="form-label">Tür</label>
+        @Html.TextBoxFor(m => m.Type, new { @class = "form-control" })
+    </div>
+
+    <div class="col-md-6">
+        <label for="Method" class="form-label">Metot</label>
+        @Html.TextBoxFor(m => m.Method, new { @class = "form-control" })
+    </div>
+
+    <div class="col-md-6">
+        <label for="Status" class="form-label">Durum</label>
+        @Html.TextBoxFor(m => m.Status, new { @class = "form-control" })
+    </div>
+
+    <div class="col-12">
+        <label for="Content" class="form-label">İçerik</label>
+        @Html.TextAreaFor(m => m.Content, new { @class = "form-control", rows = 3 })
+    </div>
+
+    <div class="col-12">
+        <label for="CurrentToken" class="form-label">Current Token</label>
+        @Html.TextBoxFor(m => m.CurrentToken, new { @class = "form-control" })
+    </div>
+
+    <div class="col-12">
+        <label for="SecretToken" class="form-label">Secret Token</label>
+        @Html.TextBoxFor(m => m.SecretToken, new { @class = "form-control" })
+    </div>
+
+    <div class="col-12 d-flex justify-content-end gap-2">
+        <a href="@Url.Action("BankTransactions", "Bank")" class="btn btn-outline-secondary">İptal</a>
+        <button type="submit" class="btn btn-primary">Güncelle</button>
+    </div>
+</form>

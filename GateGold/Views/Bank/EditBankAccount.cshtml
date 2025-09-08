@@ -1,0 +1,58 @@
+﻿@model EntityLayer.Concrete.BankAccount
+@{
+    ViewBag.Title = "EditBankAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4 text-primary text-center">Banka Hesabı Düzenle</h2>
+
+<form method="post" action="@Url.Action("EditBankAccount","BankAccount")" class="row g-3">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <div class="col-md-6">
+        <label for="bankId" class="form-label">Banka <span class="text-danger">*</span></label>
+        <select id="bankId" name="BankId" class="form-select" required>
+            <option value="">-- Banka Seçin --</option>
+            <!-- Örnek: buraya bankaları loop ile doldurabilirsin -->
+            <option value="@Model.BankId" selected>@Model.BankId</option>
+        </select>
+    </div>
+
+    <div class="col-md-6">
+        <label for="accountName" class="form-label">Hesap Sahibi Adı <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" id="accountName" name="AccountName" value="@Model.AccountName" required />
+    </div>
+
+    <div class="col-md-6">
+        <label for="accountNumber" class="form-label">Hesap Numarası <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" id="accountNumber" name="AccountNumber" value="@Model.AccountNumber" required />
+    </div>
+
+    <div class="col-md-6">
+        <label for="iban" class="form-label">IBAN <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" id="iban" name="Iban" value="@Model.Iban" required />
+    </div>
+
+    <div class="col-md-6">
+        <label for="currency" class="form-label">Para Birimi</label>
+        <select id="currency" name="Currency" class="form-select">
+            <option value="TRY" @(Model.ClassName == "TRY" ? "selected" : "")>₺ - Türk Lirası (TRY)</option>
+            <option value="USD" @(Model.ClassName == "USD" ? "selected" : "")>$ - Amerikan Doları (USD)</option>
+            <option value="EUR" @(Model.ClassName == "EUR" ? "selected" : "")>€ - Euro (EUR)</option>
+            <!-- Diğer para birimlerini ekleyebilirsin -->
+        </select>
+    </div>
+
+    <div class="col-md-6">
+        <label for="status" class="form-label">Durum</label>
+        <select class="form-select" id="status" name="Status">
+            <option value="1" @(Model.Status == 1 ? "selected" : "")>Aktif</option>
+            <option value="0" @(Model.Status == 0 ? "selected" : "")>Pasif</option>
+        </select>
+    </div>
+
+    <div class="col-12 d-flex justify-content-end gap-2">
+        <a href="@Url.Action("BankAccountList","BankAccount")" class="btn btn-outline-secondary">İptal</a>
+        <button type="submit" class="btn btn-primary">Güncelle</button>
+    </div>
+</form>

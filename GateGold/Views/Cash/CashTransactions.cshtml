@@ -1,0 +1,83 @@
+﻿@model IEnumerable<EntityLayer.Concrete.CaseTransaction>
+
+@{
+    ViewBag.Title = "Kasa Hareketleri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center my-4 fw-bold text-primary">Kasa Hareketleri</h2>
+
+<!-- 🎯 Filtreleme Alanı -->
+@using (Html.BeginForm("CashTransactions", "Cash", FormMethod.Get))
+{
+    <div class="row g-3 mb-4">
+        <!-- Para Birimi -->
+        <div class="col-md-3">
+            @Html.Label("Para Birimi", new { @class = "form-label" })
+            @Html.DropDownList("currency", new SelectList(new List<SelectListItem>
+            {
+                new SelectListItem { Text="Seçiniz", Value="" },
+                new SelectListItem { Text="₺ - TRY", Value="TRY" },
+                new SelectListItem { Text="$ - USD", Value="USD" },
+                new SelectListItem { Text="€ - EUR", Value="EUR" },
+                new SelectListItem { Text="£ - GBP", Value="GBP" }
+            }, "Value", "Text"), new { @class = "form-select" })
+        </div>
+
+        <!-- Cari -->
+        <div class="col-md-3">
+            @Html.Label("Cari", new { @class = "form-label" })
+            @Html.DropDownList("CariID", (IEnumerable<SelectListItem>)ViewBag.Customers, "Seçiniz", new { @class = "form-select" })
+
+        </div>
+
+        <!-- Tarih -->
+        <div class="col-md-3">
+            @Html.Label("Tarih", new { @class = "form-label" })
+            <input type="date" name="date" class="form-control" />
+        </div>
+
+        <!-- Buton -->
+        <div class="col-md-3 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">Filtrele</button>
+        </div>
+    </div>
+}
+
+<!-- 📋 Kasa Hareketleri Tablosu -->
+<table class="table table-bordered table-striped">
+    <thead class="table-primary">
+        <tr>
+            <th>ID</th>
+            <th>Tarih</th>
+            <th>Cari</th>
+            <th>Açıklama</th>
+            <th>Verilen</th>
+            <th>Alınan</th>
+            <th>Para Birimi</th>
+            <th>Kur</th>
+            <th>Has Fiyatı</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CaseTransactionId</td>
+                <td>@item.Date.ToString("dd.MM.yyyy")</td>
+                <td>@item.Customer?.Name</td>
+                <td>@item.Description</td>
+                <td>@(item.Type=="Gider" ? item.Amount.ToString("N2") : "-")</td>
+                <td>@(item.Type=="Gelir" ? item.Amount.ToString("N2") : "-")</td>
+                <td>@item.Currency</td>
+                <td>@item.ExchangeRate.ToString("N2")</td>
+                <td>@(item.Amount * item.ExchangeRate)</td>
+                <td>
+                    @Html.ActionLink("Düzenle", "EditCashTransaction", new { id = item.CaseTransactionId }, new { @class = "btn btn-sm btn-warning" })
+                    @Html.ActionLink("Sil", "DeleteCashTransaction", new { id = item.CaseTransactionId }, new { @class = "btn btn-sm btn-danger", onclick = "return confirm('Silmek istediğinize emin misiniz?');" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

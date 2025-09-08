@@ -1,0 +1,64 @@
+﻿@model EntityLayer.Concrete.Currency
+
+@{
+    ViewBag.Title = "AddCurrency";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4 text-primary text-center">Döviz Bilgisi Ekle</h2>
+
+<form method="post" action="/Currency/AddCurrencyDetail" class="row g-3">
+
+    <div class="col-md-6">
+        <label for="CariID" class="form-label">Cari <span class="text-danger">*</span></label>
+        <select id="CariID" name="CariID" class="form-select" required>
+            <option value="">-- Cari Seçiniz --</option>
+            @foreach (var customer in ViewBag.Customers as List<EntityLayer.Concrete.Customer> ?? new List<EntityLayer.Concrete.Customer>())
+            {
+                <option value="@customer.CariID">@customer.CariAdi</option>
+            }
+
+        </select>
+    </div>
+
+    <div class="col-md-6">
+        <label for="Name" class="form-label">Ad Soyad <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" id="Name" name="Name" required />
+    </div>
+
+    <div class="col-md-6">
+        <label for="Address" class="form-label">Adres</label>
+        <input type="text" class="form-control" id="Address" name="Address" />
+    </div>
+
+    <div class="col-md-6">
+        <label for="Phone" class="form-label">Telefon</label>
+        <input type="text" class="form-control" id="Phone" name="Phone" />
+    </div>
+
+    <div class="col-md-6">
+        <label for="Email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="Email" name="Email" />
+    </div>
+
+    <div class="col-md-6">
+        <label for="TaxNumber" class="form-label">Vergi No</label>
+        <input type="text" class="form-control" id="TaxNumber" name="TaxNumber" />
+    </div>
+
+    <div class="col-md-6">
+        <label for="Iban" class="form-label">IBAN</label>
+        <input type="text" class="form-control" id="Iban" name="Iban" />
+    </div>
+
+    <div class="col-md-6">
+        <label for="TaxAdmin" class="form-label">Vergi Dairesi</label>
+        <input type="text" class="form-control" id="TaxAdmin" name="TaxAdmin" />
+    </div>
+
+    <div class="col-12 d-flex justify-content-end gap-2">
+        <a href="/Currency/CurrencyBalanceList" class="btn btn-outline-secondary">İptal</a>
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+    </div>
+
+</form>

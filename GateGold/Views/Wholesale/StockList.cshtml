@@ -1,0 +1,70 @@
+﻿@model List<EntityLayer.Concrete.Stock>
+
+@{
+    ViewBag.Title = "Stok Listesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4 text-primary text-center fw-bold">
+    Stok Listesi
+</h2>
+
+<div class="container" style="max-width: 1000px;">
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th> Stok ID</th>
+                        <th> Stok Adı</th>
+                        <th> Miktar</th>
+                        <th> Birim Fiyat</th>
+                        <th> Oluşturma Tarihi</th>
+                        <th class="text-center"> İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.StockId</td>
+                                <td>@item.StockName</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.Price.ToString("C")</td>
+                                <td>@item.CreatedDate.ToString("dd MMM yyyy")</td>
+                                <td class="text-center">
+                                    <a href="@Url.Action("EditStock", "Wholesale", new { id = item.StockId })"
+                                       class="btn btn-sm btn-warning me-1">
+                                        <i class="bi bi-pencil-square"></i> Düzenle
+                                    </a>
+                                    <a href="@Url.Action("DeleteStock", "Wholesale", new { id = item.StockId })"
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('Bu kaydı silmek istediğinize emin misiniz?');">
+                                        <i class="bi bi-trash3"></i> Sil
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">
+                                <i class="bi bi-exclamation-circle"></i> Henüz stok bulunmamaktadır.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="@Url.Action("AddStock", "Wholesale")"
+           class="btn btn-primary btn-lg shadow-sm">
+            <i class="bi bi-plus-circle"></i> Yeni Stok Ekle
+        </a>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+﻿@model EntityLayer.Concrete.FastSaleProduct
+@{
+    ViewBag.Title = "Ürün Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var categories = ViewBag.Categories as List<EntityLayer.Concrete.FastSaleCategory>;
+}
+
+<h2 class="mb-4 text-center">Yeni Ürün Ekle</h2>
+
+<div class="container" style="max-width: 500px;">
+    @using (Html.BeginForm())
+    {
+        <div class="mb-3">
+            <label for="ProductName" class="form-label">Ürün Adı</label>
+            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control", placeholder = "Ürün adını girin", required = "required" })
+        </div>
+
+        <div class="mb-3">
+            <label for="Category" class="form-label">Kategori Seçiniz</label>
+            <select id="Category" name="Category" class="form-select" required>
+                <option value="" disabled selected>Bir kategori seçin</option>
+                @if (categories != null)
+                {
+                    foreach (var cat in categories)
+                    {
+                        <option value="@cat.CategoryName">@cat.CategoryName</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="Value" class="form-label">Değer / Fiyat</label>
+            @Html.TextBoxFor(m => m.Value, new { @class = "form-control", placeholder = "Ürün değerini girin", required = "required" })
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Kaydet</button>
+        <a href="@Url.Action("AllProducts", "Retail")" class="btn btn-secondary w-100 mt-2">İptal</a>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger mt-3">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+</div>

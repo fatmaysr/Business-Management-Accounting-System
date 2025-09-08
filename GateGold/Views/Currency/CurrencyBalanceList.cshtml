@@ -1,0 +1,58 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Currency>
+
+@{
+    ViewBag.Title = "CurrencyBalanceList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4 text-primary text-center">Döviz Listesi</h2>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <input type="text" class="form-control w-50" placeholder="Cari adı, telefon veya email ile ara..." id="searchInput" />
+    <a href="/Currency/AddCurrencyDetail" class="btn btn-primary px-4 d-flex align-items-center gap-2 shadow-sm">
+        <i class="bi bi-plus-lg fs-5"></i> Yeni Döviz Ekle
+    </a>
+</div>
+
+<div class="table-responsive shadow-sm rounded">
+    <table class="table table-bordered table-hover align-middle text-center mb-0">
+        <thead class="table-primary">
+            <tr>
+                <th>ID</th>
+                <th>Cari Adı</th>
+                <th>Adres</th>
+                <th>Telefon</th>
+                <th>Email</th>
+                <th>Vergi No</th>
+                <th>IBAN</th>
+                <th>Vergi Dairesi</th>
+                <th>Durum</th>
+                <th>İşlem</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CurrencyId</td>
+                    <td>@item.Name</td>
+                    <td>@item.Address</td>
+                    <td>@item.Phone</td>
+                    <td>@item.Email</td>
+                    <td>@item.TaxNumber</td>
+                    <td>@item.Iban</td>
+                    <td>@item.TaxAdmin</td>
+                    <td>@(item.Status.HasValue ? (item.Status == 1 ? "Aktif" : "Pasif") : "Bilinmiyor")</td>
+                    <td>
+                    <td>
+                        <a href="@Url.Action("EditCurrency", "Currency", new { id = item.CurrencyId })" class="btn btn-sm btn-warning">Düzenle</a>
+                        <a href="@Url.Action("DeleteCurrency", "Currency", new { id = item.CurrencyId })" class="btn btn-sm btn-danger" onclick="return confirm('Silmek istediğinize emin misiniz?')">Sil</a>
+                        <a href="@Url.Action("CurrencyDetailList", "Currency", new { currencyId = item.CurrencyId })" class="btn btn-sm btn-info">Hareketler</a>
+                    </td>
+
+                 
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

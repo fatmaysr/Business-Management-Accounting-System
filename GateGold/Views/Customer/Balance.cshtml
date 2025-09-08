@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Cari Bakiye";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center my-4 fw-bold text-primary">💰Cari Bakiye</h2>
+
+<!-- 🔍 Filtreleme Paneli -->
+<div class="card shadow-sm border-0 mb-4">
+ 
+    <div class="card-body">
+        <form class="row g-3">
+            <!-- Cari Seçimi -->
+            <div class="col-md-6">
+                <label for="cariSec" class="form-label">Cari Seç</label>
+                <select class="form-select" id="cariSec" name="cariSec">
+                    <option selected disabled>Bir cari seçiniz</option>
+                    @if (ViewBag.Customers != null)
+                    {
+                        foreach (var cari in ViewBag.Customers)
+                        {
+                            <option value="@cari.Value">@cari.Text</option>
+                        }
+                    }
+                </select>
+
+            </div>
+
+            <!-- Tarih Aralığı -->
+            <div class="col-md-3">
+                <label class="form-label">Başlangıç Tarihi</label>
+                <input type="date" class="form-control" name="startDate" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Bitiş Tarihi</label>
+                <input type="date" class="form-control" name="endDate" />
+            </div>
+
+            <!-- Filtrele Butonu -->
+            <div class="col-12 text-end mt-3">
+                <button type="submit" class="btn btn-outline-primary px-4">
+                    <i class="bi bi-search me-1"></i>Filtrele
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 📋 Bakiye Özeti -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 bg-light p-4 mb-4">
+            <h5 class="fw-semibold text-secondary">Cari Bilgileri</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Cari Adı: <span class="fw-normal text-muted"></span></li>
+                <li class="list-group-item">Telefon: <span class="fw-normal text-muted"></span></li>
+                <li class="list-group-item">E-posta: <span class="fw-normal text-muted"></span></li>
+                <li class="list-group-item">Adres: <span class="fw-normal text-muted"></span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 bg-white p-4 mb-4">
+            <h5 class="fw-semibold text-secondary">Bakiye Bilgisi</h5>
+            <p><strong>Toplam Alacak:</strong> <span class="text-success"></span></p>
+            <p><strong>Toplam Borç:</strong> <span class="text-danger"></span></p>
+            <hr />
+            <h4>
+                <strong>Bakiye:</strong>
+                <span class="text-primary fw-bold"></span>
+            </h4>
+        </div>
+    </div>
+</div>
+
+    

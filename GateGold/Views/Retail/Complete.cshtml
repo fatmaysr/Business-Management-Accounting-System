@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Satış Tamamlandı";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5" style="max-width: 600px;">
+    <div class="card shadow-sm border-priamry">
+        <div class="card-header bg-primary text-white text-center">
+            <h2 class="text-white ">Satış Başarıyla Tamamlandı!</h2>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4">Seçilen Kategori:</dt>
+                <dd class="col-sm-8 fw-bold">
+                    @if (!string.IsNullOrEmpty(ViewBag.Category))
+                    {
+                        @ViewBag.Category
+                    }
+                    else
+                    {
+                        <span class="text-muted fst-italic">Seçilmedi</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-4">Seçilen Ürün:</dt>
+                <dd class="col-sm-8 fw-bold">
+                    @if (!string.IsNullOrEmpty(ViewBag.Product))
+                    {
+                        @ViewBag.Product
+                    }
+                    else
+                    {
+                        <span class="text-muted fst-italic">Seçilmedi</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-4">Ödeme Türü:</dt>
+                <dd class="col-sm-8 fw-bold text-capitalize">
+                    @if (!string.IsNullOrEmpty(ViewBag.PaymentType))
+                    {
+                        @ViewBag.PaymentType
+                    }
+                    else
+                    {
+                        <span class="text-muted fst-italic">Seçilmedi</span>
+                    }
+                </dd>
+            </dl>
+            <div class="text-center mt-4">
+                <a href="@Url.Action("QuickSale", "Retail")" class="btn btn-primary btn-lg px-4">
+                    Yeni Satış Yap
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

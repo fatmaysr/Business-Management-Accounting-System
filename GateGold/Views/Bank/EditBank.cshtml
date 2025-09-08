@@ -1,0 +1,45 @@
+﻿@model EntityLayer.Concrete.Bank
+
+@{
+    ViewBag.Title = "Banka Düzenle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-primary mb-4">Banka Düzenle</h2>
+
+@using (Html.BeginForm("EditBank", "Bank", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.BankId)
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.BankName)
+        @Html.TextBoxFor(m => m.BankName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.BankName)
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Branch)
+        @Html.TextBoxFor(m => m.Branch, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Phone)
+        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Address)
+        @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Status)
+        @Html.DropDownListFor(m => m.Status, new SelectList(new[] {
+            new { Text = "Aktif", Value = 1 },
+            new { Text = "Pasif", Value = 0 }
+        }, "Value", "Text", Model.Status), "Durum Seç", new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Güncelle</button>
+    <a href="@Url.Action("BankList","Bank")" class="btn btn-secondary">Geri</a>
+}

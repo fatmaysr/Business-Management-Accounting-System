@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Cari Alacak & Borç";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center my-4 fw-bold text-primary">🧾 Cari Alacak & Borç</h2>
+
+<!-- 🔍 Filtreleme Paneli -->
+<div class="card shadow-sm border-0 mb-4">
+ 
+    <div class="card-body">
+        <form class="row g-3">
+            <!-- Cari Seçimi -->
+            <div class="col-md-6">
+                <label for="cariSec" class="form-label">Cari Seç</label>
+                <select class="form-select" id="cariSec" name="cariSec">
+                    <option selected disabled>Bir cari seçiniz</option>
+                    @if (ViewBag.Customers != null)
+                    {
+                        foreach (var cari in ViewBag.Customers)
+                        {
+                            <option value="@cari.Value">@cari.Text</option>
+                        }
+                    }
+                </select>
+
+
+            </div>
+
+            <!-- Tarih Aralığı -->
+            <div class="col-md-3">
+                <label class="form-label">Başlangıç Tarihi</label>
+                <input type="date" class="form-control" name="startDate" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Bitiş Tarihi</label>
+                <input type="date" class="form-control" name="endDate" />
+            </div>
+
+            <!-- Filtrele Butonu -->
+            <div class="col-12 text-end mt-3">
+                <button type="submit" class="btn btn-outline-primary px-4">
+                    <i class="bi bi-search me-1"></i>Filtrele
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 📊 Sonuç Tablosu -->
+<div class="table-responsive shadow-sm">
+    <table class="table table-bordered table-striped align-middle text-center">
+        <thead class="table-primary">
+            <tr>
+                <th>Tarih</th>
+                <th>İşlem Açıklaması</th>
+                <th>Alacak (₺)</th>
+                <th>Borç (₺)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Veriler burada dinamik olarak gelecek -->
+        </tbody>
+    </table>
+</div>
+
+<!-- 💰 Toplamlar -->
+<div class="row mt-4">
+    <div class="col-md-4 offset-md-8">
+        <div class="card border-0 shadow-sm bg-light p-3">
+            <h6 class="text-muted">Özet</h6>
+            <p><strong>Toplam Alacak:</strong> <span class="text-success"></span></p>
+            <p><strong>Toplam Borç:</strong> <span class="text-danger"></span></p>
+            <hr />
+            <h5>
+                <strong>Bakiye:</strong>
+                <span class="text-danger"></span>
+            </h5>
+        </div>
+    </div>
+</div>

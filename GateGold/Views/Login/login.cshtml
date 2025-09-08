@@ -1,0 +1,107 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword" content="">
+    <meta name="author" content="WRAPCODERS">
+    <title>Duralux || Login Creative</title>
+    <link rel="shortcut icon" type="image/x-icon" href="./../assets/images/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="./../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./../assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="./../assets/css/theme.min.css">
+</head>
+
+<body>
+    <main class="auth-creative-wrapper">
+        <div class="auth-creative-inner">
+            <div class="creative-card-wrapper">
+                <div class="card my-4 overflow-hidden" style="z-index: 1">
+                    <div class="row flex-1 g-0">
+                        <div class="col-lg-6 h-100 my-auto order-1 order-lg-0">
+                            <div class="wd-50 bg-white p-2 rounded-circle shadow-lg position-absolute translate-middle top-50 start-50 d-none d-lg-block">
+                                <img src="~/assets/images/auth/gold.png" class="img-fluid">
+                            </div>
+                            <div class="creative-card-body card-body p-sm-5">
+                                <h2 class="fs-20 fw-bolder mb-4">Hesabınıza Giriş Yapın</h2>
+
+                                <!-- Form: MVC uyumlu -->
+                                <form method="post" action="@Url.Action("Login", "Login")" class="w-100 mt-4 pt-2">
+                                    <div class="mb-4">
+                                        <input type="text" name="username" class="form-control" placeholder="Mail veya Kullanıcı Adı" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="password" name="password" class="form-control" placeholder="Şifre" required>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="rememberMe">
+                                                <label class="custom-control-label c-pointer" for="rememberMe">Beni Hatırla</label>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a href="@Url.Action("ResetPassword", "Login")" class="fs-11 text-primary">Şifremi Unuttum</a>
+
+                                        </div>
+                                    </div>
+                                    <div class="mt-5">
+                                        <button type="submit" class="btn btn-lg btn-primary w-100">Giriş Yap</button>
+                                    </div>
+                                </form>
+
+                                <!-- Hata mesajı -->
+                                @if (ViewBag.Error != null)
+                                {
+                                    <div class="alert alert-danger mt-3">
+                                        @ViewBag.Error
+                                    </div>
+                                }
+
+                                <div class="w-100 mt-5 text-center mx-auto">
+                                    <div class="mb-4 border-bottom position-relative">
+                                        <span class="small py-1 px-3 text-uppercase text-muted bg-white position-absolute translate-middle">veya</span>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-center gap-2">
+                                        <a href="javascript:void(0);" class="btn btn-light-brand flex-fill" title="Login with Facebook">
+                                            <i class="feather-facebook"></i>
+                                        </a>
+                                        <a href="javascript:void(0);" class="btn btn-light-brand flex-fill" title="Login with Twitter">
+                                            <i class="feather-twitter"></i>
+                                        </a>
+                                        <a href="javascript:void(0);" class="btn btn-light-brand flex-fill" title="Login with Github">
+                                            <i class="feather-github text"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="mt-5 text-muted">
+                                    <span> Hesabınız Yok Mu?</span>
+                                    <a href="auth-register-creative.html" class="fw-bold">Yeni Hesap Oluştur</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 bg-primary order-0 order-lg-1">
+                            <div class="h-100 d-flex align-items-center justify-content-center">
+                                <img src="~/assets/images/auth/goldgate.png" class="img-fluid w-100 h-100 object-fit-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="./../assets/vendors/js/vendors.min.js"></script>
+    <script src="./../assets/js/common-init.min.js"></script>
+    <script src="./../assets/js/theme-customizer-init.min.js"></script>
+</body>
+
+</html>

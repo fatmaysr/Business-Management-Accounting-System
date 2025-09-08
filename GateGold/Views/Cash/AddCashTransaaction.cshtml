@@ -1,0 +1,81 @@
+﻿@model EntityLayer.Concrete.CaseTransaction
+@{
+    ViewBag.Title = "Kasa Hareketi Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center my-4 fw-bold text-primary">Kasa Hareketi Ekle</h2>
+
+@using (Html.BeginForm("AddCashTransaction", "Cash", FormMethod.Post, new { @class = "row g-3 mt-3" }))
+{
+    @Html.AntiForgeryToken()
+
+    <!-- Kasa -->
+    <div class="col-md-4">
+        @Html.LabelFor(m => m.CaseId, "Kasa", new { @class = "form-label" })
+        @Html.DropDownListFor(m => m.CaseId, (SelectList)ViewBag.CashCases, "Seçiniz", new { @class = "form-select" })
+        @Html.ValidationMessageFor(m => m.CaseId, "", new { @class = "text-danger" })
+    </div>
+
+    <!-- Cari -->
+    <div class="col-md-4">
+        @Html.LabelFor(m => m.CariID, "Cari", new { @class = "form-label" })
+        @Html.DropDownList("CariID", null, "Seçiniz", new { @class = "form-select" }) <!-- ViewBag ile carileri de ekleyebilirsin -->
+        @Html.ValidationMessageFor(m => m.CariID, "", new { @class = "text-danger" })
+    </div>
+
+    <!-- Para Birimi -->
+    <div class="col-md-4">
+        @Html.LabelFor(m => m.Currency, "Para Birimi", new { @class = "form-label" })
+        @Html.DropDownListFor(m => m.Currency, new SelectList(new[]
+        {
+            new { Value="TRY", Text="₺ - Türk Lirası (TRY)" },
+            new { Value="USD", Text="$ - Amerikan Doları (USD)" },
+            new { Value="EUR", Text="€ - Euro (EUR)" },
+            new { Value="GBP", Text="£ - İngiliz Sterlini (GBP)" },
+            new { Value="CHF", Text="Fr. - İsviçre Frangı (CHF)" },
+            new { Value="CAD", Text="C$ - Kanada Doları (CAD)" },
+            new { Value="AUD", Text="A$ - Avustralya Doları (AUD)" },
+            new { Value="JPY", Text="¥ - Japon Yeni (JPY)" },
+            new { Value="CNY", Text="¥ - Çin Yuanı (CNY)" },
+            new { Value="AED", Text="د.إ - BAE Dirhemi (AED)" },
+            new { Value="SAR", Text="﷼ - Suudi Riyali (SAR)" },
+            new { Value="RUB", Text="₽ - Rus Rublesi (RUB)" },
+            new { Value="SEK", Text="kr - İsveç Kronu (SEK)" },
+            new { Value="NOK", Text="kr - Norveç Kronu (NOK)" },
+            new { Value="DKK", Text="kr - Danimarka Kronu (DKK)" },
+            new { Value="INR", Text="₹ - Hindistan Rupisi (INR)" },
+            new { Value="ZAR", Text="R - Güney Afrika Randı (ZAR)" },
+            new { Value="BRL", Text="R$ - Brezilya Reali (BRL)" },
+            new { Value="MXN", Text="$ - Meksika Pesosu (MXN)" },
+            new { Value="KRW", Text="₩ - Güney Kore Wonu (KRW)" }
+        }, "Value", "Text"), "Seçiniz", new { @class = "form-select" })
+        @Html.ValidationMessageFor(m => m.Currency, "", new { @class = "text-danger" })
+    </div>
+
+    <!-- Tutar -->
+    <div class="col-md-4">
+        @Html.LabelFor(m => m.Amount, "Tutar", new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", placeholder = "Tutar giriniz" })
+        @Html.ValidationMessageFor(m => m.Amount, "", new { @class = "text-danger" })
+    </div>
+
+    <!-- Tür (Gelir / Gider) -->
+    <div class="col-md-4">
+        @Html.LabelFor(m => m.Type, "Tür", new { @class = "form-label" })
+        @Html.DropDownListFor(m => m.Type, new SelectList(new[] { "Gelir", "Gider" }), "Seçiniz", new { @class = "form-select" })
+        @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
+    </div>
+
+    <!-- Açıklama -->
+    <div class="col-md-4">
+        @Html.LabelFor(m => m.Description, "Açıklama", new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.Description, new { @class = "form-control", placeholder = "Açıklama giriniz" })
+        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+    </div>
+
+    <!-- Tanımla Butonu -->
+    <div class="col-12 mt-3">
+        <button type="submit" class="btn btn-primary w-100">Tanımla</button>
+    </div>
+}

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<EntityLayer.Concrete.CaseTransaction>
+@{
+    ViewBag.Title = "Günlük Kasa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center my-4 fw-bold text-primary">Günlük Kasa</h2>
+
+<!-- 📅 Tek Tarih Seçme Formu -->
+@using (Html.BeginForm("DailyCash", "Cash", FormMethod.Get, new { @class = "row g-3 mb-4" }))
+{
+    <div class="col-md-4">
+        <label for="selectedDate" class="form-label">Tarih Seçin</label>
+        <input type="date" class="form-control" id="selectedDate" name="selectedDate" value="@Request.QueryString["selectedDate"]" />
+    </div>
+    <div class="col-md-4 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary w-100">Listele</button>
+    </div>
+}
+
+<!-- 📋 Günlük Kasa Tablosu -->
+<table class="table table-bordered table-striped">
+    <thead class="table-primary">
+        <tr>
+            <th>Tarih</th>
+            <th>Cari</th>
+            <th>Açıklama</th>
+            <th class="text-end">Verilen</th>
+            <th class="text-end">Alınan</th>
+            <th>Para Birimi</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Date.ToString("dd.MM.yyyy")</td>
+                    <td>@item.CariID</td>
+                    <td>@item.Description</td>
+                    <td class="text-end">@(item.Amount > 0 ? item.Amount.ToString("N2") : "")</td>
+                    <td>@item.Currency</td>
+                    <td>
+                        @Html.ActionLink("Düzenle", "EditCashTransaction", new { id = item.CaseTransactionId }, new { @class = "btn btn-warning btn-sm" })
+                        @Html.ActionLink("Sil", "DeleteCashTransaction", new { id = item.CaseTransactionId }, new { @class = "btn btn-danger btn-sm", onclick = "return confirm('Silmek istediğinize emin misiniz?');" })
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="text-center text-muted">Seçilen tarihte işlem bulunamadı.</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,38 @@
+﻿@model EntityLayer.Concrete.User
+
+@{
+    ViewBag.Title = "Kullanıcı Düzenle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4 text-center">Kullanıcı Düzenle</h2>
+
+<div class="container" style="max-width: 500px;">
+    @using (Html.BeginForm())
+    {
+        @Html.HiddenFor(x => x.UserId)
+
+        <div class="mb-3">
+            <label class="form-label">Kullanıcı Adı</label>
+            @Html.TextBoxFor(x => x.UserName, new { @class = "form-control", required = "required" })
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            @Html.TextBoxFor(x => x.Email, new { @class = "form-control", type = "email", required = "required" })
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Şifre</label>
+            @Html.PasswordFor(x => x.Password, new { @class = "form-control", required = "required" })
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Rol</label>
+            @Html.TextBoxFor(x => x.Role, new { @class = "form-control", placeholder = "Admin / Customer", required = "required" })
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Güncelle</button>
+        <a href="@Url.Action("UserList", "User")" class="btn btn-secondary w-100 mt-2">İptal</a>
+    }
+</div>

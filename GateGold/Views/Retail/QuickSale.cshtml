@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "QuickSale";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center text-primary mt-4 mb-5">Kategori Seçin</h2>
+
+<form method="get" action="/Retail/ProductSelection">
+    <div class="container">
+        <div class="row justify-content-center g-4">
+
+            <!-- ALTIN -->
+            <div class="col-md-3">
+                <input type="radio" name="category" value="Altın" class="d-none category-radio" id="catAltin" />
+                <label for="catAltin" class="card shadow-sm border-0 h-100 text-center category-card d-block" style="cursor:pointer;">
+                    <img src="~/assets/images/auth/altın.png" class="card-img-top p-3" style="height: 160px; object-fit: cover;" alt="Altın" />
+                    <span class="card-title text-dark" style="display:block; font-size:1.25rem; font-weight:600; margin:0;">Altın</span>
+                </label>
+            </div>
+
+            <!-- DÖVİZ -->
+            <div class="col-md-3">
+                <input type="radio" name="category" value="Döviz" class="d-none category-radio" id="catDoviz" />
+                <label for="catDoviz" class="card shadow-sm border-0 h-100 text-center category-card d-block" style="cursor:pointer;">
+                    <img src="~/assets/images/auth/döviz.png" class="card-img-top p-3" style="height: 160px; object-fit: cover;" alt="Döviz" />
+                    <span class="card-title text-dark" style="display:block; font-size:1.25rem; font-weight:600; margin:0;">Döviz</span>
+                </label>
+            </div>
+
+            <!-- ZİYNET -->
+            <div class="col-md-3">
+                <input type="radio" name="category" value="Ziynet" class="d-none category-radio" id="catZiynet" />
+                <label for="catZiynet" class="card shadow-sm border-0 h-100 text-center category-card d-block" style="cursor:pointer;">
+                    <img src="~/assets/images/auth/ziynet.png" class="card-img-top p-3" style="height: 160px; object-fit: cover;" alt="Ziynet" />
+                    <span class="card-title text-dark" style="display:block; font-size:1.25rem; font-weight:600; margin:0;">Ziynet</span>
+                </label>
+            </div>
+
+            <!-- HURDA -->
+            <div class="col-md-3">
+                <input type="radio" name="category" value="Hurda" class="d-none category-radio" id="catHurda" />
+                <label for="catHurda" class="card shadow-sm border-0 h-100 text-center category-card d-block" style="cursor:pointer;">
+                    <img src="~/assets/images/auth/hurda.png" class="card-img-top p-3" style="height: 160px; object-fit: cover;" alt="Hurda" />
+                    <span class="card-title text-dark" style="display:block; font-size:1.25rem; font-weight:600; margin:0;">Hurda</span>
+                </label>
+            </div>
+
+            <!-- Devam Butonu -->
+            <div class="text-center mt-5">
+                <button type="submit" id="continueBtn" class="btn btn-primary btn-lg px-5" disabled>Devam Et</button>
+            </div>
+        </div>
+    </div>
+</form>
+<style>
+    /* Seçilen kategori kutucuğunun etrafı mavi, gölgeli */
+    .category-card.selected {
+        border: 3px solid #007bff !important;
+        box-shadow: 0 0 15px rgba(0, 123, 255, 0.5) !important;
+    }
+</style>
+
+<script>
+    document.querySelectorAll('.category-radio').forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            // Tüm kutucukların selected sınıfını kaldır
+            document.querySelectorAll('.category-card').forEach(card => card.classList.remove('selected'));
+
+            // Seçilen radio'nun label'ını bul
+            var label = document.querySelector('label[for="' + this.id + '"]');
+            if (label) {
+                label.classList.add('selected'); // selected sınıfını ekle
+            }
+
+            // Devam et butonunu aktif et
+            document.getElementById('continueBtn').disabled = false;
+        });
+    });
+</script>

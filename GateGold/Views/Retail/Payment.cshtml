@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Ödeme Sayfası";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center text-primary mb-4">Ödeme Yap</h2>
+
+<div class="card mx-auto" style="max-width: 500px;">
+    <div class="card-body">
+        <p>Seçilen Kategori: <strong>@ViewBag.SelectedCategory</strong></p>
+        <p>Seçilen Ürün: <strong>@ViewBag.SelectedProduct</strong></p>
+
+        <form method="post" action="/Retail/ProcessPayment">
+            <input type="hidden" name="category" value="@ViewBag.SelectedCategory" />
+            <input type="hidden" name="product" value="@ViewBag.SelectedProduct" />
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="paymentType" id="paymentNakit" value="Nakit" required />
+                <label class="form-check-label" for="paymentNakit">Nakit Ödeme</label>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="radio" name="paymentType" id="paymentKart" value="Kart" required />
+                <label class="form-check-label" for="paymentKart">Kart ile Ödeme</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Ödemeyi Tamamla</button>
+        </form>
+    </div>
+</div>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger mt-3">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+
