@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt-Net-Next, Version=4.2.0.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.4.2.0\lib\net48\BCrypt-Net-Next.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -41,8 +44,21 @@
       <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.6.3\lib\net462\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.6.1\lib\net462\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.1.2\lib\net462\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,8 +67,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IAdminDal.cs" />
-    <Compile Include="Abstract\IAdminLogsDal.cs" />
     <Compile Include="Abstract\IBankAccountDal.cs" />
     <Compile Include="Abstract\IBankDal.cs" />
     <Compile Include="Abstract\IBankTransactionDal.cs" />
@@ -61,24 +75,13 @@
     <Compile Include="Abstract\ICurrencyDal.cs" />
     <Compile Include="Abstract\ICurrencyDetailDal.cs" />
     <Compile Include="Abstract\ICustomerDal.cs" />
-    <Compile Include="Abstract\ICustomerLogDal.cs" />
-    <Compile Include="Abstract\IDatsDal.cs" />
-    <Compile Include="Abstract\IExchangeDataDal.cs" />
-    <Compile Include="Abstract\IExchangeRateDal.cs" />
-    <Compile Include="Abstract\IExchangeRateNewDal.cs" />
-    <Compile Include="Abstract\IExchangeSettingDal.cs" />
     <Compile Include="Abstract\IFastSaleCategoryDal.cs" />
     <Compile Include="Abstract\IFastSaleDal.cs" />
     <Compile Include="Abstract\IFastSaleProductDal.cs" />
     <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="Abstract\IStockDal.cs" />
-    <Compile Include="Abstract\ITestDal.cs" />
-    <Compile Include="Abstract\ITypeDal.cs" />
     <Compile Include="Abstract\IUserDal.cs" />
     <Compile Include="Concrete\AppDbContext.cs" />
-    <Compile Include="EntityFramework\EfExchangeRateDal.cs" />
-    <Compile Include="EntityFramework\EfAdminDal.cs" />
-    <Compile Include="EntityFramework\EfAdminLogDal.cs" />
     <Compile Include="EntityFramework\EfBankAccountDal.cs" />
     <Compile Include="EntityFramework\EfBankDal.cs" />
     <Compile Include="EntityFramework\EfBankTransactionDal.cs" />
@@ -87,21 +90,18 @@
     <Compile Include="EntityFramework\EfCurrencyDal.cs" />
     <Compile Include="EntityFramework\EfCurrencyDetailDal.cs" />
     <Compile Include="EntityFramework\EfCustomerDal.cs" />
-    <Compile Include="EntityFramework\EfCustomerLogDal.cs" />
-    <Compile Include="EntityFramework\EfDatsDal.cs" />
-    <Compile Include="EntityFramework\EfExchangeDataDal.cs" />
-    <Compile Include="EntityFramework\EfExchangeRateNewDal.cs" />
-    <Compile Include="EntityFramework\EfExchangeSettingDal.cs" />
     <Compile Include="EntityFramework\EfFastSaleCategoryDal.cs" />
     <Compile Include="EntityFramework\EfFastSaleDal.cs" />
     <Compile Include="EntityFramework\EfFastSaleProductDal.cs" />
     <Compile Include="EntityFramework\EfStockDal.cs" />
-    <Compile Include="EntityFramework\EfTestDal.cs" />
-    <Compile Include="EntityFramework\EfTypeDal.cs" />
     <Compile Include="EntityFramework\EfUserDal.cs" />
     <Compile Include="Migrations\202509041254051_InitialCreate.cs" />
     <Compile Include="Migrations\202509041254051_InitialCreate.Designer.cs">
       <DependentUpon>202509041254051_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202509221330333_NewAdd.cs" />
+    <Compile Include="Migrations\202509221330333_NewAdd.Designer.cs">
+      <DependentUpon>202509221330333_NewAdd.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,6 +120,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202509041254051_InitialCreate.resx">
       <DependentUpon>202509041254051_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202509221330333_NewAdd.resx">
+      <DependentUpon>202509221330333_NewAdd.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

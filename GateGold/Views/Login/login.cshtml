@@ -34,6 +34,7 @@
 
                                 <!-- Form: MVC uyumlu -->
                                 <form method="post" action="@Url.Action("Login", "Login")" class="w-100 mt-4 pt-2">
+                                    @Html.AntiForgeryToken()
                                     <div class="mb-4">
                                         <input type="text" name="username" class="form-control" placeholder="Mail veya Kullanıcı Adı" required>
                                     </div>
@@ -43,7 +44,7 @@
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div>
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="rememberMe">
+                                                <input type="checkbox" name="rememberMe" class="custom-control-input" id="rememberMe" value="true">
                                                 <label class="custom-control-label c-pointer" for="rememberMe">Beni Hatırla</label>
                                             </div>
                                         </div>

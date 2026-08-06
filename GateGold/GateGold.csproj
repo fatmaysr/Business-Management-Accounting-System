@@ -1131,7 +1131,7 @@
     <Content Include="Views\Customer\TransactionReport.cshtml" />
     <Content Include="Views\Cash\DailyCash.cshtml" />
     <Content Include="Views\Cash\CashTransactions.cshtml" />
-    <Content Include="Views\Cash\AddCashTransaaction.cshtml" />
+    <Content Include="Views\Cash\AddCashTransaction.cshtml" />
     <Content Include="Views\Cash\AddCash.cshtml" />
     <Content Include="Views\Cash\CashList.cshtml" />
     <Content Include="Views\Bank\AddBank.cshtml" />

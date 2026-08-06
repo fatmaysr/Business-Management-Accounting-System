@@ -18,6 +18,20 @@
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
+
+            // İlk kurulumda giriş yapabilmek için varsayılan bir admin kullanıcısı.
+            // ÖNEMLİ: İlk girişten sonra bu şifreyi mutlaka değiştirin.
+            context.Users.AddOrUpdate(
+                u => u.UserName,
+                new EntityLayer.Concrete.User
+                {
+                    UserName = "admin",
+                    Email = "admin@gategold.local",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Admin123!"),
+                    Role = "Admin"
+                });
+
+            context.SaveChanges();
         }
     }
 }

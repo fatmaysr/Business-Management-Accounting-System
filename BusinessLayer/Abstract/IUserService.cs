@@ -10,5 +10,6 @@ namespace BusinessLayer.Abstract
         void Delete(User user);
         User GetById(int id);
         List<User> GetList();
+        User Login(string username, string password);
     }
 }

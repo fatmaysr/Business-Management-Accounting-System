@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using BusinessLayer.Abstract;
+﻿using BusinessLayer.Abstract;
 using DataAccessLayer.Abstract;
 using EntityLayer.Concrete;
+using System.Collections.Generic;
+using System.Web.Helpers;
 
 namespace BusinessLayer.Concrete
 {
@@ -16,11 +17,22 @@ namespace BusinessLayer.Concrete
 
         public void Add(User user)
         {
+            // Şifreyi hiçbir zaman düz metin olarak DB'ye yazmıyoruz.
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             _userDal.Insert(user);
         }
 
         public void Update(User user)
         {
+            var existing = _userDal.Get(x => x.UserId == user.UserId);
+
+            // Kullanıcı formda şifreyi değiştirmediyse (hash aynen geri geldiyse)
+            // tekrar hashlemiyoruz; değiştirdiyse yeni şifreyi hashliyoruz.
+            if (existing == null || user.Password != existing.Password)
+            {
+                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            }
+
             _userDal.Update(user);
         }
 
@@ -37,6 +49,22 @@ namespace BusinessLayer.Concrete
         public List<User> GetList()
         {
             return _userDal.List();
+        }
+
+        /// <summary>
+        /// Kullanıcı adı + şifre doğrular. Başarılıysa User döner, değilse null.
+        /// Hiçbir zaman şifreleri düz metin karşılaştırmaz.
+        /// </summary>
+        public User Login(string username, string password)
+        {
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                return null;
+
+            var user = _userDal.Get(x => x.UserName == username);
+            if (user == null)
+                return null;
+
+            return BCrypt.Net.BCrypt.Verify(password, user.Password) ? user : null;
         }
     }
 }

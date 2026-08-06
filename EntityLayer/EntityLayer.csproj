@@ -51,8 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Concrete\Admin.cs" />
-    <Compile Include="Concrete\AdminLog.cs" />
+    
     <Compile Include="Concrete\Bank.cs" />
     <Compile Include="Concrete\BankAccount.cs" />
     <Compile Include="Concrete\BankTransaction.cs" />
@@ -61,18 +60,13 @@
     <Compile Include="Concrete\Currency.cs" />
     <Compile Include="Concrete\CurrencyDetail.cs" />
     <Compile Include="Concrete\Customer.cs" />
-    <Compile Include="Concrete\CustomerLog.cs" />
-    <Compile Include="Concrete\Dats.cs" />
-    <Compile Include="Concrete\ExchangeData.cs" />
-    <Compile Include="Concrete\ExchangeRate.cs" />
-    <Compile Include="Concrete\ExchangeRateNew.cs" />
-    <Compile Include="Concrete\ExchangeSetting.cs" />
+  
+
     <Compile Include="Concrete\FastSale.cs" />
     <Compile Include="Concrete\FastSaleCategory.cs" />
     <Compile Include="Concrete\FastSaleProduct.cs" />
     <Compile Include="Concrete\Stock.cs" />
-    <Compile Include="Concrete\Test.cs" />
-    <Compile Include="Concrete\Type.cs" />
+
     <Compile Include="Concrete\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
