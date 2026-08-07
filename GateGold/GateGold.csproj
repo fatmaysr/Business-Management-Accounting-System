@@ -156,6 +156,7 @@
     <Compile Include="Controllers\CashController.cs" />
     <Compile Include="Controllers\CurrencyController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ReportingController.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1099,6 +1101,8 @@
     <Content Include="assets\vendors\js\tui-schedules.min.js.map" />
     <Content Include="assets\vendors\js\tui-time-picker.min.js.map" />
     <Content Include="assets\vendors\js\vendors.min.js.map" />
+    <Content Include="ConnectionStrings.config" />
+    <Content Include="ConnectionStrings.config.example" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -1177,10 +1181,12 @@
     <Content Include="Views\User\EditUser.cshtml" />
     <Content Include="Views\Wholesale\EditStock.cshtml" />
     <Content Include="Views\Login\ResetPassword.cshtml" />
+    <Content Include="Views\Shared\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

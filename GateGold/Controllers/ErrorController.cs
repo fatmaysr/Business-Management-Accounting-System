@@ -1,0 +1,2 @@
+﻿using System.Web.Mvc;
+namespace GateGold.Controllers { public class ErrorController : Controller { [AllowAnonymous] public ActionResult Index() { Response.StatusCode = 500; Response.TrySkipIisCustomErrors = true; return View("~/Views/Shared/Error.cshtml"); } [AllowAnonymous] public ActionResult NotFound() { Response.StatusCode = 404; Response.TrySkipIisCustomErrors = true; return View("~/Views/Shared/NotFound.cshtml"); } } }

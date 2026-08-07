@@ -1,0 +1,3 @@
+﻿<connectionStrings>
+	<add name="AppDbContext" connectionString="DATA SOURCE=SUNUCU_ADIN\SQLEXPRESS; initial catalog=GateTest; Persist Security Info=True; User ID=KULLANICI_ADIN; Password=SIFREN;;" providerName="System.Data.SqlClient" />
+</connectionStrings>

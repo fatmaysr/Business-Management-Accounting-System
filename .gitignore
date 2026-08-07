@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+
+ # Gerçek veritabanı şifresini içerdiği için bu dosya asla yüklenmez GateGold/ConnectionStrings.config 

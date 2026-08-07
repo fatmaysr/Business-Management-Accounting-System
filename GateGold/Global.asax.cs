@@ -36,8 +36,12 @@ namespace GateGold
             HttpContext.Current.User = new GenericPrincipal(identity, roles);
             System.Threading.Thread.CurrentPrincipal = HttpContext.Current.User;
 
+
+
         }
-        
+
+        protected void Application_Error(object sender, EventArgs e) { var exception = Server.GetLastError(); if (exception == null) return; GateGold.Helpers.Logger.LogError(exception, Request?.Url?.ToString()); }
+
 
     }
 
