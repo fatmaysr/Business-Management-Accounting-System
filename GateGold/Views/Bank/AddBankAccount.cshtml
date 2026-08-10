@@ -1,19 +1,24 @@
 ﻿@model EntityLayer.Concrete.BankAccount
 @{
-    ViewBag.Title = "AddBankAccount";
+    ViewBag.Title = "Banka Hesabı Ekle";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2 class="mb-4 text-primary text-center">Banka Hesabı Ekle</h2>
 
-<form method="post" asp-action="AddBankAccount" class="row g-3">
+<form action="@Url.Action("AddBankAccount", "Bank")" method="post" class="row g-3">
+    @Html.AntiForgeryToken() @* <-- CSRF Token Eklendi *@
+
     <div class="col-md-6">
         <label for="bankId" class="form-label">Banka <span class="text-danger">*</span></label>
         <select id="bankId" name="BankId" class="form-select" required>
             <option value="">-- Banka Seçin --</option>
-            @foreach (var bank in ViewBag.Banks as SelectList)
+            @if (ViewBag.Banks != null)
             {
-                <option value="@bank.Value">@bank.Text</option>
+                foreach (var bank in ViewBag.Banks as SelectList)
+                {
+                    <option value="@bank.Value">@bank.Text</option>
+                }
             }
         </select>
     </div>

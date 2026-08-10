@@ -8,8 +8,10 @@
 <h2 class="mb-4 text-center">Yeni Ürün Ekle</h2>
 
 <div class="container" style="max-width: 500px;">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("AddProduct", "Retail", FormMethod.Post))
     {
+        @Html.AntiForgeryToken() @* <-- CSRF Token Eklendi *@
+
         <div class="mb-3">
             <label for="ProductName" class="form-label">Ürün Adı</label>
             @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control", placeholder = "Ürün adını girin", required = "required" })

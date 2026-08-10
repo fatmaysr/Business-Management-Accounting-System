@@ -9,6 +9,7 @@
 
 @using (Html.BeginForm("EditBank", "Bank", FormMethod.Post))
 {
+    @Html.AntiForgeryToken() @* <-- CSRF Token Eklendi *@
     @Html.HiddenFor(m => m.BankId)
 
     <div class="mb-3">

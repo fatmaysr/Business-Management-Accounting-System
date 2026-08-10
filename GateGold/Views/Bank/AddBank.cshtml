@@ -9,6 +9,8 @@
 
 @using (Html.BeginForm("AddBank", "Bank", FormMethod.Post))
 {
+    @Html.AntiForgeryToken() @* <-- CSRF Token Eklendi *@
+
     <div class="mb-3">
         @Html.LabelFor(m => m.BankName)
         @Html.TextBoxFor(m => m.BankName, new { @class = "form-control" })

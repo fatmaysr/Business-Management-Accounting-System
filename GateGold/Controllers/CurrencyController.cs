@@ -91,6 +91,7 @@ namespace GateGold.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
 
         public ActionResult AddCurrency(Currency currency)
 
@@ -245,7 +246,7 @@ namespace GateGold.Controllers
 
 
         [HttpPost]
-
+        [ValidateAntiForgeryToken]
         public ActionResult AddCurrencyDetail(CurrencyDetail detail)
 
         {
@@ -301,6 +302,7 @@ namespace GateGold.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
 
         public ActionResult EditCurrencyDetail(CurrencyDetail detail)
 

@@ -36,6 +36,7 @@ namespace GateGold.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddCategory(string categoryName)
         {
             if (string.IsNullOrWhiteSpace(categoryName))
@@ -75,6 +76,7 @@ namespace GateGold.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditCategory(FastSaleCategory category)
         {
             if (!ModelState.IsValid)
@@ -100,6 +102,7 @@ namespace GateGold.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddProduct(FastSaleProduct product)
         {
             if (ModelState.IsValid)
@@ -134,6 +137,7 @@ namespace GateGold.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditProduct(FastSaleProduct product)
         {
             if (ModelState.IsValid)
@@ -174,6 +178,7 @@ namespace GateGold.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ConfirmSale(string category, string product)
         {
             TempData["Category"] = category;
@@ -190,6 +195,7 @@ namespace GateGold.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ProcessPayment(string category, string product, string paymentType)
         {
             TempData["Category"] = category;
@@ -212,6 +218,7 @@ namespace GateGold.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult CardPayment(string category, string product, string cardNumber, string expiryDate, string cvv)
         {
             TempData["Category"] = category;

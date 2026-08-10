@@ -34,6 +34,7 @@ namespace GateGold.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddUser(User user)
         {
             UserValidator validator = new UserValidator();
@@ -63,6 +64,7 @@ namespace GateGold.Controllers
 
         // 3. Düzenle - POST
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditUser(User user)
         {
             UserValidator validator = new UserValidator();

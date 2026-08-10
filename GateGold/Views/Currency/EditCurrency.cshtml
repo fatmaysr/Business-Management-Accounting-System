@@ -7,8 +7,10 @@
 
 <h2 class="mb-4 text-primary text-center">Döviz Kaydı Düzenle</h2>
 
-<form method="post" action="/Currency/EditCurrency" class="row g-3">
-    <input type="hidden" name="CurrencyId" value="@Model.CurrencyId" />
+@using (Html.BeginForm("EditCurrency", "Currency", FormMethod.Post, new { @class = "row g-3" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.CurrencyId)
 
     <div class="col-md-6">
         <label class="form-label">Tarih</label>
@@ -65,7 +67,7 @@
     </div>
 
     <div class="col-12 d-flex justify-content-end gap-2">
-        <a href="/Currency/CurrencyBalanceList" class="btn btn-outline-secondary">İptal</a>
+        <a href="@Url.Action("CurrencyBalanceList", "Currency")" class="btn btn-outline-secondary">İptal</a>
         <button type="submit" class="btn btn-primary">Güncelle</button>
     </div>
-</form>
+}

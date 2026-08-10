@@ -7,8 +7,11 @@
 
 <h2 class="mb-4 text-primary text-center">Döviz Düzenle</h2>
 
-<form method="post" action="/Currency/EditCurrencyDetail" class="row g-3">
-    <input type="hidden" name="CurrecyDetailId" value="@Model.CurrencyDetailId" />
+@using (Html.BeginForm("EditCurrencyDetail", "Currency", FormMethod.Post, new { @class = "row g-3" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.CurrecyDetailId)
+    @Html.HiddenFor(m => m.CariID)
 
     <div class="col-md-6">
         <label for="Type" class="form-label">Tür <span class="text-danger">*</span></label>
@@ -20,8 +23,8 @@
 
     <div class="col-md-6">
         <label for="CariID" class="form-label">Cari <span class="text-danger">*</span></label>
-        <select id="CariID" name="CariID" class="form-select" required>
-            @foreach (var customer in ViewBag.Customers as List<EntityLayer.Concrete.Customer>)
+        <select id="CariID" name="CariID" class="form-select" required disabled>
+            @foreach (var customer in ViewBag.Customers as List<EntityLayer.Concrete.Customer> ?? new List<EntityLayer.Concrete.Customer>())
             {
                 <option value="@customer.CariID" @(Model.CariID == customer.CariID ? "selected" : "")>@customer.CariAdi</option>
             }
@@ -40,7 +43,7 @@
 
     <div class="col-md-6">
         <label for="Amount" class="form-label">Tutar</label>
-        <input type="number" step="0.01" min="0" class="form-control" id="Amount" name="Amount" value="@Model.Amount" />
+        <input type="number" step="0.01" min="0" class="form-control" id="Amount" name="Amount" value="@Model.Amount" required />
     </div>
 
     <div class="col-md-6">
@@ -59,7 +62,7 @@
     </div>
 
     <div class="col-12 d-flex justify-content-end gap-2">
-        <a href="/Currency/CurrencyDetailList" class="btn btn-outline-secondary">İptal</a>
+        <a href="@Url.Action("CurrencyDetailList", "Currency", new { currencyId = Model.CariID })" class="btn btn-outline-secondary">İptal</a>
         <button type="submit" class="btn btn-primary">Güncelle</button>
     </div>
-</form>
+}

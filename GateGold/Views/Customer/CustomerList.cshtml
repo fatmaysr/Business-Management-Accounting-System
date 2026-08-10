@@ -13,9 +13,16 @@
         </span>
         <input type="text" class="form-control border-start-0" placeholder="Cari adı veya kodu ile ara..." />
     </div>
-    <a href="@Url.Action("AddCustomer", "Customer")" class="btn btn-primary ms-3 px-4 fw-semibold">
-        + Yeni Cari Ekle
-    </a>
+
+    <div class="d-flex gap-2">
+        <a href="@Url.Action("ExportToExcel", "Customer")" class="btn btn-success px-3 shadow-sm d-inline-flex align-items-center gap-2">
+            <i class="feather-file-text"></i> Excel'e Aktar
+        </a>
+
+        <a href="@Url.Action("AddCustomer", "Customer")" class="btn btn-primary px-4 fw-semibold">
+            + Yeni Cari Ekle
+        </a>
+    </div>
 </div>
 
 <div class="table-responsive shadow-sm rounded">

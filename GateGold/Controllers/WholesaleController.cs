@@ -29,6 +29,7 @@ namespace GateGold.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddStock(Stock stock)
         {
             stock.CreatedDate = DateTime.Now;
@@ -58,6 +59,7 @@ namespace GateGold.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditStock(Stock stock)
         {
             StockValidator validator = new StockValidator();

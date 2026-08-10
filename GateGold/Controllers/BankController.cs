@@ -40,6 +40,7 @@ namespace GateGold.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddBank(Bank bank)
         {
             if (!ModelState.IsValid)
@@ -99,6 +100,7 @@ namespace GateGold.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddBankAccount(BankAccount account)
         {
             if (!ModelState.IsValid)
@@ -123,6 +125,7 @@ namespace GateGold.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditBankAccount(BankAccount account)
         {
             if (!ModelState.IsValid)
@@ -163,6 +166,7 @@ namespace GateGold.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddBankTransaction(BankTransaction transaction)
         {
             if (!ModelState.IsValid)
@@ -189,6 +193,7 @@ namespace GateGold.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditBankTransaction(BankTransaction transaction)
         {
             if (!ModelState.IsValid)

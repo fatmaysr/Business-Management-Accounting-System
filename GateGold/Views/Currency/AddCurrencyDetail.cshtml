@@ -7,7 +7,10 @@
 
 <h2 class="mb-4 text-primary text-center">Döviz Ekle</h2>
 
-<form method="post" action="/Currency/AddCurrencyDetail" class="row g-3">
+@using (Html.BeginForm("AddCurrencyDetail", "Currency", FormMethod.Post, new { @class = "row g-3" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.CariID)
 
     <div class="col-md-6">
         <label for="Type" class="form-label">Tür <span class="text-danger">*</span></label>
@@ -20,11 +23,11 @@
 
     <div class="col-md-6">
         <label for="CariID" class="form-label">Cari <span class="text-danger">*</span></label>
-        <select id="CariID" name="CariID" class="form-select" required>
+        <select id="CariID" name="CariID" class="form-select" required disabled>
             <option value="">-- Cari Seçiniz --</option>
-            @foreach (var customer in ViewBag.Customers as List<EntityLayer.Concrete.Customer>)
+            @foreach (var customer in ViewBag.Customers as List<EntityLayer.Concrete.Customer> ?? new List<EntityLayer.Concrete.Customer>())
             {
-                <option value="@customer.CariID">@customer.CariAdi</option>
+                <option value="@customer.CariID" @(Model.CariID == customer.CariID ? "selected" : "")>@customer.CariAdi</option>
             }
         </select>
     </div>
@@ -66,8 +69,7 @@
     </div>
 
     <div class="col-12 d-flex justify-content-end gap-2">
-        <a href="/Currency/CurrencyDetailList" class="btn btn-outline-secondary">İptal</a>
+        <a href="@Url.Action("CurrencyDetailList", "Currency", new { currencyId = Model.CariID })" class="btn btn-outline-secondary">İptal</a>
         <button type="submit" class="btn btn-primary">Kaydet</button>
     </div>
-
-</form>
+}

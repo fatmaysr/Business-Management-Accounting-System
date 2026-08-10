@@ -6,14 +6,14 @@
 
 <h2 class="mb-4 text-primary text-center">Banka Hesabı Düzenle</h2>
 
-<form method="post" action="@Url.Action("EditBankAccount","BankAccount")" class="row g-3">
-    <input type="hidden" name="Id" value="@Model.Id" />
+<form method="post" action="@Url.Action("EditBankAccount","Bank")" class="row g-3">
+    @Html.AntiForgeryToken() @* <-- CSRF Token Eklendi *@
+    <input type="hidden" name="BankAccountId" value="@Model.BankAccountId" />
 
     <div class="col-md-6">
         <label for="bankId" class="form-label">Banka <span class="text-danger">*</span></label>
         <select id="bankId" name="BankId" class="form-select" required>
             <option value="">-- Banka Seçin --</option>
-            <!-- Örnek: buraya bankaları loop ile doldurabilirsin -->
             <option value="@Model.BankId" selected>@Model.BankId</option>
         </select>
     </div>
@@ -36,10 +36,9 @@
     <div class="col-md-6">
         <label for="currency" class="form-label">Para Birimi</label>
         <select id="currency" name="Currency" class="form-select">
-            <option value="TRY" @(Model.ClassName == "TRY" ? "selected" : "")>₺ - Türk Lirası (TRY)</option>
-            <option value="USD" @(Model.ClassName == "USD" ? "selected" : "")>$ - Amerikan Doları (USD)</option>
-            <option value="EUR" @(Model.ClassName == "EUR" ? "selected" : "")>€ - Euro (EUR)</option>
-            <!-- Diğer para birimlerini ekleyebilirsin -->
+            <option value="TRY" @(Model.Currency == "TRY" ? "selected" : "")>₺ - Türk Lirası (TRY)</option>
+            <option value="USD" @(Model.Currency == "USD" ? "selected" : "")>$ - Amerikan Doları (USD)</option>
+            <option value="EUR" @(Model.Currency == "EUR" ? "selected" : "")>€ - Euro (EUR)</option>
         </select>
     </div>
 
@@ -52,7 +51,7 @@
     </div>
 
     <div class="col-12 d-flex justify-content-end gap-2">
-        <a href="@Url.Action("BankAccountList","BankAccount")" class="btn btn-outline-secondary">İptal</a>
+        <a href="@Url.Action("BankAccountList","Bank")" class="btn btn-outline-secondary">İptal</a>
         <button type="submit" class="btn btn-primary">Güncelle</button>
     </div>
 </form>

@@ -41,6 +41,7 @@ namespace GateGold.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddCash(CashCase cashCase)
         {
             if (!ModelState.IsValid)
@@ -117,10 +118,15 @@ namespace GateGold.Controllers
         public ActionResult AddCashTransaction()
         {
             ViewBag.CashCases = new SelectList(_cashCaseService.GetList(), "CashCaseId", "CaseName");
+
+            // Cari dropdown'ının dolması için eklendi:
+            ViewBag.Customers = new SelectList(_customerService.GetList(), "CariID", "CariAdi");
+
             return View(new CaseTransaction());
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddCashTransaction(CaseTransaction transaction)
         {
             if (!ModelState.IsValid)
@@ -141,11 +147,16 @@ namespace GateGold.Controllers
             if (transaction == null)
                 return HttpNotFound();
 
-            ViewBag.CashCases = new SelectList(_cashCaseService.GetList(), "CashCaseId", "CaseName", transaction.CaseTransactionId);
+            ViewBag.CashCases = new SelectList(_cashCaseService.GetList(), "CashCaseId", "CaseName", transaction.CaseId);
+
+            // Düzenleme sayfasında da carilerin gelmesi için eklendi:
+            ViewBag.Customers = new SelectList(_customerService.GetList(), "CariID", "CariAdi", transaction.CariID);
+
             return View(transaction);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditCashTransaction(CaseTransaction transaction)
         {
             if (!ModelState.IsValid)

@@ -8,8 +8,9 @@
 <h2 class="mb-4 text-center">Kullanıcı Düzenle</h2>
 
 <div class="container" style="max-width: 500px;">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("EditUser", "User", FormMethod.Post))
     {
+        @Html.AntiForgeryToken() <!-- CSRF Koruması Eklendi -->
         @Html.HiddenFor(x => x.UserId)
 
         <div class="mb-3">

@@ -8,6 +8,8 @@
 <h2 class="mb-4 text-primary text-center">Banka Hareketi Ekle</h2>
 
 <form method="post" action="@Url.Action("AddBankTransaction", "Bank")" class="row g-3">
+    @Html.AntiForgeryToken() @* <-- CSRF Token Eklendi *@
+
     <div class="col-md-6">
         <label for="Date" class="form-label">Tarih <span class="text-danger">*</span></label>
         <input type="date" id="Date" name="Date" class="form-control" required />
@@ -29,8 +31,8 @@
     </div>
 
     <div class="col-md-6">
-        <label for="Cuurency" class="form-label">Para Birimi</label>
-        <input type="text" id="Cuurency" name="Cuurency" class="form-control" />
+        <label for="Currency" class="form-label">Para Birimi</label>
+        <input type="text" id="Currency" name="Currency" class="form-control" />
     </div>
 
     <div class="col-md-6">

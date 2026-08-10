@@ -7,7 +7,7 @@
 
 <h2>Yeni Cari Ekle</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("AddCustomer", "Customer", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -28,8 +28,6 @@
         @Html.TextBoxFor(x => x.CariTipi, new { @class = "form-control" })
         @Html.ValidationMessageFor(x => x.CariTipi, "", new { @class = "text-danger" })
     </div>
-
-    <!-- Diğer alanlar için de aynı şekilde ValidationMessageFor ekleyebilirsin -->
 
     <button type="submit" class="btn btn-success">Kaydet</button>
 

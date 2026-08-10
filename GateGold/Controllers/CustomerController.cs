@@ -35,7 +35,7 @@ namespace GateGold.Controllers
 
 
         [HttpPost]
-        //  [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public ActionResult AddCustomer(Customer model)
         {
             if (!ModelState.IsValid)
@@ -138,6 +138,28 @@ namespace GateGold.Controllers
             }).ToList();
 
             return View();
+        }
+
+
+        public ActionResult ExportToExcel()
+        {
+            var customers = _customerService.GetList();
+
+            var mappings = new Dictionary<string, string>
+    {
+        { "CariID", "Cari ID" },
+        { "CariAdi", "Cari Unvanı / Adı" },
+        { "CariKodu", "Cari Kodu" },
+        { "CariTipi", "Cari Tipi" },
+        { "Telefon", "Telefon" },
+        { "Email", "E-Posta" }
+    };
+
+            var excelService = new ExcelExportService();
+            byte[] fileBytes = excelService.ExportToExcel(customers, "Cari_Listesi", mappings);
+
+            string fileName = $"Cari_Listesi_{DateTime.Now:yyyyMMdd_HHmm}.xlsx";
+            return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
 
     }

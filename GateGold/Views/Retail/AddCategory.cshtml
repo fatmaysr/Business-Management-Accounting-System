@@ -9,6 +9,8 @@
 <div class="container" style="max-width: 500px;">
     @using (Html.BeginForm("AddCategory", "Retail", FormMethod.Post))
     {
+        @Html.AntiForgeryToken() @* <-- CSRF Token Eklendi *@
+
         <div class="mb-3">
             <label for="categoryName" class="form-label">Kategori Adı</label>
             <input type="text" id="categoryName" name="categoryName" class="form-control" placeholder="Kategori adını girin" required />

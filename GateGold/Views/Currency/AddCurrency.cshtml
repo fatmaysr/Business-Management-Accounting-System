@@ -7,7 +7,9 @@
 
 <h2 class="mb-4 text-primary text-center">Döviz Bilgisi Ekle</h2>
 
-<form method="post" action="/Currency/AddCurrencyDetail" class="row g-3">
+@using (Html.BeginForm("AddCurrency", "Currency", FormMethod.Post, new { @class = "row g-3" }))
+{
+    @Html.AntiForgeryToken()
 
     <div class="col-md-6">
         <label for="CariID" class="form-label">Cari <span class="text-danger">*</span></label>
@@ -17,7 +19,6 @@
             {
                 <option value="@customer.CariID">@customer.CariAdi</option>
             }
-
         </select>
     </div>
 
@@ -57,8 +58,7 @@
     </div>
 
     <div class="col-12 d-flex justify-content-end gap-2">
-        <a href="/Currency/CurrencyBalanceList" class="btn btn-outline-secondary">İptal</a>
+        <a href="@Url.Action("CurrencyBalanceList", "Currency")" class="btn btn-outline-secondary">İptal</a>
         <button type="submit" class="btn btn-primary">Kaydet</button>
     </div>
-
-</form>
+}

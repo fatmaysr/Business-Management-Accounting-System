@@ -10,6 +10,7 @@
 <div class="container" style="max-width: 500px;">
     @using (Html.BeginForm("EditProduct", "Retail", FormMethod.Post))
     {
+        @Html.AntiForgeryToken() @* <-- CSRF Token Eklendi *@
         @Html.HiddenFor(m => m.ProductId)
 
         <div class="mb-3">

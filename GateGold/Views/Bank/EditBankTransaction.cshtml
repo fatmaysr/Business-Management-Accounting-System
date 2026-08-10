@@ -8,6 +8,7 @@
 <h2 class="mb-4 text-primary text-center">Banka Hareketi Düzenle</h2>
 
 <form method="post" action="@Url.Action("EditBankTransaction", "Bank")" class="row g-3">
+    @Html.AntiForgeryToken() @* <-- CSRF Token Eklendi *@
     @Html.HiddenFor(m => m.Id)
 
     <div class="col-md-6">
