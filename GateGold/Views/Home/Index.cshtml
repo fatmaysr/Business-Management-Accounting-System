@@ -7,6 +7,48 @@
 
 <h2 class="fw-bold my-4">Genel Bakış</h2>
 
+@* 1. Canlı Döviz Kurları Bandı *@
+@if (Model.LiveRates != null && Model.LiveRates.Any())
+{
+    <div class="row g-3 mb-4">
+        @foreach (var rate in Model.LiveRates)
+        {
+            // Para birimine göre bayrak/simge belirleme
+            string iconClass = "feather-dollar-sign";
+            string flagCode = "us";
+
+            if (rate.CurrencyCode == "EUR") { flagCode = "eu"; }
+            else if (rate.CurrencyCode == "GBP") { flagCode = "gb"; }
+            else if (rate.CurrencyCode == "CHF") { flagCode = "ch"; }
+
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm bg-soft-primary">
+                    <div class="card-body py-3">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="fi fi-@flagCode rounded-circle fs-6"></span>
+                                <span class="fw-bold text-dark fs-14">TCMB @rate.CurrencyCode</span>
+                            </div>
+                            <span class="badge bg-primary">Canlı</span>
+                        </div>
+                        <div class="mt-2 d-flex justify-content-between fs-12 text-muted">
+                            <span>
+                                <i class="feather-arrow-up-right text-success me-1"></i>Alış:
+                                <strong class="text-dark">@rate.ForexBuying.ToString("N4") ₺</strong>
+                            </span>
+                            <span>
+                                <i class="feather-arrow-down-right text-danger me-1"></i>Satış:
+                                <strong class="text-dark">@rate.ForexSelling.ToString("N4") ₺</strong>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@* 2. Özet İstatistik Kartları *@
 <div class="row g-3 mb-4">
     <div class="col-md-3">
         <div class="card text-center border-0 shadow-sm">
@@ -42,6 +84,7 @@
     </div>
 </div>
 
+@* 3. Son Kasa Hareketleri Tablosu *@
 <div class="card border-0 shadow-sm">
     <div class="card-body">
         <h5 class="fw-bold mb-3">Son Kasa Hareketleri</h5>
@@ -77,3 +120,82 @@
         }
     </div>
 </div>
+
+@* 3. Grafik Alanı *@
+<div class="row g-3 mb-4">
+    <!-- Çizgi Grafik: Kasa Akışı -->
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="fw-bold mb-0">Haftalık Kasa & Finans Akışı</h5>
+                    <span class="badge bg-soft-info text-info fs-11">Son 7 Gün</span>
+                </div>
+                <div id="cashFlowChart" style="min-height: 280px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pasta Grafik: İşlem Dağılımı -->
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="fw-bold mb-0">İşlem Dağılımı</h5>
+                    <span class="badge bg-soft-primary text-primary fs-11">Genel</span>
+                </div>
+                <div id="transactionPieChart" style="min-height: 280px;" class="d-flex align-items-center justify-content-center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 1. Çizgi Grafik (Haftalık Kasa Akışı)
+            var cashOptions = {
+                chart: {
+                    type: 'area',
+                    height: 260,
+                    toolbar: { show: false },
+                    sparkline: { enabled: false }
+                },
+                stroke: { curve: 'smooth', width: 2 },
+                fill: {
+                    type: 'gradient',
+                    gradient: { opacityFrom: 0.45, opacityTo: 0.05 }
+                },
+                series: [{
+                    name: 'Giriş (TL)',
+                    data: [12000, 18500, 9400, 24000, 15000, 31000, 28000]
+                }, {
+                    name: 'Çıkış (TL)',
+                    data: [8000, 11000, 6200, 14500, 9000, 18000, 12500]
+                }],
+                colors: ['#22c55e', '#ef4444'],
+                xaxis: {
+                    categories: ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz']
+                },
+                tooltip: { y: { formatter: function (val) { return val.toLocaleString('tr-TR') + ' ₺'; } } }
+            };
+            var cashChart = new ApexCharts(document.querySelector("#cashFlowChart"), cashOptions);
+            cashChart.render();
+
+            // 2. Donut Grafik (İşlem Dağılımı)
+            var pieOptions = {
+                chart: {
+                    type: 'donut',
+                    height: 250
+                },
+                series: [@Model.AktifKasaSayisi > 0 ? @Model.AktifKasaSayisi : 1, @Model.CariSayisi, @Model.KullaniciSayisi],
+                labels: ['Kasalar', 'Cariler', 'Kullanıcılar'],
+                colors: ['#3b82f6', '#22c55e', '#06b6d4'],
+                legend: { position: 'bottom' },
+                dataLabels: { enabled: false }
+            };
+            var pieChart = new ApexCharts(document.querySelector("#transactionPieChart"), pieOptions);
+            pieChart.render();
+        });
+    </script>
+}

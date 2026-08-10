@@ -1,8 +1,9 @@
-﻿using System;
+﻿using BusinessLayer.Abstract;
+using BusinessLayer.Concrete;
+using GateGold.Models;
+using System;
 using System.Linq;
 using System.Web.Mvc;
-using BusinessLayer.Abstract;
-using GateGold.Models;
 
 namespace GateGold.Controllers
 {
@@ -29,13 +30,18 @@ namespace GateGold.Controllers
         {
             var tumHareketler = _caseTransactionService.GetList();
 
+            // Canlı kurları TCMB'den çekiyoruz
+            var tcmbService = new TcmbCurrencyService();
+            var canliKurlar = tcmbService.GetTodayRates();
+
             var model = new DashboardViewModel
             {
                 AktifKasaSayisi = _cashCaseService.GetList().Count(x => x.Status == 1),
                 CariSayisi = _customerService.GetList().Count,
                 KullaniciSayisi = _userService.GetList().Count,
                 BugunkuHareketSayisi = tumHareketler.Count(x => x.Date.Date == DateTime.Today),
-                SonHareketler = tumHareketler.OrderByDescending(x => x.Date).Take(5).ToList()
+                SonHareketler = tumHareketler.OrderByDescending(x => x.Date).Take(5).ToList(),
+                LiveRates = canliKurlar // Modele ekledik
             };
 
             return View(model);
