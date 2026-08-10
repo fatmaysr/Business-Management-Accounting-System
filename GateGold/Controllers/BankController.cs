@@ -14,15 +14,18 @@ namespace GateGold.Controllers
         private readonly IBankService _bankService;
         private readonly IBankAccountService _bankAccountService;
         private readonly IBankTransactionService _transactionService;
+        private readonly ICustomerService _customerService;
 
         public BankController(
             IBankService bankService,
             IBankAccountService bankAccountService,
-            IBankTransactionService transactionService)
+            IBankTransactionService transactionService,
+            ICustomerService customerService)
         {
             _bankService = bankService;
             _bankAccountService = bankAccountService;
             _transactionService = transactionService;
+            _customerService = customerService;
         }
 
         // ===== BANK CRUD =====
@@ -36,6 +39,7 @@ namespace GateGold.Controllers
         [HttpGet]
         public ActionResult AddBank()
         {
+            ViewBag.Customers = _customerService.GetList();
             return View(new Bank());
         }
 
@@ -44,7 +48,10 @@ namespace GateGold.Controllers
         public ActionResult AddBank(Bank bank)
         {
             if (!ModelState.IsValid)
+            {
+                ViewBag.Customers = _customerService.GetList();
                 return View(bank);
+            }
 
             _bankService.Add(bank);
             TempData["Success"] = "Banka başarıyla eklendi.";
@@ -58,6 +65,7 @@ namespace GateGold.Controllers
             if (bank == null)
                 return HttpNotFound();
 
+            ViewBag.Customers = _customerService.GetList();
             return View(bank);
         }
 
@@ -66,7 +74,10 @@ namespace GateGold.Controllers
         public ActionResult EditBank(Bank bank)
         {
             if (!ModelState.IsValid)
+            {
+                ViewBag.Customers = _customerService.GetList();
                 return View(bank);
+            }
 
             _bankService.Update(bank);
             TempData["Success"] = "Banka bilgileri güncellendi.";

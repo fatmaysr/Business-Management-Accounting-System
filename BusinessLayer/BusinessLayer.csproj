@@ -137,6 +137,7 @@
     <Compile Include="Abstract\IFastSaleCategoryService.cs" />
     <Compile Include="Abstract\IFastSaleProductService.cs" />
     <Compile Include="Abstract\IFastSaleService.cs" />
+    <Compile Include="Abstract\ISaleService.cs" />
     <Compile Include="Abstract\IStockService.cs" />
     <Compile Include="Abstract\IUserService.cs" />
     <Compile Include="Concrete\BankAccountManager.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Concrete\FastSaleCategoryManager.cs" />
     <Compile Include="Concrete\FastSaleManager.cs" />
     <Compile Include="Concrete\FastSaleProductManager.cs" />
+    <Compile Include="Concrete\SaleManager.cs" />
     <Compile Include="Concrete\StockManager.cs" />
     <Compile Include="Concrete\TcmbCurrencyService.cs" />
     <Compile Include="Concrete\UserManager.cs" />

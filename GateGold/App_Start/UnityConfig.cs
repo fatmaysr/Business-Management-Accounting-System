@@ -29,6 +29,11 @@ namespace GateGold
             container.RegisterType<IStockDal, EfStockDal>();
             container.RegisterType<IUserDal, EfUserDal>();
 
+
+            container.RegisterType<ISaleDal, EfSaleDal>();
+            container.RegisterType<ISaleService, SaleManager>();
+
+
             // ===== BusinessLayer (Service) Kayýtlarý =====
             container.RegisterType<IBankService, BankManager>();
             container.RegisterType<IBankAccountService, BankAccountManager>();

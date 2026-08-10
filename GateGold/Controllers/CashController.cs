@@ -37,6 +37,7 @@ namespace GateGold.Controllers
         [HttpGet]
         public ActionResult AddCash()
         {
+            ViewBag.Customers = new SelectList(_customerService.GetList(), "CariID", "CariAdi");
             return View(new CashCase());
         }
 
@@ -45,7 +46,10 @@ namespace GateGold.Controllers
         public ActionResult AddCash(CashCase cashCase)
         {
             if (!ModelState.IsValid)
+            {
+                ViewBag.Customers = new SelectList(_customerService.GetList(), "CariID", "CariAdi", cashCase.CariID);
                 return View(cashCase);
+            }
 
             _cashCaseService.Add(cashCase);
             TempData["Success"] = "Kasa başarıyla eklendi.";
@@ -59,6 +63,7 @@ namespace GateGold.Controllers
             if (cashCase == null)
                 return HttpNotFound();
 
+            ViewBag.Customers = new SelectList(_customerService.GetList(), "CariID", "CariAdi", cashCase.CariID);
             return View(cashCase);
         }
 
@@ -67,7 +72,10 @@ namespace GateGold.Controllers
         public ActionResult EditCash(CashCase cashCase)
         {
             if (!ModelState.IsValid)
+            {
+                ViewBag.Customers = new SelectList(_customerService.GetList(), "CariID", "CariAdi", cashCase.CariID);
                 return View(cashCase);
+            }
 
             _cashCaseService.Update(cashCase);
             TempData["Success"] = "Kasa bilgileri güncellendi.";
@@ -89,7 +97,6 @@ namespace GateGold.Controllers
 
         public ActionResult CashTransactions(int? CariID, string currency, DateTime? date)
         {
-            // 1️⃣ Müşteri listesini ViewBag’e koy
             ViewBag.Customers = _customerService.GetList()
                 .Select(c => new SelectListItem
                 {
@@ -97,10 +104,8 @@ namespace GateGold.Controllers
                     Value = c.CariID.ToString()
                 }).ToList();
 
-            // 2️⃣ Tüm işlemleri çek
             var transactions = _cashTransactionService.GetList();
 
-            // 3️⃣ Filtreleme
             if (CariID.HasValue)
                 transactions = transactions.Where(x => x.CariID == CariID.Value).ToList();
 
@@ -113,15 +118,11 @@ namespace GateGold.Controllers
             return View(transactions);
         }
 
-
         [HttpGet]
         public ActionResult AddCashTransaction()
         {
-            ViewBag.CashCases = new SelectList(_cashCaseService.GetList(), "CashCaseId", "CaseName");
-
-            // Cari dropdown'ının dolması için eklendi:
+            ViewBag.CashCases = new SelectList(_cashCaseService.GetList(), "CaseId", "CaseName");
             ViewBag.Customers = new SelectList(_customerService.GetList(), "CariID", "CariAdi");
-
             return View(new CaseTransaction());
         }
 
@@ -131,7 +132,8 @@ namespace GateGold.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.CashCases = new SelectList(_cashCaseService.GetList(), "CashCaseId", "CaseName", transaction.CaseTransactionId);
+                ViewBag.CashCases = new SelectList(_cashCaseService.GetList(), "CaseId", "CaseName", transaction.CaseId);
+                ViewBag.Customers = new SelectList(_customerService.GetList(), "CariID", "CariAdi", transaction.CariID);
                 return View(transaction);
             }
 
@@ -147,9 +149,7 @@ namespace GateGold.Controllers
             if (transaction == null)
                 return HttpNotFound();
 
-            ViewBag.CashCases = new SelectList(_cashCaseService.GetList(), "CashCaseId", "CaseName", transaction.CaseId);
-
-            // Düzenleme sayfasında da carilerin gelmesi için eklendi:
+            ViewBag.CashCases = new SelectList(_cashCaseService.GetList(), "CaseId", "CaseName", transaction.CaseId);
             ViewBag.Customers = new SelectList(_customerService.GetList(), "CariID", "CariAdi", transaction.CariID);
 
             return View(transaction);
@@ -161,7 +161,8 @@ namespace GateGold.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.CashCases = new SelectList(_cashCaseService.GetList(), "CashCaseId", "CaseName", transaction.CaseTransactionId);
+                ViewBag.CashCases = new SelectList(_cashCaseService.GetList(), "CaseId", "CaseName", transaction.CaseId);
+                ViewBag.Customers = new SelectList(_customerService.GetList(), "CariID", "CariAdi", transaction.CariID);
                 return View(transaction);
             }
 
@@ -182,10 +183,10 @@ namespace GateGold.Controllers
         }
 
         // ===== DAILY CASH (Sadece liste/rapor) =====
-
+     
         public ActionResult DailyCash(DateTime? selectedDate)
         {
-            var transactions = _cashTransactionService.GetList(); // tüm işlemleri çek
+            var transactions = _cashTransactionService.GetList();
 
             if (selectedDate.HasValue)
             {
@@ -196,6 +197,5 @@ namespace GateGold.Controllers
 
             return View(transactions);
         }
-
     }
 }

@@ -12,15 +12,16 @@ namespace GateGold.Controllers
     {
         private readonly IFastSaleCategoryService _categoryService;
         private readonly IFastSaleProductService _productService;
+        private readonly ISaleService _saleService;
 
-
-        // ---------------- Parametreli Constructor ----------------
         public RetailController(
             IFastSaleCategoryService categoryService,
-            IFastSaleProductService productService)
+            IFastSaleProductService productService,
+            ISaleService saleService)
         {
             _categoryService = categoryService;
             _productService = productService;
+            _saleService = saleService;
         }
 
         // -------------------- Kategori CRUD --------------------
@@ -186,11 +187,12 @@ namespace GateGold.Controllers
             return RedirectToAction("Payment");
         }
 
-        public ActionResult Payment()
+        public ActionResult Payment(string category, string product)
         {
-            ViewBag.SelectedCategory = TempData["Category"];
-            ViewBag.SelectedProduct = TempData["Product"];
-            TempData.Keep();
+            TempData["Category"] = category;
+            TempData["Product"] = product;
+            ViewBag.SelectedCategory = category;
+            ViewBag.SelectedProduct = product;
             return View();
         }
 
@@ -198,21 +200,40 @@ namespace GateGold.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ProcessPayment(string category, string product, string paymentType)
         {
-            TempData["Category"] = category;
-            TempData["Product"] = product;
-            TempData["PaymentType"] = paymentType;
+            if (paymentType == "Kart")
+            {
+                TempData["Category"] = category;
+                TempData["Product"] = product;
+                TempData["PaymentType"] = "Kart";
+                return RedirectToAction("CardPayment");
+            }
 
             if (paymentType == "Nakit")
-                return RedirectToAction("Complete");
-            else if (paymentType == "Kart")
-                return RedirectToAction("CardPayment");
+            {
+                try
+                {
+                    var sale = _saleService.CompleteSale(product, "Nakit", User.Identity.Name);
+                    return RedirectToAction("Complete", new { saleId = sale.SaleId });
+                }
+                catch (InvalidOperationException ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                    ViewBag.SelectedCategory = category;
+                    ViewBag.SelectedProduct = product;
+                    return View("Payment");
+                }
+            }
 
             ModelState.AddModelError("", "Lütfen bir ödeme yöntemi seçin.");
+            ViewBag.SelectedCategory = category;
+            ViewBag.SelectedProduct = product;
             return View("Payment");
         }
 
         public ActionResult CardPayment()
         {
+            ViewBag.Category = TempData["Category"];
+            ViewBag.Product = TempData["Product"];
             TempData.Keep();
             return View();
         }
@@ -221,18 +242,27 @@ namespace GateGold.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CardPayment(string category, string product, string cardNumber, string expiryDate, string cvv)
         {
-            TempData["Category"] = category;
-            TempData["Product"] = product;
-            TempData["PaymentType"] = "Kart";
-            return RedirectToAction("Complete");
+            try
+            {
+                var sale = _saleService.CompleteSale(product, "Kart", User.Identity.Name);
+                return RedirectToAction("Complete", new { saleId = sale.SaleId });
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                ViewBag.Category = category;
+                ViewBag.Product = product;
+                return View("CardPayment");
+            }
         }
 
-        public ActionResult Complete()
+        public ActionResult Complete(int saleId)
         {
-            ViewBag.Category = TempData["Category"];
-            ViewBag.Product = TempData["Product"];
-            ViewBag.PaymentType = TempData["PaymentType"];
-            return View();
+            var sale = _saleService.GetById(saleId);
+            if (sale == null)
+                return HttpNotFound();
+
+            return View(sale);
         }
     }
 }

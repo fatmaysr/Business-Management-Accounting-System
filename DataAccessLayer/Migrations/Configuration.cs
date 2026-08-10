@@ -31,6 +31,17 @@
                     Role = "Admin"
                 });
 
+            context.Customers.AddOrUpdate(
+    c => c.CariKodu,
+    new EntityLayer.Concrete.Customer
+    {
+        CariKodu = "PERAKENDE",
+        CariAdi = "Perakende Müşteri (Genel)",
+        CariTipi = "Perakende"
+    });
+
+            context.SaveChanges();
+
             context.SaveChanges();
         }
     }

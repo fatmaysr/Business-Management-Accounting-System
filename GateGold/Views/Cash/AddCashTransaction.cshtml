@@ -11,11 +11,11 @@
     @Html.AntiForgeryToken()
 
     <!-- Kasa -->
-    <div class="col-md-4">
-        @Html.LabelFor(m => m.CaseId, "Kasa", new { @class = "form-label" })
-        @Html.DropDownListFor(m => m.CaseId, (SelectList)ViewBag.CashCases, "Seçiniz", new { @class = "form-select" })
-        @Html.ValidationMessageFor(m => m.CaseId, "", new { @class = "text-danger" })
-    </div>
+<div class="col-md-4">
+    @Html.LabelFor(m => m.CaseId, "Kasa", new { @class = "form-label" })
+    @Html.DropDownList("CariID", (SelectList)ViewBag.Customers, "Seçiniz", new { @class = "form-select" })
+    @Html.ValidationMessageFor(m => m.CaseId, "", new { @class = "text-danger" })
+</div>
 
     <!-- Cari -->
     <div class="col-md-4">

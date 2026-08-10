@@ -79,6 +79,7 @@
     <Compile Include="Abstract\IFastSaleDal.cs" />
     <Compile Include="Abstract\IFastSaleProductDal.cs" />
     <Compile Include="Abstract\IRepository.cs" />
+    <Compile Include="Abstract\ISaleDal.cs" />
     <Compile Include="Abstract\IStockDal.cs" />
     <Compile Include="Abstract\IUserDal.cs" />
     <Compile Include="Concrete\AppDbContext.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="EntityFramework\EfFastSaleCategoryDal.cs" />
     <Compile Include="EntityFramework\EfFastSaleDal.cs" />
     <Compile Include="EntityFramework\EfFastSaleProductDal.cs" />
+    <Compile Include="EntityFramework\EfSaleDal.cs" />
     <Compile Include="EntityFramework\EfStockDal.cs" />
     <Compile Include="EntityFramework\EfUserDal.cs" />
     <Compile Include="Migrations\202509041254051_InitialCreate.cs" />
@@ -102,6 +104,10 @@
     <Compile Include="Migrations\202509221330333_NewAdd.cs" />
     <Compile Include="Migrations\202509221330333_NewAdd.Designer.cs">
       <DependentUpon>202509221330333_NewAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202608101037554_AddSaleTableAndWalkInCustomer.cs" />
+    <Compile Include="Migrations\202608101037554_AddSaleTableAndWalkInCustomer.Designer.cs">
+      <DependentUpon>202608101037554_AddSaleTableAndWalkInCustomer.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202509221330333_NewAdd.resx">
       <DependentUpon>202509221330333_NewAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202608101037554_AddSaleTableAndWalkInCustomer.resx">
+      <DependentUpon>202608101037554_AddSaleTableAndWalkInCustomer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -24,6 +24,11 @@
     </div>
 
     <div class="col-md-4">
+        @Html.Label("Müşteri (Cari)", htmlAttributes: new { @class = "form-label" })
+        @Html.DropDownList("CariID", (SelectList)ViewBag.Customers, "Müşteri seçin", new { @class = "form-select" })
+    </div>
+
+    <div class="col-md-4">
         @Html.LabelFor(m => m.Currency, "Para Birimi", htmlAttributes: new { @class = "form-label" })
         @Html.DropDownListFor(m => m.Currency,
             new SelectList(new[]

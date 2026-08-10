@@ -33,6 +33,12 @@
     </div>
 
     <div class="mb-3">
+        @Html.Label("Müşteri (Cari)")
+        @Html.DropDownList("CariID",
+            new SelectList((IEnumerable<EntityLayer.Concrete.Customer>)ViewBag.Customers, "CariID", "CariAdi"),
+            "Müşteri seçin", new { @class = "form-control" })
+    </div>
+    <div class="mb-3">
         @Html.LabelFor(m => m.Status)
         @Html.DropDownListFor(m => m.Status, new SelectList(new[] {
             new { Text = "Aktif", Value = 1 },

@@ -11,6 +11,7 @@
         <p>Seçilen Ürün: <strong>@ViewBag.SelectedProduct</strong></p>
 
         <form method="post" action="/Retail/ProcessPayment">
+            @Html.AntiForgeryToken()
             <input type="hidden" name="category" value="@ViewBag.SelectedCategory" />
             <input type="hidden" name="product" value="@ViewBag.SelectedProduct" />
 

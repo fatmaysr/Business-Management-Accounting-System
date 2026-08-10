@@ -32,7 +32,9 @@ namespace DataAccessLayer.Concrete
 
         public DbSet<User> Users { get; set; }  
 
-        public DbSet<Stock> Stocks { get; set; }    
+        public DbSet<Stock> Stocks { get; set; }
+
+        public DbSet<Sale> Sales { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Bank>()
@@ -88,6 +90,24 @@ namespace DataAccessLayer.Concrete
                 .HasRequired(cd => cd.Customer)
                  .WithMany()
                 .HasForeignKey(cd => cd.CariID)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Sale>()
+    .       HasRequired(s => s.CashCase)
+    .       WithMany()
+            .HasForeignKey(s => s.CaseId)
+            .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Sale>()
+                .HasRequired(s => s.Customer)
+                .WithMany()
+                .HasForeignKey(s => s.CariID)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Sale>()
+                .HasRequired(s => s.Product)
+                .WithMany()
+                .HasForeignKey(s => s.ProductId)
                 .WillCascadeOnDelete(false);
         }
     }
