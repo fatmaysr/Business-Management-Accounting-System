@@ -5,7 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="fw-bold my-4">Genel Bakış</h2>
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h2 class="fw-bold text-dark mb-1">Genel Bakış</h2>
+        <p class="text-muted fs-14 mb-0">Finansal operasyonlarınıza ve canlı piyasa verilerine hızlıca göz atın.</p>
+    </div>
+    <span class="badge bg-soft-primary text-primary px-3 py-2 rounded-pill fs-12">
+        <i class="feather-calendar me-1"></i> @DateTime.Now.ToString("dd MMMM yyyy")
+    </span>
+</div>
 
 @* 1. Canlı Döviz Kurları Bandı *@
 @if (Model.LiveRates != null && Model.LiveRates.Any())
@@ -13,34 +21,23 @@
     <div class="row g-3 mb-4">
         @foreach (var rate in Model.LiveRates)
         {
-            // Para birimine göre bayrak/simge belirleme
-            string iconClass = "feather-dollar-sign";
             string flagCode = "us";
-
             if (rate.CurrencyCode == "EUR") { flagCode = "eu"; }
             else if (rate.CurrencyCode == "GBP") { flagCode = "gb"; }
             else if (rate.CurrencyCode == "CHF") { flagCode = "ch"; }
 
             <div class="col-md-3">
-                <div class="card border-0 shadow-sm bg-soft-primary">
-                    <div class="card-body py-3">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div class="d-flex align-items-center gap-2">
-                                <span class="fi fi-@flagCode rounded-circle fs-6"></span>
-                                <span class="fw-bold text-dark fs-14">TCMB @rate.CurrencyCode</span>
-                            </div>
-                            <span class="badge bg-primary">Canlı</span>
+                <div class="card border-0 shadow-sm bg-white p-3 h-100">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fi fi-@flagCode rounded-circle fs-6"></span>
+                            <span class="fw-semibold text-dark fs-14">TCMB @rate.CurrencyCode</span>
                         </div>
-                        <div class="mt-2 d-flex justify-content-between fs-12 text-muted">
-                            <span>
-                                <i class="feather-arrow-up-right text-success me-1"></i>Alış:
-                                <strong class="text-dark">@rate.ForexBuying.ToString("N4") ₺</strong>
-                            </span>
-                            <span>
-                                <i class="feather-arrow-down-right text-danger me-1"></i>Satış:
-                                <strong class="text-dark">@rate.ForexSelling.ToString("N4") ₺</strong>
-                            </span>
-                        </div>
+                        <span class="badge bg-soft-success text-success fs-11">Canlı</span>
+                    </div>
+                    <div class="d-flex justify-content-between fs-12 text-muted mt-2 pt-2 border-top border-light">
+                        <span>Alış: <strong class="text-dark">@rate.ForexBuying.ToString("N4") ₺</strong></span>
+                        <span>Satış: <strong class="text-dark">@rate.ForexSelling.ToString("N4") ₺</strong></span>
                     </div>
                 </div>
             </div>
@@ -48,50 +45,95 @@
     </div>
 }
 
-@* 2. Özet İstatistik Kartları *@
+@* 2. Özet İstatistik Kartları (Soft Clean) *@
 <div class="row g-3 mb-4">
     <div class="col-md-3">
-        <div class="card text-center border-0 shadow-sm">
-            <div class="card-body">
-                <h6 class="text-muted mb-2">Aktif Kasa</h6>
-                <h3 class="fw-bold text-primary">@Model.AktifKasaSayisi</h3>
+        <div class="card border-0 shadow-sm p-3">
+            <div class="d-flex align-items-center">
+                <div class="bg-soft-primary p-3 rounded-3 me-3 text-primary">
+                    <i class="feather-briefcase fs-4"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1 fs-13">Aktif Kasa</h6>
+                    <h3 class="fw-bold text-dark mb-0">@Model.AktifKasaSayisi</h3>
+                </div>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card text-center border-0 shadow-sm">
-            <div class="card-body">
-                <h6 class="text-muted mb-2">Cari Hesap</h6>
-                <h3 class="fw-bold text-success">@Model.CariSayisi</h3>
+        <div class="card border-0 shadow-sm p-3">
+            <div class="d-flex align-items-center">
+                <div class="bg-soft-success p-3 rounded-3 me-3 text-success">
+                    <i class="feather-users fs-4"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1 fs-13">Cari Hesap</h6>
+                    <h3 class="fw-bold text-dark mb-0">@Model.CariSayisi</h3>
+                </div>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card text-center border-0 shadow-sm">
-            <div class="card-body">
-                <h6 class="text-muted mb-2">Kullanıcı</h6>
-                <h3 class="fw-bold text-info">@Model.KullaniciSayisi</h3>
+        <div class="card border-0 shadow-sm p-3">
+            <div class="d-flex align-items-center">
+                <div class="bg-soft-info p-3 rounded-3 me-3 text-info">
+                    <i class="feather-user-check fs-4"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1 fs-13">Kullanıcı</h6>
+                    <h3 class="fw-bold text-dark mb-0">@Model.KullaniciSayisi</h3>
+                </div>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card text-center border-0 shadow-sm">
-            <div class="card-body">
-                <h6 class="text-muted mb-2">Bugünkü Hareket</h6>
-                <h3 class="fw-bold text-warning">@Model.BugunkuHareketSayisi</h3>
+        <div class="card border-0 shadow-sm p-3">
+            <div class="d-flex align-items-center">
+                <div class="bg-soft-warning p-3 rounded-3 me-3 text-warning">
+                    <i class="feather-activity fs-4"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1 fs-13">Bugünkü Hareket</h6>
+                    <h3 class="fw-bold text-dark mb-0">@Model.BugunkuHareketSayisi</h3>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-@* 3. Son Kasa Hareketleri Tablosu *@
-<div class="card border-0 shadow-sm">
-    <div class="card-body">
-        <h5 class="fw-bold mb-3">Son Kasa Hareketleri</h5>
-        @if (Model.SonHareketler != null && Model.SonHareketler.Any())
-        {
-            <table class="table table-hover align-middle">
-                <thead>
+@* 3. Grafik Alanı *@
+<div class="row g-3 mb-4">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm h-100 p-3">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h5 class="fw-bold text-dark mb-0 fs-16">Haftalık Kasa & Finans Akışı</h5>
+                <span class="badge bg-soft-secondary text-muted fs-11">Son 7 Gün</span>
+            </div>
+            <div id="cashFlowChart" style="min-height: 280px;"></div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm h-100 p-3">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h5 class="fw-bold text-dark mb-0 fs-16">İşlem Dağılımı</h5>
+                <span class="badge bg-soft-secondary text-muted fs-11">Genel</span>
+            </div>
+            <div id="transactionPieChart" style="min-height: 280px;" class="d-flex align-items-center justify-content-center"></div>
+        </div>
+    </div>
+</div>
+
+@* 4. Son Kasa Hareketleri Tablosu *@
+<div class="card border-0 shadow-sm p-3">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h5 class="fw-bold text-dark mb-0 fs-16">Son Kasa Hareketleri</h5>
+        <span class="text-muted fs-12">En son gerçekleşen 5 finansal hareket</span>
+    </div>
+    @if (Model.SonHareketler != null && Model.SonHareketler.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light text-muted fs-12">
                     <tr>
                         <th>Tarih</th>
                         <th>Tip</th>
@@ -104,68 +146,34 @@
                     @foreach (var h in Model.SonHareketler)
                     {
                         <tr>
-                            <td>@h.Date.ToString("dd.MM.yyyy HH:mm")</td>
-                            <td>@h.Type</td>
-                            <td>@h.Amount.ToString("N2")</td>
-                            <td>@h.Currency</td>
-                            <td>@h.Description</td>
+                            <td class="text-muted fs-13">@h.Date.ToString("dd.MM.yyyy HH:mm")</td>
+                            <td>
+                                <span class="badge @(h.Type == "Giriş" ? "bg-soft-success text-success" : "bg-soft-danger text-danger")">
+                                    @h.Type
+                                </span>
+                            </td>
+                            <td class="fw-semibold">@h.Amount.ToString("N2")</td>
+                            <td><span class="text-muted">@h.Currency</span></td>
+                            <td class="text-muted">@h.Description</td>
                         </tr>
                     }
                 </tbody>
             </table>
-        }
-        else
-        {
-            <p class="text-muted mb-0">Henüz kayıtlı bir kasa hareketi yok.</p>
-        }
-    </div>
-</div>
-
-@* 3. Grafik Alanı *@
-<div class="row g-3 mb-4">
-    <!-- Çizgi Grafik: Kasa Akışı -->
-    <div class="col-lg-8">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h5 class="fw-bold mb-0">Haftalık Kasa & Finans Akışı</h5>
-                    <span class="badge bg-soft-info text-info fs-11">Son 7 Gün</span>
-                </div>
-                <div id="cashFlowChart" style="min-height: 280px;"></div>
-            </div>
         </div>
-    </div>
-
-    <!-- Pasta Grafik: İşlem Dağılımı -->
-    <div class="col-lg-4">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-body">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h5 class="fw-bold mb-0">İşlem Dağılımı</h5>
-                    <span class="badge bg-soft-primary text-primary fs-11">Genel</span>
-                </div>
-                <div id="transactionPieChart" style="min-height: 280px;" class="d-flex align-items-center justify-content-center"></div>
-            </div>
-        </div>
-    </div>
+    }
+    else
+    {
+        <p class="text-muted mb-0 py-3 text-center">Henüz kayıtlı bir kasa hareketi bulunmuyor.</p>
+    }
 </div>
 
 @section scripts {
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // 1. Çizgi Grafik (Haftalık Kasa Akışı)
             var cashOptions = {
-                chart: {
-                    type: 'area',
-                    height: 260,
-                    toolbar: { show: false },
-                    sparkline: { enabled: false }
-                },
+                chart: { type: 'area', height: 260, toolbar: { show: false }, sparkline: { enabled: false } },
                 stroke: { curve: 'smooth', width: 2 },
-                fill: {
-                    type: 'gradient',
-                    gradient: { opacityFrom: 0.45, opacityTo: 0.05 }
-                },
+                fill: { type: 'gradient', gradient: { opacityFrom: 0.35, opacityTo: 0.02 } },
                 series: [{
                     name: 'Giriş (TL)',
                     data: [12000, 18500, 9400, 24000, 15000, 31000, 28000]
@@ -173,24 +181,18 @@
                     name: 'Çıkış (TL)',
                     data: [8000, 11000, 6200, 14500, 9000, 18000, 12500]
                 }],
-                colors: ['#22c55e', '#ef4444'],
-                xaxis: {
-                    categories: ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz']
-                },
+                colors: ['#10b981', '#f43f5e'],
+                xaxis: { categories: ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'] },
                 tooltip: { y: { formatter: function (val) { return val.toLocaleString('tr-TR') + ' ₺'; } } }
             };
             var cashChart = new ApexCharts(document.querySelector("#cashFlowChart"), cashOptions);
             cashChart.render();
 
-            // 2. Donut Grafik (İşlem Dağılımı)
             var pieOptions = {
-                chart: {
-                    type: 'donut',
-                    height: 250
-                },
+                chart: { type: 'donut', height: 250 },
                 series: [@Model.AktifKasaSayisi > 0 ? @Model.AktifKasaSayisi : 1, @Model.CariSayisi, @Model.KullaniciSayisi],
                 labels: ['Kasalar', 'Cariler', 'Kullanıcılar'],
-                colors: ['#3b82f6', '#22c55e', '#06b6d4'],
+                colors: ['#6366f1', '#10b981', '#0ea5e9'],
                 legend: { position: 'bottom' },
                 dataLabels: { enabled: false }
             };

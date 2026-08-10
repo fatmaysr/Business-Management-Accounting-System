@@ -109,6 +109,14 @@
     <Compile Include="Migrations\202608101037554_AddSaleTableAndWalkInCustomer.Designer.cs">
       <DependentUpon>202608101037554_AddSaleTableAndWalkInCustomer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202608101211144_FixSalesTable.cs" />
+    <Compile Include="Migrations\202608101211144_FixSalesTable.Designer.cs">
+      <DependentUpon>202608101211144_FixSalesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202608101400263_AddAdminLogTable.cs" />
+    <Compile Include="Migrations\202608101400263_AddAdminLogTable.Designer.cs">
+      <DependentUpon>202608101400263_AddAdminLogTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AppGenericRepository.cs" />
@@ -132,6 +140,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202608101037554_AddSaleTableAndWalkInCustomer.resx">
       <DependentUpon>202608101037554_AddSaleTableAndWalkInCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202608101211144_FixSalesTable.resx">
+      <DependentUpon>202608101211144_FixSalesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202608101400263_AddAdminLogTable.resx">
+      <DependentUpon>202608101400263_AddAdminLogTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

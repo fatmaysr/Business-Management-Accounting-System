@@ -10,6 +10,9 @@ namespace GateGold.Models
         public int CariSayisi { get; set; }
         public int KullaniciSayisi { get; set; }
         public int BugunkuHareketSayisi { get; set; }
+
+        public decimal ToplamGiris { get; set; }
+        public decimal ToplamCikis { get; set; }
         public List<CaseTransaction> SonHareketler { get; set; } = new List<CaseTransaction>();
 
         // Canlı Kurlar İçin Eklendi:

@@ -19,6 +19,7 @@ namespace DataAccessLayer.Concrete
         //public DbSet<Admin> Admins { get; set; }
         //public DbSet<AdminLog> AdminLogs { get; set; }
         public DbSet<Bank> Banks { get; set; }
+        public DbSet<AdminLog> AdminLogs { get; set; }
         public DbSet<BankAccount> BankAccounts { get; set; }
         public DbSet<BankTransaction> BankTransactions { get; set; }
         public DbSet<CaseTransaction> CaseTransactions { get; set; }

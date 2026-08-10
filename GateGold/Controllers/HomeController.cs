@@ -29,10 +29,12 @@ namespace GateGold.Controllers
         public ActionResult Index()
         {
             var tumHareketler = _caseTransactionService.GetList();
-
-            // Canlı kurları TCMB'den çekiyoruz
             var tcmbService = new TcmbCurrencyService();
             var canliKurlar = tcmbService.GetTodayRates();
+
+            // GERÇEK VERİLER: Kasa hareketlerinden toplam girişi ve çıkışı hesaplıyoruz
+            decimal toplamGiris = tumHareketler.Where(x => x.Type == "Giriş").Sum(x => x.Amount);
+            decimal toplamCikis = tumHareketler.Where(x => x.Type == "Çıkış").Sum(x => x.Amount);
 
             var model = new DashboardViewModel
             {
@@ -41,7 +43,11 @@ namespace GateGold.Controllers
                 KullaniciSayisi = _userService.GetList().Count,
                 BugunkuHareketSayisi = tumHareketler.Count(x => x.Date.Date == DateTime.Today),
                 SonHareketler = tumHareketler.OrderByDescending(x => x.Date).Take(5).ToList(),
-                LiveRates = canliKurlar // Modele ekledik
+                LiveRates = canliKurlar,
+
+                // Yeni eklediğimiz özellikler (DashboardViewModel modeline bunları eklemen gerekebilir)
+                ToplamGiris = toplamGiris,
+                ToplamCikis = toplamCikis
             };
 
             return View(model);

@@ -9,9 +9,8 @@ namespace GateGold
         {
             filters.Add(new HandleErrorAttribute());
 
-            // Artık hiçbir controller/action, [AllowAnonymous] ile işaretlenmediği
-            // sürece login olmadan erişilemez. Önceden bu zorunlu değildi.
-            filters.Add(new AuthorizeAttribute());
+            // Eklediğimiz hata filtresini buraya kaydediyoruz:
+            filters.Add(new GateGold.Filters.CustomExceptionFilter());
         }
     }
 }

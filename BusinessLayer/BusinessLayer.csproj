@@ -156,6 +156,7 @@
     <Compile Include="Concrete\StockManager.cs" />
     <Compile Include="Concrete\TcmbCurrencyService.cs" />
     <Compile Include="Concrete\UserManager.cs" />
+    <Compile Include="Filters\CustomExceptionFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidationRules\CustomerValidator.cs" />
     <Compile Include="ValidationRules\StockValidator.cs" />

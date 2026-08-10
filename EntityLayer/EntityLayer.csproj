@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Concrete\AdminLog.cs" />
     <Compile Include="Concrete\Bank.cs" />
     <Compile Include="Concrete\BankAccount.cs" />
     <Compile Include="Concrete\BankTransaction.cs" />
