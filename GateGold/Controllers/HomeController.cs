@@ -1,30 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using BusinessLayer.Abstract;
+using GateGold.Models;
 
 namespace GateGold.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ICashCaseService _cashCaseService;
+        private readonly ICustomerService _customerService;
+        private readonly IUserService _userService;
+        private readonly ICaseTransactionService _caseTransactionService;
+
+        public HomeController(
+            ICashCaseService cashCaseService,
+            ICustomerService customerService,
+            IUserService userService,
+            ICaseTransactionService caseTransactionService)
+        {
+            _cashCaseService = cashCaseService;
+            _customerService = customerService;
+            _userService = userService;
+            _caseTransactionService = caseTransactionService;
+        }
+
         public ActionResult Index()
         {
-            return View();
-        }
+            var tumHareketler = _caseTransactionService.GetList();
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+            var model = new DashboardViewModel
+            {
+                AktifKasaSayisi = _cashCaseService.GetList().Count(x => x.Status == 1),
+                CariSayisi = _customerService.GetList().Count,
+                KullaniciSayisi = _userService.GetList().Count,
+                BugunkuHareketSayisi = tumHareketler.Count(x => x.Date.Date == DateTime.Today),
+                SonHareketler = tumHareketler.OrderByDescending(x => x.Date).Take(5).ToList()
+            };
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(model);
         }
     }
 }

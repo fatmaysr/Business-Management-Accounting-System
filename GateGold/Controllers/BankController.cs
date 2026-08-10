@@ -15,11 +15,14 @@ namespace GateGold.Controllers
         private readonly IBankAccountService _bankAccountService;
         private readonly IBankTransactionService _transactionService;
 
-        public BankController()
+        public BankController(
+            IBankService bankService,
+            IBankAccountService bankAccountService,
+            IBankTransactionService transactionService)
         {
-            _bankService = new BankManager(new EfBankDal());
-            _bankAccountService = new BankAccountManager(new EfBankAccountDal());
-            _transactionService = new BankTransactionManager(new EfBankTransactionDal());
+            _bankService = bankService;
+            _bankAccountService = bankAccountService;
+            _transactionService = transactionService;
         }
 
         // ===== BANK CRUD =====

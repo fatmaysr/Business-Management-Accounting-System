@@ -32,16 +32,14 @@ namespace GateGold.Controllers
 
 
 
-        public CurrencyController()
-
+        public CurrencyController(
+            ICurrencyService currencyService,
+            ICurrencyDetailService currencyDetailService,
+            ICustomerService customerService)
         {
-
-            _currencyService = new CurrencyManager(new EfCurrencyDal());
-
-            _currencyDetailService = new CurrencyDetailManager(new EfCurrencyDetailDal());
-
-            _customerService = new CustomerManager(new EfCustomerDal());
-
+            _currencyService = currencyService;
+            _currencyDetailService = currencyDetailService;
+            _customerService = customerService;
         }
 
 

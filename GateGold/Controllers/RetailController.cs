@@ -13,13 +13,6 @@ namespace GateGold.Controllers
         private readonly IFastSaleCategoryService _categoryService;
         private readonly IFastSaleProductService _productService;
 
-        // ---------------- Parametresiz Constructor ----------------
-        public RetailController()
-        {
-            // Somut implementasyonları burada oluşturuyoruz
-            _categoryService = new FastSaleCategoryManager();
-            _productService = new FastSaleProductManager();
-        }
 
         // ---------------- Parametreli Constructor ----------------
         public RetailController(

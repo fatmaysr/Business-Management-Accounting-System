@@ -16,11 +16,14 @@ namespace GateGold.Controllers
         private readonly ICaseTransactionService _cashTransactionService;
         private readonly ICustomerService _customerService;
 
-        public CashController()
+        public CashController(
+            ICashCaseService cashCaseService,
+            ICaseTransactionService cashTransactionService,
+            ICustomerService customerService)
         {
-            _cashCaseService = new CashCaseManager(new EfCashCaseDal());
-            _cashTransactionService = new CaseTransactionManager(new EfCaseTransaction());
-            _customerService = new CustomerManager(new EfCustomerDal());
+            _cashCaseService = cashCaseService;
+            _cashTransactionService = cashTransactionService;
+            _customerService = customerService;
         }
 
         // ===== CASH CASE CRUD =====

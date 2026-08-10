@@ -12,9 +12,9 @@ namespace GateGold.Controllers
     {
         private readonly IUserService _userService;
 
-        public LoginController()
+        public LoginController(IUserService userService)
         {
-            _userService = new UserManager(new EfUserDal());
+            _userService = userService;
         }
 
         [AllowAnonymous]

@@ -4,16 +4,22 @@ using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using System;
 using System.Web.Mvc;
+using BusinessLayer.Abstract;
 
 namespace GateGold.Controllers
 {
     public class WholesaleController : Controller
     {
-        StockManager sm = new StockManager(new EfStockDal());
+        private readonly IStockService _stockService;
+
+        public WholesaleController(IStockService stockService)
+        {
+            _stockService = stockService;
+        }
 
         public ActionResult StockList()
         {
-            var stocks = sm.GetList();
+            var stocks = _stockService.GetList();
             return View(stocks);
         }
 
@@ -32,7 +38,7 @@ namespace GateGold.Controllers
 
             if (results.IsValid)
             {
-                sm.Add(stock);
+                _stockService.Add(stock);
                 return RedirectToAction("StockList");
             }
             else
@@ -47,7 +53,7 @@ namespace GateGold.Controllers
 
         public ActionResult EditStock(int id)
         {
-            var stock = sm.GetById(id);
+            var stock = _stockService.GetById(id);
             return View(stock);
         }
 
@@ -59,7 +65,7 @@ namespace GateGold.Controllers
 
             if (results.IsValid)
             {
-                sm.Update(stock);
+                _stockService.Update(stock);
                 return RedirectToAction("StockList");
             }
             else
@@ -74,8 +80,8 @@ namespace GateGold.Controllers
 
         public ActionResult DeleteStock(int id)
         {
-            var stock = sm.GetById(id);
-            sm.Delete(stock);
+            var stock = _stockService.GetById(id);
+            _stockService.Delete(stock);
             return RedirectToAction("StockList");
         }
     }

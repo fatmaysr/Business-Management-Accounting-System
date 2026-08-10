@@ -5,19 +5,24 @@ using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using BusinessLayer.ValidationRules;
 using FluentValidation.Results;
-
+using BusinessLayer.Abstract;
 
 namespace GateGold.Controllers
 {
     [Authorize]
     public class UserController : Controller
     {
-        UserManager um = new UserManager(new EfUserDal());
+        private readonly IUserService _userService;
+
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
+        }
 
         // 1. Listeleme
         public ActionResult UserList()
         {
-            var users = um.GetList();
+            var users = _userService.GetList();
             return View(users);
         }
 
@@ -43,7 +48,7 @@ namespace GateGold.Controllers
                 return View(user);
             }
 
-            um.Add(user);
+            _userService.Add(user);
             return RedirectToAction("UserList");
         }
 
@@ -52,7 +57,7 @@ namespace GateGold.Controllers
         [HttpGet]
         public ActionResult EditUser(int id)
         {
-            var user = um.GetById(id);
+            var user = _userService.GetById(id);
             return View(user);
         }
 
@@ -65,7 +70,7 @@ namespace GateGold.Controllers
 
             if (results.IsValid)
             {
-                um.Update(user);
+                _userService.Update(user);
                 return RedirectToAction("UserList");
             }
             else
@@ -83,8 +88,8 @@ namespace GateGold.Controllers
         // 4. Sil
         public ActionResult DeleteUser(int id)
         {
-            var user = um.GetById(id);
-            um.Delete(user);
+            var user = _userService.GetById(id);
+            _userService.Delete(user);
             return RedirectToAction("UserList");
         }
     }

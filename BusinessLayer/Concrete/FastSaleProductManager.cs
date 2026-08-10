@@ -15,10 +15,6 @@ namespace BusinessLayer.Concrete
         public void Delete(FastSaleProduct entity) => _dal.Delete(entity);
         public FastSaleProduct GetById(int id) => _dal.Get(x => x.ProductId == id);
         public List<FastSaleProduct> GetList() => _dal.List();
-        public FastSaleProductManager()
-        {
-            _dal = new EfFastSaleProductDal();
-        }
         public void Update(FastSaleProduct entity) => _dal.Update(entity);
     }
 }

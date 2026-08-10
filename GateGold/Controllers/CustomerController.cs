@@ -15,9 +15,9 @@ namespace GateGold.Controllers
         private readonly ICustomerService _customerService;
 
 
-        public CustomerController()
+        public CustomerController(ICustomerService customerService)
         {
-            _customerService = new CustomerManager(new EfCustomerDal());
+            _customerService = customerService;
         }
 
 
