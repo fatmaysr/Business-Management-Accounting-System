@@ -1,144 +1,108 @@
-﻿@{
+﻿@using System.Linq
+@model List<EntityLayer.Concrete.CaseTransaction>
+@{
     ViewBag.Title = "Cari Hareket Raporu";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    .filter-box {
-        border: 1px solid #dee2e6;
-        padding: 15px;
-        border-radius: 6px;
-        background-color: #f8f9fa;
-        margin-bottom: 1.5rem;
-        display: none;
-    }
-
-    .table th, .table td {
-        font-size: 14px;
-        vertical-align: middle;
-    }
-
-    .section-title {
-        font-weight: 600;
-        color: #0d6efd;
-        margin-bottom: 10px;
-    }
-</style>
-
 <h2 class="text-primary text-center mb-4">Cari Hareket Raporu</h2>
 
 <div class="container" style="max-width: 1100px;">
-    <!-- Filtreyi Aç Butonu -->
-    <div class="mb-3 text-end">
-        <button id="toggleFilterBtn" type="button" class="btn btn-outline-primary btn-sm">
-            Filtrele
-        </button>
-    </div>
-
-    <!-- Filtre Formu -->
-    <form id="filterForm" method="get" class="filter-box">
-        <div class="row g-3">
-            <div class="col-md-4">
-                <label for="cariSec" class="form-label">Cari Seç</label>
-                <select id="cariSec" name="cari" class="form-select form-select-sm">
-                    <option selected disabled>-- Cari Seçiniz --</option>
-   
-                </select>
-            </div>
-
-            <div class="col-md-2">
-                <label for="idFilter" class="form-label">ID</label>
-                <input type="number" id="idFilter" name="id" class="form-control form-control-sm" placeholder="ID" />
-            </div>
-
-            <div class="col-md-3">
-                <label for="startDate" class="form-label">Tarih Başlangıç</label>
-                <input type="date" id="startDate" name="startDate" class="form-control form-control-sm" />
-            </div>
-
-            <div class="col-md-3">
-                <label for="endDate" class="form-label">Tarih Bitiş</label>
-                <input type="date" id="endDate" name="endDate" class="form-control form-control-sm" />
-            </div>
-        </div>
-
-        <!-- Checkboxlar -->
-        <div class="row mt-3">
-            <div class="col-md-12 d-flex flex-wrap gap-3">
-                @foreach (var item in new[] {
-                    "Altın Alındı", "Altın Verildi",
-                    "Nakit Alındı", "Nakit Verildi",
-                    "Nakit Alındı -> gr", "Nakit Verildi -> gr"
-                })
+    <form method="get" class="row g-3 mb-4 align-items-end">
+        <div class="col-md-4">
+            <label class="form-label">Cari Seç</label>
+            @{
+                var customers = ViewBag.Customers as List<EntityLayer.Concrete.Customer>;
+                var selectedCariId = ViewBag.SelectedCariId as int?;
+            }
+            <select name="cariId" class="form-select">
+                <option value="">-- Tümü --</option>
+                @foreach (var c in customers)
                 {
-                    var id = item.ToLower().Replace(" ", "").Replace("->", "To");
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="@id" name="filters" value="@item" />
-                        <label class="form-check-label" for="@id">@item</label>
-                    </div>
+                    if (selectedCariId.HasValue && selectedCariId.Value == c.CariID)
+                    {
+                        <option value="@c.CariID" selected="selected">@c.CariAdi</option>
+                    }
+                    else
+                    {
+                        <option value="@c.CariID">@c.CariAdi</option>
+                    }
                 }
-            </div>
+            </select>
         </div>
-
-        <!-- Butonlar -->
-        <div class="text-end mt-3">
-            <button type="submit" class="btn btn-primary btn-sm px-4 me-2">Uygula</button>
-            <button type="button" id="resetFilterBtn" class="btn btn-outline-secondary btn-sm px-4">Temizle</button>
+        <div class="col-md-3">
+            <label class="form-label">Tarih Başlangıç</label>
+            <input type="date" name="startDate" class="form-control" value="@ViewBag.StartDate" />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Tarih Bitiş</label>
+            <input type="date" name="endDate" class="form-control" value="@ViewBag.EndDate" />
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Filtrele</button>
         </div>
     </form>
 
-    <!-- Cari Hareket Raporu Tablosu -->
-    <div class="mt-4">
-        <h5 class="section-title"style= "color:black">Cari Hareket Raporu</h5>
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover text-center align-middle">
-                <thead class="table-primary">
-                    <tr>
-                        <th>ID</th>
-                        <th>Tarih</th>
-                        <th>Cari</th>
-                        <th>Tür</th>
-                        <th>Alınan</th>
-                        <th>Verilen</th>
-                        <th>Para</th>
-                        <th>Açıklama</th>
-                        <th>İşlem</th>
-                    </tr>
-                </thead>
-         
-            </table>
+    <div class="row mb-4 text-center">
+        <div class="col-md-6">
+            <div class="card border-success">
+                <div class="card-body">
+                    <div class="text-muted">Toplam Giriş</div>
+                    <div class="fs-4 fw-bold text-success">@(((decimal)ViewBag.ToplamGiris).ToString("N2"))</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-danger">
+                <div class="card-body">
+                    <div class="text-muted">Toplam Çıkış</div>
+                    <div class="fs-4 fw-bold text-danger">@(((decimal)ViewBag.ToplamCikis).ToString("N2"))</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Cari Toplam Tablosu -->
-    <div class="mt-5">
-        <h5 class="section-title" style=" color:black">Cari Toplam</h5>
-        <div class="table-responsive">
-            <table class="table table-bordered text-center align-middle">
-                <thead class="table-primary fw-semibold">
-                    <tr>
-                        <th>Toplam Alınan</th>
-                        <th>Toplam Verilen</th>
-                        <th>Para Birimi</th>
-                        <th>Bakiye</th>
-                    </tr>
-                </thead>
-              
-            </table>
-        </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover text-center align-middle">
+            <thead class="table-primary">
+                <tr>
+                    <th>Tarih</th>
+                    <th>Cari</th>
+                    <th>Tür</th>
+                    <th>Tutar</th>
+                    <th>Para Birimi</th>
+                    <th>Açıklama</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="6" class="text-muted">Kayıt bulunamadı.</td></tr>
+                }
+                else
+                {
+                    foreach (var t in Model)
+                    {
+                        <tr>
+                            <td>@t.Date.ToString("dd.MM.yyyy HH:mm")</td>
+                            <td>@(t.Customer?.CariAdi)</td>
+                            <td>
+                                @if (t.Type == "Giriş")
+                                {
+                                    <span class="badge bg-success">Giriş</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Çıkış</span>
+                                }
+                            </td>
+                            <td>@t.Amount.ToString("N2")</td>
+                            <td>@t.Currency</td>
+                            <td>@t.Description</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
     </div>
 </div>
-
-<script>
-    const toggleBtn = document.getElementById('toggleFilterBtn');
-    const filterForm = document.getElementById('filterForm');
-    const resetBtn = document.getElementById('resetFilterBtn');
-
-    toggleBtn.addEventListener('click', () => {
-        filterForm.style.display = filterForm.style.display === 'none' || filterForm.style.display === '' ? 'block' : 'none';
-    });
-
-    resetBtn.addEventListener('click', () => {
-        filterForm.reset();
-    });
-</script>

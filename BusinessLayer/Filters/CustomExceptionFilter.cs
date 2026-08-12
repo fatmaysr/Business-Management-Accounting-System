@@ -40,10 +40,10 @@ namespace GateGold.Filters
                 
             }
 
-            
+
             filterContext.Result = new ViewResult
             {
-                ViewName = "~/Views/Error/Index.cshtml"
+                ViewName = "~/Views/Shared/Error.cshtml"
             };
 
             filterContext.ExceptionHandled = true;

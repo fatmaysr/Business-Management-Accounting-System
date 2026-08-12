@@ -10,6 +10,7 @@
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            CommandTimeout = 180; // saniye — varsayılan ~30sn yetmeyebiliyor
         }
 
         protected override void Seed(DataAccessLayer.Concrete.AppDbContext context)

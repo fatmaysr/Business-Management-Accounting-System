@@ -1,4 +1,4 @@
-﻿
+﻿@model List<GateGold.Controllers.CashStatusRow>
 @{
     ViewBag.Title = "CashStatus";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,21 +7,30 @@
 <h2 class="mb-4 text-primary text-center">Kasa Durum Raporu</h2>
 
 <table class="table table-bordered table-hover align-middle text-center">
-    <thead class="table-primary ">
+    <thead class="table-primary">
         <tr>
             <th>Para Birimi</th>
             <th>Kasaya Giriş</th>
             <th>Kasadan Çıkış</th>
-            <th>Toplam</th>
+            <th>Bakiye</th>
         </tr>
     </thead>
     <tbody>
-        <!-- Buraya döngü ile veya manuel veri eklenecek -->
-        <tr class="text-center">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+        @if (!Model.Any())
+        {
+            <tr><td colspan="4" class="text-muted">Henüz kasa hareketi yok.</td></tr>
+        }
+        else
+        {
+            foreach (var row in Model)
+            {
+                <tr>
+                    <td>@row.Currency</td>
+                    <td class="text-success">@row.TotalIn.ToString("N2")</td>
+                    <td class="text-danger">@row.TotalOut.ToString("N2")</td>
+                    <td class="fw-bold">@row.Balance.ToString("N2")</td>
+                </tr>
+            }
+        }
     </tbody>
 </table>

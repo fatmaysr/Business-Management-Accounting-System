@@ -61,11 +61,11 @@
     </div>
 
     <!-- Tür (Gelir / Gider) -->
-    <div class="col-md-4">
-        @Html.LabelFor(m => m.Type, "Tür", new { @class = "form-label" })
-        @Html.DropDownListFor(m => m.Type, new SelectList(new[] { "Gelir", "Gider" }), "Seçiniz", new { @class = "form-select" })
-        @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
-    </div>
+<div class="col-md-4">
+    @Html.LabelFor(m => m.Type, "Tür", new { @class = "form-label" })
+    @Html.DropDownListFor(m => m.Type, new SelectList(new[] { "Giriş", "Çıkış" }), "Seçiniz", new { @class = "form-select" })
+    @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
+</div>
 
     <!-- Açıklama -->
     <div class="col-md-4">

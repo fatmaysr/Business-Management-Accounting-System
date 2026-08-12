@@ -1181,7 +1181,6 @@
     <Content Include="Views\Wholesale\AddStock.cshtml" />
     <Content Include="Views\Wholesale\StockList.cshtml" />
     <Content Include="Views\Reporting\CashStatus.cshtml" />
-    <Content Include="Views\Reporting\Labor.cshtml" />
     <Content Include="Views\Reporting\AccountMovements.cshtml" />
     <Content Include="Views\Settings\General.cshtml" />
     <Content Include="Views\Settings\Currency.cshtml" />

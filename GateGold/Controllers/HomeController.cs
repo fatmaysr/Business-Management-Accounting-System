@@ -26,6 +26,7 @@ namespace GateGold.Controllers
             _caseTransactionService = caseTransactionService;
         }
 
+
         public ActionResult Index()
         {
             var tumHareketler = _caseTransactionService.GetList();

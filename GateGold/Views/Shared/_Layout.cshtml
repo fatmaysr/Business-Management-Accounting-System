@@ -5,10 +5,10 @@
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="GateGold Yönetim Paneli" />
-    <meta name="author" content="GateGold" />
+    <meta name="description" content="Nexus Yönetim Paneli" />
+    <meta name="author" content="Nexus" />
 
-    <title>GateGold || @ViewBag.Title</title>
+    <title>Nexus || @ViewBag.Title</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -80,8 +80,8 @@
         <div class="navbar-wrapper">
             <div class="m-header">
                 <a href="@Url.Action("Index", "Home")" class="b-brand">
-                    <img src="@Url.Content("~/assets/images/logo-full.png")" alt="GateGold" class="logo logo-lg" />
-                    <img src="@Url.Content("~/assets/images/logo-abbr.png")" alt="GateGold" class="logo logo-sm" />
+                    <span class="logo logo-lg text-primary" style="font-size:26px; font-weight:800; letter-spacing:0.5px;">Nexus</span>
+                    <span class="logo logo-sm text-primary" style="font-size:22px; font-weight:800;">N</span>
                 </a>
             </div>
             <div class="navbar-content">
@@ -194,7 +194,6 @@
                         </a>
                         <ul class="nxl-submenu">
                             <li class="nxl-item"><a class="nxl-link" href="@Url.Action("CashStatus", "Reporting")">Kasa Durum Raporu</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="@Url.Action("Labor", "Reporting")">İşçilik Raporu</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="@Url.Action("AccountMovements", "Reporting")">Cari Hareket Raporu</a></li>
                         </ul>
                     </li>
@@ -295,7 +294,7 @@
         </div>
         <footer class="footer">
             <p class="fs-11 text-muted fw-medium text-uppercase mb-0 copyright">
-                <span>GateGold © </span>
+                <span>Nexus © </span>
                 <script>document.write(new Date().getFullYear());</script>
             </p>
         </footer>
