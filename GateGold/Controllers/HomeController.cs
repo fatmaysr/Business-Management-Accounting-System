@@ -1,11 +1,11 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
-using GateGold.Models;
+using Nexus.Models;
 using System;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace GateGold.Controllers
+namespace Nexus.Controllers
 {
     public class HomeController : Controller
     {

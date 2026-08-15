@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Bir derleme hakkındaki genel Bilgiler aşağıdakiler üzerinden denetlenir
 // denetlenir. Bir derlemeyle ilişkilendirilmiş bilgileri değiştirmek için bu
 // öznitelik değerlerini değiştirin.
-[assembly: AssemblyTitle("GateGold")]
+[assembly: AssemblyTitle("Nexus")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("GateGold")]
+[assembly: AssemblyProduct("Nexus")]
 [assembly: AssemblyCopyright("Telif hakkı ©  2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

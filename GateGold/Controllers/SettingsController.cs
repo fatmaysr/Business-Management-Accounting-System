@@ -1,8 +1,8 @@
 ﻿using System.Web.Mvc;
-using GateGold.Helpers;
-using GateGold.Models;
+using Nexus.Helpers;
+using Nexus.Models;
 
-namespace GateGold.Controllers
+namespace Nexus.Controllers
 {
     public class SettingsController : Controller
     {

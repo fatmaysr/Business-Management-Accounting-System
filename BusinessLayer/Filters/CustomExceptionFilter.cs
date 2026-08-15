@@ -3,7 +3,7 @@ using System.Web.Mvc;
 using DataAccessLayer.Concrete;
 using EntityLayer.Concrete;
 
-namespace GateGold.Filters 
+namespace Nexus.Filters 
 {
     public class CustomExceptionFilter : FilterAttribute, IExceptionFilter
     {

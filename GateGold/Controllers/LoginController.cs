@@ -6,7 +6,7 @@ using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 
-namespace GateGold.Controllers
+namespace Nexus.Controllers
 {
     public class LoginController : Controller
     {

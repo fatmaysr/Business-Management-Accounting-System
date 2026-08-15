@@ -1,4 +1,4 @@
-﻿namespace GateGold.Models
+﻿namespace Nexus.Models
 {
     public class GeneralSettingsViewModel
     {

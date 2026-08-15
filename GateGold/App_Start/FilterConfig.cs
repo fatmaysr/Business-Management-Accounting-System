@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace GateGold
+namespace Nexus
 {
     public class FilterConfig
     {
@@ -10,7 +10,7 @@ namespace GateGold
             filters.Add(new HandleErrorAttribute());
 
             // Eklediğimiz hata filtresini buraya kaydediyoruz:
-            filters.Add(new GateGold.Filters.CustomExceptionFilter());
+            filters.Add(new Nexus.Filters.CustomExceptionFilter());
         }
     }
 }

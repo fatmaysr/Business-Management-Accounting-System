@@ -27,7 +27,7 @@
                 new EntityLayer.Concrete.User
                 {
                     UserName = "admin",
-                    Email = "admin@gategold.local",
+                    Email = "admin@Nexus.local",
                     Password = BCrypt.Net.BCrypt.HashPassword("Admin123!"),
                     Role = "Admin"
                 });

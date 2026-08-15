@@ -2,7 +2,7 @@
 using EntityLayer.Concrete;
 using BusinessLayer.Concrete; // TcmbRateDto için eklendi
 
-namespace GateGold.Models
+namespace Nexus.Models
 {
     public class DashboardViewModel
     {

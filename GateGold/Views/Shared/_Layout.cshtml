@@ -95,7 +95,7 @@
             <div class="m-header">
                 <a href="@Url.Action("Index", "Home")" class="b-brand">
                     @{
-                        var firmaAdi = GateGold.Helpers.SettingsStore.Load().FirmaAdi;
+                        var firmaAdi = Nexus.Helpers.SettingsStore.Load().FirmaAdi;
                         var markaAdi = string.IsNullOrWhiteSpace(firmaAdi) ? "Nexus" : firmaAdi;
                     }
                     <span class="logo logo-lg text-primary" style="font-size:26px; font-weight:800; letter-spacing:0.5px;">@markaAdi</span>

@@ -6,7 +6,7 @@ using BusinessLayer.Concrete;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 
-namespace GateGold
+namespace Nexus
 {
     public static class UnityConfig
     {

@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Web;
 
-namespace GateGold.Helpers
+namespace Nexus.Helpers
 {
     public static class Logger
     {

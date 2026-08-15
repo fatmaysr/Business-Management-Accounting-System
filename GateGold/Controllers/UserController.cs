@@ -7,7 +7,7 @@ using BusinessLayer.ValidationRules;
 using FluentValidation.Results;
 using BusinessLayer.Abstract;
 
-namespace GateGold.Controllers
+namespace Nexus.Controllers
 {
     [Authorize]
     public class UserController : Controller

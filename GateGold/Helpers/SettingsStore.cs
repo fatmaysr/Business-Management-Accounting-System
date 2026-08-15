@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Web;
-using GateGold.Models;
+using Nexus.Models;
 using Newtonsoft.Json;
 
-namespace GateGold.Helpers
+namespace Nexus.Helpers
 {
     public static class SettingsStore
     {

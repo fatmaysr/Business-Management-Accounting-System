@@ -6,7 +6,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System;
 
-namespace GateGold.Controllers
+namespace Nexus.Controllers
 {
     public class RetailController : Controller
     {

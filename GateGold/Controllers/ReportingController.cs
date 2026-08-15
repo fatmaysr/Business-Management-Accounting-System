@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using BusinessLayer.Abstract;
 
-namespace GateGold.Controllers
+namespace Nexus.Controllers
 {
     public class ReportingController : Controller
     {

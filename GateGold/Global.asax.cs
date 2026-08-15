@@ -10,7 +10,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
 
-namespace GateGold
+namespace Nexus
 {
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -41,7 +41,7 @@ namespace GateGold
 
         }
 
-        protected void Application_Error(object sender, EventArgs e) { var exception = Server.GetLastError(); if (exception == null) return; GateGold.Helpers.Logger.LogError(exception, Request?.Url?.ToString()); }
+        protected void Application_Error(object sender, EventArgs e) { var exception = Server.GetLastError(); if (exception == null) return; Nexus.Helpers.Logger.LogError(exception, Request?.Url?.ToString()); }
 
 
     }
