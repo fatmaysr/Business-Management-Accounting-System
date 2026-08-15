@@ -131,8 +131,6 @@
     <Compile Include="Abstract\IBankTransactionService.cs" />
     <Compile Include="Abstract\ICaseTransactionService.cs" />
     <Compile Include="Abstract\ICashCaseService.cs" />
-    <Compile Include="Abstract\ICurrencyDetailService.cs" />
-    <Compile Include="Abstract\ICurrencyService.cs" />
     <Compile Include="Abstract\ICustomerService.cs" />
     <Compile Include="Abstract\IFastSaleCategoryService.cs" />
     <Compile Include="Abstract\IFastSaleProductService.cs" />
@@ -145,8 +143,6 @@
     <Compile Include="Concrete\BankTransactionManager.cs" />
     <Compile Include="Concrete\CaseTransactionManager.cs" />
     <Compile Include="Concrete\CashCaseManager.cs" />
-    <Compile Include="Concrete\CurrencyDetailManager.cs" />
-    <Compile Include="Concrete\CurrencyManager.cs" />
     <Compile Include="Concrete\CustomerManager.cs" />
     <Compile Include="Concrete\ExcelExportService.cs" />
     <Compile Include="Concrete\FastSaleCategoryManager.cs" />

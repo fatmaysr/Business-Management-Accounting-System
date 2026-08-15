@@ -11,16 +11,16 @@
     @Html.AntiForgeryToken()
 
     <!-- Kasa -->
-<div class="col-md-4">
-    @Html.LabelFor(m => m.CaseId, "Kasa", new { @class = "form-label" })
-    @Html.DropDownList("CariID", (SelectList)ViewBag.Customers, "Seçiniz", new { @class = "form-select" })
-    @Html.ValidationMessageFor(m => m.CaseId, "", new { @class = "text-danger" })
-</div>
+    <div class="col-md-4">
+        @Html.LabelFor(m => m.CaseId, "Kasa", new { @class = "form-label" })
+        @Html.DropDownList("CaseId", (SelectList)ViewBag.CashCases, "Seçiniz", new { @class = "form-select" })
+        @Html.ValidationMessageFor(m => m.CaseId, "", new { @class = "text-danger" })
+    </div>
 
     <!-- Cari -->
     <div class="col-md-4">
         @Html.LabelFor(m => m.CariID, "Cari", new { @class = "form-label" })
-        @Html.DropDownList("CariID", null, "Seçiniz", new { @class = "form-select" }) <!-- ViewBag ile carileri de ekleyebilirsin -->
+        @Html.DropDownList("CariID", (SelectList)ViewBag.Customers, "Seçiniz", new { @class = "form-select" })
         @Html.ValidationMessageFor(m => m.CariID, "", new { @class = "text-danger" })
     </div>
 
@@ -61,11 +61,11 @@
     </div>
 
     <!-- Tür (Gelir / Gider) -->
-<div class="col-md-4">
-    @Html.LabelFor(m => m.Type, "Tür", new { @class = "form-label" })
-    @Html.DropDownListFor(m => m.Type, new SelectList(new[] { "Giriş", "Çıkış" }), "Seçiniz", new { @class = "form-select" })
-    @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
-</div>
+    <div class="col-md-4">
+        @Html.LabelFor(m => m.Type, "Tür", new { @class = "form-label" })
+        @Html.DropDownListFor(m => m.Type, new SelectList(new[] { "Giriş", "Çıkış" }), "Seçiniz", new { @class = "form-select" })
+        @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
+    </div>
 
     <!-- Açıklama -->
     <div class="col-md-4">

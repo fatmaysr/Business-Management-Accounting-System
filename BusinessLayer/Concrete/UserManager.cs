@@ -51,10 +51,7 @@ namespace BusinessLayer.Concrete
             return _userDal.List();
         }
 
-        /// <summary>
-        /// Kullanıcı adı + şifre doğrular. Başarılıysa User döner, değilse null.
-        /// Hiçbir zaman şifreleri düz metin karşılaştırmaz.
-        /// </summary>
+   
         public User Login(string username, string password)
         {
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
@@ -65,6 +62,14 @@ namespace BusinessLayer.Concrete
                 return null;
 
             return BCrypt.Net.BCrypt.Verify(password, user.Password) ? user : null;
+        }
+
+        public User GetByEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return null;
+
+            return _userDal.Get(x => x.Email == email);
         }
     }
 }

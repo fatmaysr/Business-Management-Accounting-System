@@ -100,16 +100,12 @@ namespace GateGold.Controllers
         public ActionResult DebtReport()
         {
             var customers = _customerService.GetList();
-
-            // Boş liste kontrolü (güvenlik için)
             if (customers == null) customers = new List<Customer>();
-
             ViewBag.Customers = customers.Select(c => new SelectListItem
             {
                 Value = c.CariID.ToString(),
                 Text = c.CariAdi
             }).ToList();
-
             return View();
         }
 
@@ -117,26 +113,22 @@ namespace GateGold.Controllers
         public ActionResult Balance()
         {
             var customers = _customerService.GetList() ?? new List<Customer>();
-
             ViewBag.Customers = customers.Select(c => new SelectListItem
             {
                 Value = c.CariID.ToString(),
                 Text = c.CariAdi
             }).ToList();
-
             return View();
         }
 
         public ActionResult TransactionReport()
         {
             var customers = _customerService.GetList() ?? new List<Customer>();
-
             ViewBag.Customers = customers.Select(c => new SelectListItem
             {
                 Value = c.CariID.ToString(),
                 Text = c.CariAdi
             }).ToList();
-
             return View();
         }
 

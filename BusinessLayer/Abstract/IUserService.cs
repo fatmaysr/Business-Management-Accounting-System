@@ -11,5 +11,7 @@ namespace BusinessLayer.Abstract
         User GetById(int id);
         List<User> GetList();
         User Login(string username, string password);
+
+        User GetByEmail(string email);
     }
 }

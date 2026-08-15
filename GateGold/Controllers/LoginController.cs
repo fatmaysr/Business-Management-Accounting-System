@@ -70,6 +70,43 @@ namespace GateGold.Controllers
             return View();
         }
 
+
+        [AllowAnonymous]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPassword(string email, string newPassword, string confirmPassword)
+        {
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(newPassword))
+            {
+                ViewBag.Error = "E-posta ve yeni şifre zorunludur.";
+                return View();
+            }
+
+            if (newPassword.Length < 6)
+            {
+                ViewBag.Error = "Şifre en az 6 karakter olmalıdır.";
+                return View();
+            }
+
+            if (newPassword != confirmPassword)
+            {
+                ViewBag.Error = "Girdiğiniz şifreler eşleşmiyor.";
+                return View();
+            }
+
+            var user = _userService.GetByEmail(email);
+            if (user == null)
+            {
+                ViewBag.Error = "Bu e-posta ile eşleşen bir kullanıcı bulunamadı.";
+                return View();
+            }
+
+            user.Password = newPassword; // UserManager.Update bunu otomatik hash'liyor
+            _userService.Update(user);
+
+            ViewBag.Success = "Şifreniz güncellendi. Şimdi yeni şifrenizle giriş yapabilirsiniz.";
+            return View();
+        }
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();

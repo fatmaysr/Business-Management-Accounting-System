@@ -20,8 +20,6 @@ namespace GateGold
             container.RegisterType<IBankTransactionDal, EfBankTransactionDal>();
             container.RegisterType<ICaseTransactionDal, EfCaseTransaction>();
             container.RegisterType<ICashCaseDal, EfCashCaseDal>();
-            container.RegisterType<ICurrencyDal, EfCurrencyDal>();
-            container.RegisterType<ICurrencyDetailDal, EfCurrencyDetailDal>();
             container.RegisterType<ICustomerDal, EfCustomerDal>();
             container.RegisterType<IFastSaleDal, EfFastSaleDal>();
             container.RegisterType<IFastSaleCategoryDal, EfFastSaleCategoryDal>();
@@ -40,8 +38,7 @@ namespace GateGold
             container.RegisterType<IBankTransactionService, BankTransactionManager>();
             container.RegisterType<ICaseTransactionService, CaseTransactionManager>();
             container.RegisterType<ICashCaseService, CashCaseManager>();
-            container.RegisterType<ICurrencyService, CurrencyManager>();
-            container.RegisterType<ICurrencyDetailService, CurrencyDetailManager>();
+           
             container.RegisterType<ICustomerService, CustomerManager>();
             container.RegisterType<IFastSaleService, FastSaleManager>();
             container.RegisterType<IFastSaleCategoryService, FastSaleCategoryManager>();

@@ -180,7 +180,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BankController.cs" />
     <Compile Include="Controllers\CashController.cs" />
-    <Compile Include="Controllers\CurrencyController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -194,7 +193,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Logger.cs" />
+    <Compile Include="Helpers\SettingsStore.cs" />
     <Compile Include="Models\DashboardViewModel.cs" />
+    <Compile Include="Models\GeneralSettingsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1155,9 +1156,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\login.cshtml" />
     <Content Include="Views\Customer\Customer.cshtml" />
-    <Content Include="Views\Customer\DebtReport.cshtml" />
-    <Content Include="Views\Customer\Balance.cshtml" />
-    <Content Include="Views\Customer\TransactionReport.cshtml" />
     <Content Include="Views\Cash\DailyCash.cshtml" />
     <Content Include="Views\Cash\CashTransactions.cshtml" />
     <Content Include="Views\Cash\AddCashTransaction.cshtml" />
@@ -1166,11 +1164,9 @@
     <Content Include="Views\Bank\AddBank.cshtml" />
     <Content Include="Views\Bank\AddBankAccount.cshtml" />
     <Content Include="Views\Bank\AddBankTransaction.cshtml" />
-    <Content Include="Views\Bank\BankTransactions.cshtml" />
+    <Content Include="Views\Bank\BankTransactionList.cshtml" />
     <Content Include="Views\Bank\BankList.cshtml" />
     <Content Include="Views\Bank\BankAccountList.cshtml" />
-    <Content Include="Views\Currency\AddCurrency.cshtml" />
-    <Content Include="Views\Currency\CurrencyBalanceList.cshtml" />
     <Content Include="Views\Retail\QuickSale.cshtml" />
     <Content Include="Views\Retail\AllCategories.cshtml" />
     <Content Include="Views\Retail\AddCategory.cshtml" />
@@ -1183,7 +1179,6 @@
     <Content Include="Views\Reporting\CashStatus.cshtml" />
     <Content Include="Views\Reporting\AccountMovements.cshtml" />
     <Content Include="Views\Settings\General.cshtml" />
-    <Content Include="Views\Settings\Currency.cshtml" />
     <Content Include="Views\Customer\CustomerList.cshtml" />
     <Content Include="Views\Retail\ProductSelection.cshtml" />
     <Content Include="Views\Retail\Payment.cshtml" />
@@ -1196,10 +1191,6 @@
     <Content Include="Views\Bank\EditBankTransaction.cshtml" />
     <Content Include="Views\Cash\EditCashTransaction.cshtml" />
     <Content Include="Views\Cash\EditCash.cshtml" />
-    <Content Include="Views\Currency\EditCurrency.cshtml" />
-    <Content Include="Views\Currency\CurrencyDetailList.cshtml" />
-    <Content Include="Views\Currency\AddCurrencyDetail.cshtml" />
-    <Content Include="Views\Currency\EditCurrencyDetail.cshtml" />
     <Content Include="Views\Retail\EditCategory.cshtml" />
     <Content Include="Views\Retail\EditProduct.cshtml" />
     <Content Include="Views\User\EditUser.cshtml" />

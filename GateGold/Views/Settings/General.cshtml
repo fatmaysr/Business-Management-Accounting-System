@@ -1,85 +1,57 @@
-﻿
+﻿@model GateGold.Models.GeneralSettingsViewModel
 @{
     ViewBag.Title = "Genel Ayarlar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2 class="text-primary text-center mb-4">Genel Ayarlar</h2>
-<div class="container" style="max-width: 800px;">
-    <form method="post" autocomplete="off" class="p-4 border rounded shadow-sm bg-light">
+<div class="container" style="max-width: 700px;">
 
-        <!-- Firma Bilgileri -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    @using (Html.BeginForm("General", "Settings", FormMethod.Post, new { @class = "p-4 border rounded shadow-sm bg-light" }))
+    {
+        @Html.AntiForgeryToken()
+
         <h5 class="text-secondary mb-3">Firma Bilgileri</h5>
         <div class="row g-3 mb-4">
             <div class="col-md-6">
-                <label for="firmaAdi" class="form-label">Firma Adı</label>
-                <input type="text" id="firmaAdi" name="firmaAdi" class="form-control" placeholder="Firma adı giriniz" />
+                <label class="form-label">Firma Adı</label>
+                @Html.TextBoxFor(m => m.FirmaAdi, new { @class = "form-control", placeholder = "Firma adı giriniz" })
             </div>
             <div class="col-md-6">
-                <label for="firmaEmail" class="form-label">E-posta</label>
-                <input type="email" id="firmaEmail" name="firmaEmail" class="form-control" placeholder="ornek@firma.com" />
+                <label class="form-label">E-posta</label>
+                @Html.TextBoxFor(m => m.FirmaEmail, new { @class = "form-control", type = "email", placeholder = "ornek@firma.com" })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Telefon</label>
+                @Html.TextBoxFor(m => m.FirmaTelefon, new { @class = "form-control", placeholder = "0 5xx xxx xx xx" })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Adres</label>
+                @Html.TextBoxFor(m => m.FirmaAdres, new { @class = "form-control", placeholder = "Firma adresi" })
             </div>
         </div>
 
-        <!-- Finansal Ayarlar -->
         <h5 class="text-secondary mb-3">Finansal Ayarlar</h5>
         <div class="row g-3 mb-4">
             <div class="col-md-6">
-                <label for="paraBirimi" class="form-label">Varsayılan Para Birimi</label>
-                <select id="paraBirimi" name="paraBirimi" class="form-select">
-                    <option value="TRY">₺ - Türk Lirası (TRY)</option>
-                    <option value="USD">$ - Amerikan Doları (USD)</option>
-                    <option value="EUR">€ - Euro (EUR)</option>
-                    <option value="GBP">£ - İngiliz Sterlini (GBP)</option>
-                    <option value="CHF">Fr. - İsviçre Frangı (CHF)</option>
-                    <option value="CAD">C$ - Kanada Doları (CAD)</option>
-                    <option value="AUD">A$ - Avustralya Doları (AUD)</option>
-                    <option value="JPY">¥ - Japon Yeni (JPY)</option>
-                    <option value="CNY">¥ - Çin Yuanı (CNY)</option>
-                    <option value="AED">د.إ - BAE Dirhemi (AED)</option>
-                    <option value="SAR">﷼ - Suudi Riyali (SAR)</option>
-                    <option value="RUB">₽ - Rus Rublesi (RUB)</option>
-                    <option value="SEK">kr - İsveç Kronu (SEK)</option>
-                    <option value="NOK">kr - Norveç Kronu (NOK)</option>
-                    <option value="DKK">kr - Danimarka Kronu (DKK)</option>
-                    <option value="INR">₹ - Hindistan Rupisi (INR)</option>
-                    <option value="ZAR">R - Güney Afrika Randı (ZAR)</option>
-                    <option value="BRL">R$ - Brezilya Reali (BRL)</option>
-                    <option value="MXN">$ - Meksika Pesosu (MXN)</option>
-                    <option value="KRW">₩ - Güney Kore Wonu (KRW)</option>
-                </select>
-            </div>
-            <div class="col-md-6 d-flex align-items-end">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="kurGuncelle" name="kurGuncelle" />
-                    <label class="form-check-label" for="kurGuncelle">Döviz kuru otomatik güncellensin</label>
-                </div>
+                <label class="form-label">Varsayılan Para Birimi</label>
+                @Html.DropDownListFor(m => m.ParaBirimi, new[]
+               {
+                   new SelectListItem { Value = "TRY", Text = "₺ - Türk Lirası (TRY)" },
+                   new SelectListItem { Value = "USD", Text = "$ - Amerikan Doları (USD)" },
+                   new SelectListItem { Value = "EUR", Text = "€ - Euro (EUR)" },
+                   new SelectListItem { Value = "GBP", Text = "£ - İngiliz Sterlini (GBP)" }
+               }, new { @class = "form-select" })
             </div>
         </div>
 
-        <!-- Görünüm ve Dil -->
-        <h5 class="text-secondary mb-3">Görünüm ve Dil</h5>
-        <div class="row g-3 mb-4">
-            <div class="col-md-6">
-                <label for="tema" class="form-label">Tema</label>
-                <select id="tema" name="tema" class="form-select">
-                    <option value="light" selected>Açık Tema</option>
-                    <option value="dark">Koyu Tema</option>
-                </select>
-            </div>
-            <div class="col-md-6">
-                <label for="dil" class="form-label">Dil</label>
-                <select id="dil" name="dil" class="form-select">
-                    <option value="tr" selected>Türkçe</option>
-                    <option value="en">İngilizce</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- Kaydet Butonu -->
         <div class="text-center">
             <button type="submit" class="btn btn-primary px-5">Kaydet</button>
         </div>
-
-    </form>
+    }
 </div>

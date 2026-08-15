@@ -24,8 +24,6 @@ namespace DataAccessLayer.Concrete
         public DbSet<BankTransaction> BankTransactions { get; set; }
         public DbSet<CaseTransaction> CaseTransactions { get; set; }
         public DbSet<CashCase> CashCases { get; set; }
-        public DbSet<Currency> Currency { get; set; }
-        public DbSet<CurrencyDetail> CurrencyDetails { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<FastSale> FastSales { get; set; }
         public DbSet<FastSaleCategory> FastSaleCategories { get; set; }
@@ -73,25 +71,7 @@ namespace DataAccessLayer.Concrete
             base.OnModelCreating(modelBuilder);
 
 
-            // CurrencyDetail -> Customer ilişkisi için cascade delete engelleme
-            modelBuilder.Entity<CurrencyDetail>()
-                .HasRequired(cd => cd.Customer)
-                .WithMany() // Customer sınıfında CurrencyDetails koleksiyonu olmalı
-                .HasForeignKey(cd => cd.CariID)
-                .WillCascadeOnDelete(false);
-
-            // CurrencyDetail -> Currency ilişkisi
-            modelBuilder.Entity<CurrencyDetail>()
-                .HasRequired(cd => cd.Currency)
-                .WithMany() // Currency sınıfında CurrencyDetails koleksiyonu olmalı
-                .HasForeignKey(cd => cd.CurrencyId)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Currency>()
-                .HasRequired(cd => cd.Customer)
-                 .WithMany()
-                .HasForeignKey(cd => cd.CariID)
-                .WillCascadeOnDelete(false);
+           
 
             modelBuilder.Entity<Sale>()
     .       HasRequired(s => s.CashCase)

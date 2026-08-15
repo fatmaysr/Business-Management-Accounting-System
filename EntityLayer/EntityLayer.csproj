@@ -57,8 +57,6 @@
     <Compile Include="Concrete\BankTransaction.cs" />
     <Compile Include="Concrete\CaseTransaction.cs" />
     <Compile Include="Concrete\CashCase.cs" />
-    <Compile Include="Concrete\Currency.cs" />
-    <Compile Include="Concrete\CurrencyDetail.cs" />
     <Compile Include="Concrete\Customer.cs" />
     <Compile Include="Concrete\FastSale.cs" />
     <Compile Include="Concrete\FastSaleCategory.cs" />

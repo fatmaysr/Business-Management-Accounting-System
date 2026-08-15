@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using GateGold.Helpers;
+using GateGold.Models;
 
 namespace GateGold.Controllers
 {
@@ -10,13 +8,20 @@ namespace GateGold.Controllers
     {
         public ActionResult General()
         {
-            return View();
+            var model = SettingsStore.Load();
+            return View(model);
         }
 
-        public ActionResult Currency()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult General(GeneralSettingsViewModel model)
         {
-            return View();
-        }
+            if (!ModelState.IsValid)
+                return View(model);
 
+            SettingsStore.Save(model);
+            TempData["Success"] = "Ayarlar kaydedildi.";
+            return RedirectToAction("General");
+        }
     }
 }

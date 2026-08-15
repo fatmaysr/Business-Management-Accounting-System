@@ -80,8 +80,12 @@
         <div class="navbar-wrapper">
             <div class="m-header">
                 <a href="@Url.Action("Index", "Home")" class="b-brand">
-                    <span class="logo logo-lg text-primary" style="font-size:26px; font-weight:800; letter-spacing:0.5px;">Nexus</span>
-                    <span class="logo logo-sm text-primary" style="font-size:22px; font-weight:800;">N</span>
+                    @{
+                        var firmaAdi = GateGold.Helpers.SettingsStore.Load().FirmaAdi;
+                        var markaAdi = string.IsNullOrWhiteSpace(firmaAdi) ? "GateGold" : firmaAdi;
+                    }
+                    <span class="logo logo-lg text-primary" style="font-size:26px; font-weight:800; letter-spacing:0.5px;">@markaAdi</span>
+                    <span class="logo logo-sm text-primary" style="font-size:22px; font-weight:800;">@markaAdi.Substring(0, 1)</span>
                 </a>
             </div>
             <div class="navbar-content">
@@ -103,9 +107,7 @@
                         <ul class="nxl-submenu">
                             <li class="nxl-item"><a class="nxl-link" href="@Url.Action("AddCustomer","Customer")">Cari Tanımla</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="@Url.Action("CustomerList","Customer")">Cari Listesi</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="@Url.Action("DebtReport","Customer")">Cari Alacak & Borç</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="@Url.Action("Balance","Customer")">Cari Bakiye</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="@Url.Action("TransactionReport","Customer")">Cari Hesap Hareket Raporu</a></li>
+
                         </ul>
                     </li>
                     <li class="nxl-item nxl-hasmenu">
@@ -122,6 +124,7 @@
                         </ul>
                     </li>
                     <li class="nxl-item nxl-hasmenu">
+                      
                         <a href="javascript:void(0);" class="nxl-link">
                             <span class="nxl-micon"><i class="feather-briefcase"></i></span>
                             <span class="nxl-mtext">Banka</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
@@ -132,19 +135,8 @@
                             <li class="nxl-item"><a class="nxl-link" href="@Url.Action("AddBankAccount", "Bank")">Banka Hesabı Ekle</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="@Url.Action("BankAccountList", "Bank")">Banka Hesabı Listesi</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="@Url.Action("AddBankTransaction", "Bank")">Banka Hareketi Ekle</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="@Url.Action("BankTransactions", "Bank")">Banka Hareketleri</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="@Url.Action("BankTransactionList", "Bank")">Banka Hareketleri</a></li>
                         </ul>
-                    </li>
-                    <li class="nxl-item nxl-hasmenu">
-                        <a href="javascript:void(0);" class="nxl-link">
-                            <span class="nxl-micon"><i class="feather-dollar-sign"></i></span>
-                            <span class="nxl-mtext">Döviz</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
-                        </a>
-                        <ul class="nxl-submenu">
-                            <li class="nxl-item"><a class="nxl-link" href="@Url.Action("AddCurrency", "Currency")">Döviz Ekle</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="@Url.Action("CurrencyBalanceList", "Currency")">Döviz Bakiye Listesi</a></li>
-                        </ul>
-                    </li>
                     <li class="nxl-item nxl-hasmenu">
                         <a href="javascript:void(0);" class="nxl-link">
                             <span class="nxl-micon"><i class="feather-shopping-cart"></i></span>
@@ -180,7 +172,7 @@
                     <li class="nxl-item nxl-hasmenu">
                         <a href="javascript:void(0);" class="nxl-link">
                             <span class="nxl-micon"><i class="feather-package"></i></span>
-                            <span class="nxl-mtext">Toptan Satış</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+                            <span class="nxl-mtext">Stok Yönetimi</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
                         </a>
                         <ul class="nxl-submenu">
                             <li class="nxl-item"><a class="nxl-link" href="@Url.Action("AddStock", "Wholesale")">Stok Ekle</a></li>
@@ -204,7 +196,7 @@
                         </a>
                         <ul class="nxl-submenu">
                             <li class="nxl-item"><a class="nxl-link" href="@Url.Action("General", "Settings")">Genel Ayarlar</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="@Url.Action("Currency", "Settings")">Kur Ayarları</a></li>
+                            
                         </ul>
                     </li>
                 </ul>

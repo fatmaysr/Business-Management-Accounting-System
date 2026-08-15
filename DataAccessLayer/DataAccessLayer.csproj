@@ -72,8 +72,6 @@
     <Compile Include="Abstract\IBankTransactionDal.cs" />
     <Compile Include="Abstract\ICaseTransactionDal.cs" />
     <Compile Include="Abstract\ICashCaseDal.cs" />
-    <Compile Include="Abstract\ICurrencyDal.cs" />
-    <Compile Include="Abstract\ICurrencyDetailDal.cs" />
     <Compile Include="Abstract\ICustomerDal.cs" />
     <Compile Include="Abstract\IFastSaleCategoryDal.cs" />
     <Compile Include="Abstract\IFastSaleDal.cs" />
@@ -88,8 +86,6 @@
     <Compile Include="EntityFramework\EfBankTransactionDal.cs" />
     <Compile Include="EntityFramework\EfCaseTransaction.cs" />
     <Compile Include="EntityFramework\EfCashCaseDal.cs" />
-    <Compile Include="EntityFramework\EfCurrencyDal.cs" />
-    <Compile Include="EntityFramework\EfCurrencyDetailDal.cs" />
     <Compile Include="EntityFramework\EfCustomerDal.cs" />
     <Compile Include="EntityFramework\EfFastSaleCategoryDal.cs" />
     <Compile Include="EntityFramework\EfFastSaleDal.cs" />
@@ -116,6 +112,10 @@
     <Compile Include="Migrations\202608101400263_AddAdminLogTable.cs" />
     <Compile Include="Migrations\202608101400263_AddAdminLogTable.Designer.cs">
       <DependentUpon>202608101400263_AddAdminLogTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202608151929097_RemoveCurrencyModule.cs" />
+    <Compile Include="Migrations\202608151929097_RemoveCurrencyModule.Designer.cs">
+      <DependentUpon>202608151929097_RemoveCurrencyModule.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -146,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202608101400263_AddAdminLogTable.resx">
       <DependentUpon>202608101400263_AddAdminLogTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202608151929097_RemoveCurrencyModule.resx">
+      <DependentUpon>202608151929097_RemoveCurrencyModule.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
