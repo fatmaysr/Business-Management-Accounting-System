@@ -1,76 +1,90 @@
 ﻿@model EntityLayer.Concrete.Customer
 
 @{
-    ViewBag.Title = "EditCustomer";
+    ViewBag.Title = "Cari Düzenle";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Cari Düzenle</h2>
+<div class="row justify-content-center">
+    <div class="col-md-9">
+        <div class="card border-0 shadow-sm p-4" style="border-radius: 16px !important;">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold text-dark mb-1">Cari Hesap Düzenle</h3>
+                <p class="text-muted fs-14 mb-0">Mevcut cari bilgilerini güncelleyin.</p>
+            </div>
 
-@using (Html.BeginForm("EditCustomer", "Customer", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(x => x.CariID)
+            @using (Html.BeginForm("EditCustomer", "Customer", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(x => x.CariID)
 
-    <div class="mb-3">
-        @Html.LabelFor(x => x.CariKodu)
-        @Html.TextBoxFor(x => x.CariKodu, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.CariKodu, "", new { @class = "text-danger" })
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        @Html.LabelFor(x => x.CariKodu, new { @class = "form-label text-muted fs-13 fw-semibold" })
+                        @Html.TextBoxFor(x => x.CariKodu, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.CariKodu, "", new { @class = "text-danger fs-12" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(x => x.CariAdi, new { @class = "form-label text-muted fs-13 fw-semibold" })
+                        @Html.TextBoxFor(x => x.CariAdi, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.CariAdi, "", new { @class = "text-danger fs-12" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(x => x.CariTipi, new { @class = "form-label text-muted fs-13 fw-semibold" })
+                        @Html.TextBoxFor(x => x.CariTipi, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.CariTipi, "", new { @class = "text-danger fs-12" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(x => x.VergiDairesi, new { @class = "form-label text-muted fs-13 fw-semibold" })
+                        @Html.TextBoxFor(x => x.VergiDairesi, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.VergiDairesi, "", new { @class = "text-danger fs-12" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(x => x.VergiNo, new { @class = "form-label text-muted fs-13 fw-semibold" })
+                        @Html.TextBoxFor(x => x.VergiNo, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.VergiNo, "", new { @class = "text-danger fs-12" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(x => x.TCKimlikNo, new { @class = "form-label text-muted fs-13 fw-semibold" })
+                        @Html.TextBoxFor(x => x.TCKimlikNo, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.TCKimlikNo, "", new { @class = "text-danger fs-12" })
+                    </div>
+
+                    <div class="col-12">
+                        @Html.LabelFor(x => x.Adres, new { @class = "form-label text-muted fs-13 fw-semibold" })
+                        @Html.TextBoxFor(x => x.Adres, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Adres, "", new { @class = "text-danger fs-12" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(x => x.Telefon, new { @class = "form-label text-muted fs-13 fw-semibold" })
+                        @Html.TextBoxFor(x => x.Telefon, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Telefon, "", new { @class = "text-danger fs-12" })
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(x => x.Email, new { @class = "form-label text-muted fs-13 fw-semibold" })
+                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger fs-12" })
+                    </div>
+
+                    <div class="col-12">
+                        @Html.LabelFor(x => x.WebSitesi, new { @class = "form-label text-muted fs-13 fw-semibold" })
+                        @Html.TextBoxFor(x => x.WebSitesi, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.WebSitesi, "", new { @class = "text-danger fs-12" })
+                    </div>
+
+                    <div class="col-12 d-flex gap-2 mt-4">
+                        <a href="@Url.Action("CustomerList", "Customer")" class="btn btn-outline-secondary w-50">İptal</a>
+                        <button type="submit" class="btn btn-primary w-50">Güncelle</button>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(x => x.CariAdi)
-        @Html.TextBoxFor(x => x.CariAdi, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.CariAdi, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(x => x.CariTipi)
-        @Html.TextBoxFor(x => x.CariTipi, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.CariTipi, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(x => x.VergiDairesi)
-        @Html.TextBoxFor(x => x.VergiDairesi, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.VergiDairesi, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(x => x.VergiNo)
-        @Html.TextBoxFor(x => x.VergiNo, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.VergiNo, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(x => x.TCKimlikNo)
-        @Html.TextBoxFor(x => x.TCKimlikNo, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.TCKimlikNo, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(x => x.Adres)
-        @Html.TextBoxFor(x => x.Adres, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.Adres, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(x => x.Telefon)
-        @Html.TextBoxFor(x => x.Telefon, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.Telefon, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(x => x.Email)
-        @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(x => x.WebSitesi)
-        @Html.TextBoxFor(x => x.WebSitesi, new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.WebSitesi, "", new { @class = "text-danger" })
-    </div>
-
-    <button type="submit" class="btn btn-primary">Güncelle</button>
-}
+</div>

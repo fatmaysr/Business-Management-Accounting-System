@@ -1,68 +1,91 @@
 ﻿@model List<EntityLayer.Concrete.BankAccount>
 @{
-    ViewBag.Title = "BankAccountList";
+    ViewBag.Title = "Banka Hesapları Listesi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="mb-4 text-primary text-center">Banka Hesapları Listesi</h2>
-
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <input type="text" class="form-control w-50" placeholder="Banka adı, hesap sahibi veya IBAN ile ara..." id="searchInput" />
-    <a href="@Url.Action("AddBankAccount", "Bank")" class="btn btn-primary px-4 d-flex align-items-center gap-2 shadow-sm">
-        <i class="bi bi-plus-lg fs-5"></i> Banka Hesabı Ekle
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h2 class="fw-bold text-dark mb-1">Banka Hesapları</h2>
+        <p class="text-muted fs-14 mb-0">Sistemde kayıtlı tüm banka hesaplarını ve IBAN'ları yönetin.</p>
+    </div>
+    <a href="@Url.Action("AddBankAccount", "Bank")" class="btn btn-primary">
+        <i class="feather-plus me-1"></i> Banka Hesabı Ekle
     </a>
 </div>
 
-<div class="table-responsive shadow-sm rounded">
-    <table class="table table-bordered table-hover align-middle text-center mb-0">
-        <thead class="table-primary">
-            <tr>
-                <th>ID</th>
-                <th>Banka ID</th>
-                <th>Hesap Adı</th>
-                <th>Hesap Numarası</th>
-                <th>IBAN</th>
-                <th>Durum</th>
-                <th>İşlemler</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.BankAccountId</td>
-                    <td>@item.BankId</td>
-                    <td>@item.AccountName</td>
-                    <td>@item.AccountNumber</td>
-                    <td>@item.Iban</td>
-                    <td>@(item.Status == 1 ? "Aktif" : "Pasif")</td>
-                    <td>
-                        <a href="@Url.Action("EditBankAccount", "Bank", new { id = item.BankAccountId })" class="btn btn-warning btn-sm">Düzenle</a>
-                        <a href="@Url.Action("DeleteBankAccount", "Bank", new { id = item.BankAccountId })" class="btn btn-danger btn-sm">Sil</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+<div class="card border-0 shadow-sm p-3" style="border-radius: 16px !important;">
+    <div class="mb-3">
+        <input type="text" class="form-control w-25" placeholder="Banka adı, hesap veya IBAN ara..." id="searchInput" />
+    </div>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light text-muted fs-12">
+                <tr>
+                    <th>ID</th>
+                    <th>Banka ID</th>
+                    <th>Hesap Adı</th>
+                    <th>Hesap Numarası</th>
+                    <th>IBAN</th>
+                    <th>Durum</th>
+                    <th style="width: 15%;">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Count > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-muted">@item.BankAccountId</td>
+                            <td><span class="badge bg-soft-primary text-primary">#@item.BankId</span></td>
+                            <td class="fw-semibold text-dark">@item.AccountName</td>
+                            <td>@item.AccountNumber</td>
+                            <td class="font-monospace fs-13">@item.Iban</td>
+                            <td>
+                                <span class="badge @(item.Status == 1 ? "bg-soft-success text-success" : "bg-soft-danger text-danger")">
+                                    @(item.Status == 1 ? "Aktif" : "Pasif")
+                                </span>
+                            </td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a href="@Url.Action("EditBankAccount", "Bank", new { id = item.BankAccountId })" class="btn btn-sm btn-soft-warning text-warning px-3">Düzenle</a>
+                                    <a href="@Url.Action("DeleteBankAccount", "Bank", new { id = item.BankAccountId })" class="btn btn-sm btn-soft-danger text-danger px-3" onclick="return confirm('Bu hesabı silmek istediğinizden emin misiniz?');">Sil</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-4">Kayıtlı banka hesabı bulunmamaktadır.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <script>
     const searchInput = document.getElementById('searchInput');
     const tableRows = document.querySelectorAll('tbody tr');
 
-    searchInput.addEventListener('input', function () {
-        const filter = this.value.toLowerCase();
-        tableRows.forEach(row => {
-            const bankId = row.cells[1].textContent.toLowerCase();
-            const accountName = row.cells[2].textContent.toLowerCase();
-            const iban = row.cells[4].textContent.toLowerCase();
-            if (bankId.includes(filter) || accountName.includes(filter) || iban.includes(filter)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
+    if (searchInput) {
+        searchInput.addEventListener('input', function () {
+            const filter = this.value.toLowerCase();
+            tableRows.forEach(row => {
+                if (row.cells.length < 5) return;
+                const bankId = row.cells[1].textContent.toLowerCase();
+                const accountName = row.cells[2].textContent.toLowerCase();
+                const iban = row.cells[4].textContent.toLowerCase();
+                if (bankId.includes(filter) || accountName.includes(filter) || iban.includes(filter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
         });
-    });
+    }
 </script>

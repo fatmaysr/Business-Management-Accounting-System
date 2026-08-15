@@ -5,20 +5,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-center text-primary mt-4 mb-5">Kategori Seçin</h2>
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h2 class="fw-bold text-dark mb-1">Hızlı Satış - Kategori Seçimi</h2>
+        <p class="text-muted fs-14 mb-0">Satış yapmak istediğiniz kategoriyi seçerek devam edin.</p>
+    </div>
+</div>
 
 <form method="get" action="/Retail/ProductSelection">
-    <div class="container">
-        <div class="row justify-content-center g-4">
-
+    <div class="container-fluid px-0">
+        <div class="row g-4">
             @{
                 var categories = ViewBag.Categories as List<EntityLayer.Concrete.FastSaleCategory>;
             }
 
             @if (categories == null || !categories.Any())
             {
-                <div class="col-12 text-center text-muted">
-                    Henüz kategori eklenmemiş. Önce <a href="@Url.Action("AddCategory", "Retail")">bir kategori ekleyin</a>.
+                <div class="col-12 text-center text-muted py-5">
+                    <p class="mb-2">Henüz kategori eklenmemiş.</p>
+                    <a href="@Url.Action("AddCategory", "Retail")" class="btn btn-sm btn-primary">Yeni Kategori Ekle</a>
                 </div>
             }
             else
@@ -27,25 +32,37 @@
                 {
                     <div class="col-md-3">
                         <input type="radio" name="category" value="@cat.CategoryName" class="d-none category-radio" id="cat_@cat.CategoryId" />
-                        <label for="cat_@cat.CategoryId" class="card shadow-sm border-0 h-100 text-center category-card d-block p-4" style="cursor:pointer;">
-                            <i class="feather-tag" style="font-size:48px; color:#5b6fe6;"></i>
-                            <span class="card-title text-dark mt-2" style="display:block; font-size:1.15rem; font-weight:600;">@cat.CategoryName</span>
+                        <label for="cat_@cat.CategoryId" class="card shadow-sm border-0 h-100 text-center category-card d-block p-4" style="cursor:pointer; border-radius: 16px !important;">
+                            <div class="bg-soft-primary p-3 rounded-circle d-inline-flex mb-3" style="width: 70px; height: 70px; align-items: center; justify-content: center;">
+                                <i class="feather-tag fs-3 text-primary"></i>
+                            </div>
+                            <span class="card-title text-dark d-block fs-16 fw-bold">@cat.CategoryName</span>
                         </label>
                     </div>
                 }
             }
+        </div>
 
-            <div class="text-center mt-5">
-                <button type="submit" id="continueBtn" class="btn btn-primary btn-lg px-5" disabled>Devam Et</button>
-            </div>
+        <div class="text-end mt-4">
+            <button type="submit" id="continueBtn" class="btn btn-primary px-5 py-2" disabled>Devam Et &raquo;</button>
         </div>
     </div>
 </form>
+
 <style>
-    .category-card.selected {
-        border: 3px solid #007bff !important;
-        box-shadow: 0 0 15px rgba(0, 123, 255, 0.5) !important;
+    .category-card {
+        transition: all 0.2s ease-in-out;
     }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .category-card.selected {
+            border: 2px solid #6366f1 !important;
+            background-color: #f8fafc !important;
+            box-shadow: 0 10px 20px -3px rgba(99, 102, 241, 0.15) !important;
+        }
 </style>
 
 <script>

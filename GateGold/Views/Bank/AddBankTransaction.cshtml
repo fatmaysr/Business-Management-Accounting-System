@@ -5,73 +5,82 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="mb-4 text-primary text-center">Banka Hareketi Ekle</h2>
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+        <div class="card border-0 shadow-sm p-4" style="border-radius: 16px !important;">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold text-dark mb-1">Banka Hareketi Ekle</h3>
+                <p class="text-muted fs-14 mb-0">Bankalar arası transfer veya hareket kaydı oluşturun.</p>
+            </div>
 
-<form method="post" action="@Url.Action("AddBankTransaction", "Bank")" class="row g-3">
-    @Html.AntiForgeryToken() @* <-- CSRF Token Eklendi *@
+            <form method="post" action="@Url.Action("AddBankTransaction", "Bank")" class="row g-3">
+                @Html.AntiForgeryToken()
 
-    <div class="col-md-6">
-        <label for="Date" class="form-label">Tarih <span class="text-danger">*</span></label>
-        <input type="date" id="Date" name="Date" class="form-control" required />
+                <div class="col-md-6">
+                    <label for="Date" class="form-label text-muted fs-13 fw-semibold">TARİH <span class="text-danger">*</span></label>
+                    <input type="date" id="Date" name="Date" class="form-control" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="BankId" class="form-label text-muted fs-13 fw-semibold">BANKA ID <span class="text-danger">*</span></label>
+                    <input type="number" id="BankId" name="BankId" class="form-control" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="CustomerId" class="form-label text-muted fs-13 fw-semibold">MÜŞTERİ ID <span class="text-danger">*</span></label>
+                    <input type="number" id="CustomerId" name="CustomerId" class="form-control" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="BankAccountId" class="form-label text-muted fs-13 fw-semibold">HESAP ID <span class="text-danger">*</span></label>
+                    <input type="number" id="BankAccountId" name="BankAccountId" class="form-control" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="Currency" class="form-label text-muted fs-13 fw-semibold">PARA BİRİMİ</label>
+                    <input type="text" id="Currency" name="Currency" class="form-control" placeholder="TRY" />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="Price" class="form-label text-muted fs-13 fw-semibold">TUTAR</label>
+                    <input type="text" id="Price" name="Price" class="form-control" placeholder="0.00" />
+                </div>
+
+                <div class="col-md-4">
+                    <label for="Type" class="form-label text-muted fs-13 fw-semibold">TÜR</label>
+                    <input type="number" id="Type" name="Type" class="form-control" />
+                </div>
+
+                <div class="col-md-4">
+                    <label for="Method" class="form-label text-muted fs-13 fw-semibold">METOT</label>
+                    <input type="number" id="Method" name="Method" class="form-control" />
+                </div>
+
+                <div class="col-md-4">
+                    <label for="Status" class="form-label text-muted fs-13 fw-semibold">DURUM</label>
+                    <input type="number" id="Status" name="Status" class="form-control" />
+                </div>
+
+                <div class="col-12">
+                    <label for="Content" class="form-label text-muted fs-13 fw-semibold">İÇERİK / AÇIKLAMA</label>
+                    <textarea id="Content" name="Content" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="CurrentToken" class="form-label text-muted fs-13 fw-semibold">CURRENT TOKEN</label>
+                    <input type="text" id="CurrentToken" name="CurrentToken" class="form-control" />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="SecretToken" class="form-label text-muted fs-13 fw-semibold">SECRET TOKEN</label>
+                    <input type="text" id="SecretToken" name="SecretToken" class="form-control" />
+                </div>
+
+                <div class="col-12 d-flex gap-2 mt-4">
+                    <a href="@Url.Action("BankTransactions", "Bank")" class="btn btn-outline-secondary w-50">İptal</a>
+                    <button type="submit" class="btn btn-primary w-50">Kaydet</button>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <div class="col-md-6">
-        <label for="BankId" class="form-label">Banka ID <span class="text-danger">*</span></label>
-        <input type="number" id="BankId" name="BankId" class="form-control" required />
-    </div>
-
-    <div class="col-md-6">
-        <label for="CustomerId" class="form-label">Müşteri ID <span class="text-danger">*</span></label>
-        <input type="number" id="CustomerId" name="CustomerId" class="form-control" required />
-    </div>
-
-    <div class="col-md-6">
-        <label for="BankAccountId" class="form-label">Banka Hesap ID <span class="text-danger">*</span></label>
-        <input type="number" id="BankAccountId" name="BankAccountId" class="form-control" required />
-    </div>
-
-    <div class="col-md-6">
-        <label for="Currency" class="form-label">Para Birimi</label>
-        <input type="text" id="Currency" name="Currency" class="form-control" />
-    </div>
-
-    <div class="col-md-6">
-        <label for="Price" class="form-label">Tutar</label>
-        <input type="text" id="Price" name="Price" class="form-control" />
-    </div>
-
-    <div class="col-md-6">
-        <label for="Type" class="form-label">Tür</label>
-        <input type="number" id="Type" name="Type" class="form-control" />
-    </div>
-
-    <div class="col-md-6">
-        <label for="Method" class="form-label">Metot</label>
-        <input type="number" id="Method" name="Method" class="form-control" />
-    </div>
-
-    <div class="col-md-6">
-        <label for="Status" class="form-label">Durum</label>
-        <input type="number" id="Status" name="Status" class="form-control" />
-    </div>
-
-    <div class="col-12">
-        <label for="Content" class="form-label">İçerik</label>
-        <textarea id="Content" name="Content" class="form-control"></textarea>
-    </div>
-
-    <div class="col-12">
-        <label for="CurrentToken" class="form-label">Current Token</label>
-        <input type="text" id="CurrentToken" name="CurrentToken" class="form-control" />
-    </div>
-
-    <div class="col-12">
-        <label for="SecretToken" class="form-label">Secret Token</label>
-        <input type="text" id="SecretToken" name="SecretToken" class="form-control" />
-    </div>
-
-    <div class="col-12 d-flex justify-content-end gap-2">
-        <a href="@Url.Action("BankTransactions", "Bank")" class="btn btn-outline-secondary">İptal</a>
-        <button type="submit" class="btn btn-primary">Kaydet</button>
-    </div>
-</form>
+</div>

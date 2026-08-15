@@ -5,35 +5,44 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="mb-4 text-center">Kullanıcı Düzenle</h2>
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card border-0 shadow-sm p-4" style="border-radius: 16px !important;">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold text-dark mb-1">Kullanıcı Düzenle</h3>
+                <p class="text-muted fs-14 mb-0">Mevcut kullanıcı ve yetki bilgilerini güncelleyin.</p>
+            </div>
 
-<div class="container" style="max-width: 500px;">
-    @using (Html.BeginForm("EditUser", "User", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken() <!-- CSRF Koruması Eklendi -->
-        @Html.HiddenFor(x => x.UserId)
+            @using (Html.BeginForm("EditUser", "User", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(x => x.UserId)
 
-        <div class="mb-3">
-            <label class="form-label">Kullanıcı Adı</label>
-            @Html.TextBoxFor(x => x.UserName, new { @class = "form-control", required = "required" })
+                <div class="mb-3">
+                    <label class="form-label text-muted fs-13 fw-semibold">KULLANICI ADI</label>
+                    @Html.TextBoxFor(x => x.UserName, new { @class = "form-control", required = "required" })
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-muted fs-13 fw-semibold">E-POSTA</label>
+                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control", type = "email", required = "required" })
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-muted fs-13 fw-semibold">ŞİFRE</label>
+                    @Html.PasswordFor(x => x.Password, new { @class = "form-control", required = "required" })
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label text-muted fs-13 fw-semibold">ROL</label>
+                    @Html.TextBoxFor(x => x.Role, new { @class = "form-control", placeholder = "Admin / Customer", required = "required" })
+                </div>
+
+                <div class="d-flex gap-2">
+                    <a href="@Url.Action("UserList", "User")" class="btn btn-outline-secondary w-50">İptal</a>
+                    <button type="submit" class="btn btn-primary w-50">Güncelle</button>
+                </div>
+            }
         </div>
-
-        <div class="mb-3">
-            <label class="form-label">Email</label>
-            @Html.TextBoxFor(x => x.Email, new { @class = "form-control", type = "email", required = "required" })
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Şifre</label>
-            @Html.PasswordFor(x => x.Password, new { @class = "form-control", required = "required" })
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Rol</label>
-            @Html.TextBoxFor(x => x.Role, new { @class = "form-control", placeholder = "Admin / Customer", required = "required" })
-        </div>
-
-        <button type="submit" class="btn btn-primary w-100">Güncelle</button>
-        <a href="@Url.Action("UserList", "User")" class="btn btn-secondary w-100 mt-2">İptal</a>
-    }
+    </div>
 </div>

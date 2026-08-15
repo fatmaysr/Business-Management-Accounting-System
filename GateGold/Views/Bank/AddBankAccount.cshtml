@@ -4,54 +4,63 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="mb-4 text-primary text-center">Banka Hesabı Ekle</h2>
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+        <div class="card border-0 shadow-sm p-4" style="border-radius: 16px !important;">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold text-dark mb-1">Banka Hesabı Ekle</h3>
+                <p class="text-muted fs-14 mb-0">Mevcut bir bankaya yeni hesap (IBAN) tanımlayın.</p>
+            </div>
 
-<form action="@Url.Action("AddBankAccount", "Bank")" method="post" class="row g-3">
-    @Html.AntiForgeryToken() @* <-- CSRF Token Eklendi *@
+            <form action="@Url.Action("AddBankAccount", "Bank")" method="post" class="row g-3">
+                @Html.AntiForgeryToken()
 
-    <div class="col-md-6">
-        <label for="bankId" class="form-label">Banka <span class="text-danger">*</span></label>
-        <select id="bankId" name="BankId" class="form-select" required>
-            <option value="">-- Banka Seçin --</option>
-            @if (ViewBag.Banks != null)
-            {
-                foreach (var bank in ViewBag.Banks as SelectList)
-                {
-                    <option value="@bank.Value">@bank.Text</option>
-                }
-            }
-        </select>
+                <div class="col-md-6">
+                    <label for="bankId" class="form-label text-muted fs-13 fw-semibold">BANKA <span class="text-danger">*</span></label>
+                    <select id="bankId" name="BankId" class="form-select" required>
+                        <option value="">-- Banka Seçin --</option>
+                        @if (ViewBag.Banks != null)
+                        {
+                            foreach (var bank in ViewBag.Banks as SelectList)
+                            {
+                                <option value="@bank.Value">@bank.Text</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="accountHolder" class="form-label text-muted fs-13 fw-semibold">HESAP SAHİBİ <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="accountHolder" name="AccountHolder" placeholder="Ad Soyad / Firma Ünvanı" required />
+                </div>
+                <div class="col-md-6">
+                    <label for="accountNumber" class="form-label text-muted fs-13 fw-semibold">HESAP NUMARASI <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="accountNumber" name="AccountNumber" placeholder="Hesap no" required />
+                </div>
+                <div class="col-md-6">
+                    <label for="iban" class="form-label text-muted fs-13 fw-semibold">IBAN <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="iban" name="IBAN" placeholder="TR..." required />
+                </div>
+                <div class="col-md-6">
+                    <label for="currency" class="form-label text-muted fs-13 fw-semibold">PARA BİRİMİ</label>
+                    <select id="currency" name="Currency" class="form-select">
+                        <option value="TRY">₺ - Türk Lirası (TRY)</option>
+                        <option value="USD">$ - Amerikan Doları (USD)</option>
+                        <option value="EUR">€ - Euro (EUR)</option>
+                        <option value="GBP">£ - İngiliz Sterlini (GBP)</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="status" class="form-label text-muted fs-13 fw-semibold">DURUM</label>
+                    <select class="form-select" id="status" name="Status">
+                        <option value="1" selected>Aktif</option>
+                        <option value="0">Pasif</option>
+                    </select>
+                </div>
+                <div class="col-12 d-flex gap-2 mt-4">
+                    <a href="@Url.Action("BankAccountList", "Bank")" class="btn btn-outline-secondary w-50">İptal</a>
+                    <button type="submit" class="btn btn-primary w-50">Kaydet</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="col-md-6">
-        <label for="accountHolder" class="form-label">Hesap Sahibi Adı <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" id="accountHolder" name="AccountHolder" placeholder="Hesap sahibinin adı" required />
-    </div>
-    <div class="col-md-6">
-        <label for="accountNumber" class="form-label">Hesap Numarası <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" id="accountNumber" name="AccountNumber" placeholder="Hesap numarasını girin" required />
-    </div>
-    <div class="col-md-6">
-        <label for="iban" class="form-label">IBAN <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" id="iban" name="IBAN" placeholder="TR..." required />
-    </div>
-    <div class="col-md-6">
-        <label for="currency" class="form-label">Para Birimi</label>
-        <select id="currency" name="Currency" class="form-select">
-            <option value="TRY">₺ - Türk Lirası (TRY)</option>
-            <option value="USD">$ - Amerikan Doları (USD)</option>
-            <option value="EUR">€ - Euro (EUR)</option>
-            <option value="GBP">£ - İngiliz Sterlini (GBP)</option>
-        </select>
-    </div>
-    <div class="col-md-6">
-        <label for="status" class="form-label">Durum</label>
-        <select class="form-select" id="status" name="Status">
-            <option value="1" selected>Aktif</option>
-            <option value="0">Pasif</option>
-        </select>
-    </div>
-    <div class="col-12 d-flex justify-content-end gap-2">
-        <a href="@Url.Action("BankAccountList", "Bank")" class="btn btn-outline-secondary">İptal</a>
-        <button type="submit" class="btn btn-primary">Kaydet</button>
-    </div>
-</form>
+</div>

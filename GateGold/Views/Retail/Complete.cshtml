@@ -4,32 +4,46 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-5" style="max-width: 600px;">
-    <div class="card shadow-sm border-priamry">
-        <div class="card-header bg-primary text-white text-center">
-            <h2 class="text-white">Satış Başarıyla Tamamlandı!</h2>
-        </div>
-        <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-4">Ürün:</dt>
-                <dd class="col-sm-8 fw-bold">@Model.ProductName</dd>
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6 col-lg-5">
+        <div class="card border-0 shadow-sm overflow-hidden" style="border-radius: 16px !important;">
+            <div class="bg-soft-success p-4 text-center">
+                <div class="bg-success text-white rounded-circle d-inline-flex p-3 mb-2 shadow-sm" style="width: 64px; height: 64px; align-items: center; justify-content: center;">
+                    <i class="feather-check fs-2"></i>
+                </div>
+                <h3 class="fw-bold text-success mb-1">Satış Başarıyla Tamamlandı!</h3>
+                <p class="text-muted fs-13 mb-0">İşlem sisteme başarıyla işlendi ve kasaya yansıtıldı.</p>
+            </div>
 
-                <dt class="col-sm-4">Tutar:</dt>
-                <dd class="col-sm-8 fw-bold">@Model.Price.ToString("N2") ₺</dd>
+            <div class="card-body p-4">
+                <div class="bg-light p-3 rounded-3 mb-4 fs-14">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Satış No:</span>
+                        <strong class="text-dark">#@Model.SaleId</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Ürün:</span>
+                        <strong class="text-dark">@Model.ProductName</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Tutar:</span>
+                        <strong class="text-success">@Model.Price.ToString("N2") ₺</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Ödeme Türü:</span>
+                        <strong class="text-dark text-capitalize">@Model.PaymentType</strong>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted">Tarih:</span>
+                        <strong class="text-dark">@Model.Date.ToString("dd.MM.yyyy HH:mm")</strong>
+                    </div>
+                </div>
 
-                <dt class="col-sm-4">Ödeme Türü:</dt>
-                <dd class="col-sm-8 fw-bold text-capitalize">@Model.PaymentType</dd>
-
-                <dt class="col-sm-4">Tarih:</dt>
-                <dd class="col-sm-8 fw-bold">@Model.Date.ToString("dd.MM.yyyy HH:mm")</dd>
-
-                <dt class="col-sm-4">Satış No:</dt>
-                <dd class="col-sm-8 fw-bold">#@Model.SaleId</dd>
-            </dl>
-            <div class="text-center mt-4">
-                <a href="@Url.Action("QuickSale", "Retail")" class="btn btn-primary btn-lg px-4">
-                    Yeni Satış Yap
-                </a>
+                <div class="text-center">
+                    <a href="@Url.Action("QuickSale", "Retail")" class="btn btn-primary w-100 py-2">
+                        <i class="feather-plus me-1"></i> Yeni Satış Yap
+                    </a>
+                </div>
             </div>
         </div>
     </div>

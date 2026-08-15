@@ -1,22 +1,27 @@
-﻿@using System.Linq
-@model List<EntityLayer.Concrete.CaseTransaction>
+﻿@model List<EntityLayer.Concrete.CaseTransaction>
 @{
     ViewBag.Title = "Cari Hareket Raporu";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-primary text-center mb-4">Cari Hareket Raporu</h2>
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h2 class="fw-bold text-dark mb-1">Cari Hareket Raporu</h2>
+        <p class="text-muted fs-14 mb-0">Seçilen cariye ait hesap hareketlerini ve bakiye özetini inceleyin.</p>
+    </div>
+</div>
 
-<div class="container" style="max-width: 1100px;">
-    <form method="get" class="row g-3 mb-4 align-items-end">
+<!-- Filtreleme Alanı -->
+<div class="card border-0 shadow-sm p-4 mb-4" style="border-radius: 16px !important;">
+    <form method="get" class="row g-3 align-items-end">
         <div class="col-md-4">
-            <label class="form-label">Cari Seç</label>
+            <label class="form-label text-muted fs-13 fw-semibold">CARİ SEÇ</label>
             @{
                 var customers = ViewBag.Customers as List<EntityLayer.Concrete.Customer>;
                 var selectedCariId = ViewBag.SelectedCariId as int?;
             }
             <select name="cariId" class="form-select">
-                <option value="">-- Tümü --</option>
+                <option value="">-- Tüm Cariler --</option>
                 @foreach (var c in customers)
                 {
                     if (selectedCariId.HasValue && selectedCariId.Value == c.CariID)
@@ -31,45 +36,59 @@
             </select>
         </div>
         <div class="col-md-3">
-            <label class="form-label">Tarih Başlangıç</label>
+            <label class="form-label text-muted fs-13 fw-semibold">BAŞLANGIÇ TARİHİ</label>
             <input type="date" name="startDate" class="form-control" value="@ViewBag.StartDate" />
         </div>
         <div class="col-md-3">
-            <label class="form-label">Tarih Bitiş</label>
+            <label class="form-label text-muted fs-13 fw-semibold">BİTİŞ TARİHİ</label>
             <input type="date" name="endDate" class="form-control" value="@ViewBag.EndDate" />
         </div>
         <div class="col-md-2">
             <button type="submit" class="btn btn-primary w-100">Filtrele</button>
         </div>
     </form>
+</div>
 
-    <div class="row mb-4 text-center">
-        <div class="col-md-6">
-            <div class="card border-success">
-                <div class="card-body">
-                    <div class="text-muted">Toplam Giriş</div>
-                    <div class="fs-4 fw-bold text-success">@(((decimal)ViewBag.ToplamGiris).ToString("N2"))</div>
+<!-- Özet Kartları -->
+<div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm p-3" style="border-radius: 16px !important;">
+            <div class="d-flex align-items-center">
+                <div class="bg-soft-success p-3 rounded-3 me-3 text-success">
+                    <i class="feather-arrow-down-left fs-4"></i>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card border-danger">
-                <div class="card-body">
-                    <div class="text-muted">Toplam Çıkış</div>
-                    <div class="fs-4 fw-bold text-danger">@(((decimal)ViewBag.ToplamCikis).ToString("N2"))</div>
+                <div>
+                    <span class="text-muted fs-13">Toplam Giriş</span>
+                    <h3 class="fw-bold text-success mb-0">@(((decimal)ViewBag.ToplamGiris).ToString("N2")) ₺</h3>
                 </div>
             </div>
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm p-3" style="border-radius: 16px !important;">
+            <div class="d-flex align-items-center">
+                <div class="bg-soft-danger p-3 rounded-3 me-3 text-danger">
+                    <i class="feather-arrow-up-right fs-4"></i>
+                </div>
+                <div>
+                    <span class="text-muted fs-13">Toplam Çıkış</span>
+                    <h3 class="fw-bold text-danger mb-0">@(((decimal)ViewBag.ToplamCikis).ToString("N2")) ₺</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- Tablo Alanı -->
+<div class="card border-0 shadow-sm p-3" style="border-radius: 16px !important;">
     <div class="table-responsive">
-        <table class="table table-bordered table-hover text-center align-middle">
-            <thead class="table-primary">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light text-muted fs-12">
                 <tr>
                     <th>Tarih</th>
                     <th>Cari</th>
                     <th>Tür</th>
-                    <th>Tutar</th>
+                    <th class="text-end">Tutar</th>
                     <th>Para Birimi</th>
                     <th>Açıklama</th>
                 </tr>
@@ -77,28 +96,30 @@
             <tbody>
                 @if (!Model.Any())
                 {
-                    <tr><td colspan="6" class="text-muted">Kayıt bulunamadı.</td></tr>
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">Kayıt bulunamadı.</td>
+                    </tr>
                 }
                 else
                 {
                     foreach (var t in Model)
                     {
                         <tr>
-                            <td>@t.Date.ToString("dd.MM.yyyy HH:mm")</td>
-                            <td>@(t.Customer?.CariAdi)</td>
+                            <td class="text-muted fs-13">@t.Date.ToString("dd.MM.yyyy HH:mm")</td>
+                            <td class="fw-semibold text-dark">@(t.Customer?.CariAdi)</td>
                             <td>
                                 @if (t.Type == "Giriş")
                                 {
-                                    <span class="badge bg-success">Giriş</span>
+                                    <span class="badge bg-soft-success text-success">Giriş</span>
                                 }
                                 else
                                 {
-                                    <span class="badge bg-danger">Çıkış</span>
+                                    <span class="badge bg-soft-danger text-danger">Çıkış</span>
                                 }
                             </td>
-                            <td>@t.Amount.ToString("N2")</td>
-                            <td>@t.Currency</td>
-                            <td>@t.Description</td>
+                            <td class="text-end fw-bold text-dark">@t.Amount.ToString("N2")</td>
+                            <td><span class="badge bg-soft-secondary text-dark">@t.Currency</span></td>
+                            <td class="text-muted">@t.Description</td>
                         </tr>
                     }
                 }

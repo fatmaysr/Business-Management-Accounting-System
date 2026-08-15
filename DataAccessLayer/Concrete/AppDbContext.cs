@@ -15,9 +15,6 @@ namespace DataAccessLayer.Concrete
         public AppDbContext() : base("name=AppDbContext") { }
 
 
-        // DbSet'ler (tablolarla eşleşen class'lar)
-        //public DbSet<Admin> Admins { get; set; }
-        //public DbSet<AdminLog> AdminLogs { get; set; }
         public DbSet<Bank> Banks { get; set; }
         public DbSet<AdminLog> AdminLogs { get; set; }
         public DbSet<BankAccount> BankAccounts { get; set; }
@@ -54,14 +51,14 @@ namespace DataAccessLayer.Concrete
                 .HasForeignKey(ba => ba.CariID)
                 .WillCascadeOnDelete(false);
 
-            // CashCase ile Customer ilişkisi
+        
             modelBuilder.Entity<CashCase>()
                 .HasRequired(c => c.Customer)
                 .WithMany()
                 .HasForeignKey(c => c.CariID)
                 .WillCascadeOnDelete(false);
 
-            // CaseTransaction ile Customer ilişkisi
+       
             modelBuilder.Entity<CaseTransaction>()
                 .HasRequired(ct => ct.Customer)
                 .WithMany()
@@ -94,15 +91,6 @@ namespace DataAccessLayer.Concrete
     }
 }
 
-        //public DbSet<CustomerLog> CustomerLogs { get; set; }
-        //public DbSet<Dats> Dats { get; set; }
-        //public DbSet<ExchangeData> ExchangeDatas { get; set; }
-        //public DbSet<ExchangeRate> ExchangeRates { get; set; }
-        //public DbSet<ExchangeRateNew> ExchangeRateNews { get; set; }
-        //public DbSet<ExchangeSetting> ExchangeSettings { get; set; }
-       
-        //public DbSet<Test> Tests { get; set; }
-        //public DbSet<EntityLayer.Concrete.Type> Types { get; set; }
     
 
 

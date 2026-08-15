@@ -5,74 +5,83 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="mb-4 text-primary text-center">Banka Hareketi Düzenle</h2>
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+        <div class="card border-0 shadow-sm p-4" style="border-radius: 16px !important;">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold text-dark mb-1">Banka Hareketi Düzenle</h3>
+                <p class="text-muted fs-14 mb-0">Mevcut banka işlem kaydını güncelleyin.</p>
+            </div>
 
-<form method="post" action="@Url.Action("EditBankTransaction", "Bank")" class="row g-3">
-    @Html.AntiForgeryToken() @* <-- CSRF Token Eklendi *@
-    @Html.HiddenFor(m => m.Id)
+            <form method="post" action="@Url.Action("EditBankTransaction", "Bank")" class="row g-3">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Id)
 
-    <div class="col-md-6">
-        <label for="Date" class="form-label">Tarih</label>
-        @Html.TextBoxFor(m => m.Date, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                <div class="col-md-6">
+                    <label for="Date" class="form-label text-muted fs-13 fw-semibold">TARİH</label>
+                    @Html.TextBoxFor(m => m.Date, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                </div>
+
+                <div class="col-md-6">
+                    <label for="BankId" class="form-label text-muted fs-13 fw-semibold">BANKA ID</label>
+                    @Html.TextBoxFor(m => m.BankId, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6">
+                    <label for="CustomerId" class="form-label text-muted fs-13 fw-semibold">MÜŞTERİ ID</label>
+                    @Html.TextBoxFor(m => m.CustomerId, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6">
+                    <label for="BankAccountId" class="form-label text-muted fs-13 fw-semibold">HESAP ID</label>
+                    @Html.TextBoxFor(m => m.BankAccountId, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6">
+                    <label for="Cuurency" class="form-label text-muted fs-13 fw-semibold">PARA BİRİMİ</label>
+                    @Html.TextBoxFor(m => m.Cuurency, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6">
+                    <label for="Price" class="form-label text-muted fs-13 fw-semibold">TUTAR</label>
+                    @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-4">
+                    <label for="Type" class="form-label text-muted fs-13 fw-semibold">TÜR</label>
+                    @Html.TextBoxFor(m => m.Type, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-4">
+                    <label for="Method" class="form-label text-muted fs-13 fw-semibold">METOT</label>
+                    @Html.TextBoxFor(m => m.Method, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-4">
+                    <label for="Status" class="form-label text-muted fs-13 fw-semibold">DURUM</label>
+                    @Html.TextBoxFor(m => m.Status, new { @class = "form-control" })
+                </div>
+
+                <div class="col-12">
+                    <label for="Content" class="form-label text-muted fs-13 fw-semibold">İÇERİK</label>
+                    @Html.TextAreaFor(m => m.Content, new { @class = "form-control", rows = 3 })
+                </div>
+
+                <div class="col-md-6">
+                    <label for="CurrentToken" class="form-label text-muted fs-13 fw-semibold">CURRENT TOKEN</label>
+                    @Html.TextBoxFor(m => m.CurrentToken, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6">
+                    <label for="SecretToken" class="form-label text-muted fs-13 fw-semibold">SECRET TOKEN</label>
+                    @Html.TextBoxFor(m => m.SecretToken, new { @class = "form-control" })
+                </div>
+
+                <div class="col-12 d-flex gap-2 mt-4">
+                    <a href="@Url.Action("BankTransactions", "Bank")" class="btn btn-outline-secondary w-50">İptal</a>
+                    <button type="submit" class="btn btn-primary w-50">Güncelle</button>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <div class="col-md-6">
-        <label for="BankId" class="form-label">Banka ID</label>
-        @Html.TextBoxFor(m => m.BankId, new { @class = "form-control" })
-    </div>
-
-    <div class="col-md-6">
-        <label for="CustomerId" class="form-label">Müşteri ID</label>
-        @Html.TextBoxFor(m => m.CustomerId, new { @class = "form-control" })
-    </div>
-
-    <div class="col-md-6">
-        <label for="BankAccountId" class="form-label">Banka Hesap ID</label>
-        @Html.TextBoxFor(m => m.BankAccountId, new { @class = "form-control" })
-    </div>
-
-    <div class="col-md-6">
-        <label for="Cuurency" class="form-label">Para Birimi</label>
-        @Html.TextBoxFor(m => m.Cuurency, new { @class = "form-control" })
-    </div>
-
-    <div class="col-md-6">
-        <label for="Price" class="form-label">Tutar</label>
-        @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
-    </div>
-
-    <div class="col-md-6">
-        <label for="Type" class="form-label">Tür</label>
-        @Html.TextBoxFor(m => m.Type, new { @class = "form-control" })
-    </div>
-
-    <div class="col-md-6">
-        <label for="Method" class="form-label">Metot</label>
-        @Html.TextBoxFor(m => m.Method, new { @class = "form-control" })
-    </div>
-
-    <div class="col-md-6">
-        <label for="Status" class="form-label">Durum</label>
-        @Html.TextBoxFor(m => m.Status, new { @class = "form-control" })
-    </div>
-
-    <div class="col-12">
-        <label for="Content" class="form-label">İçerik</label>
-        @Html.TextAreaFor(m => m.Content, new { @class = "form-control", rows = 3 })
-    </div>
-
-    <div class="col-12">
-        <label for="CurrentToken" class="form-label">Current Token</label>
-        @Html.TextBoxFor(m => m.CurrentToken, new { @class = "form-control" })
-    </div>
-
-    <div class="col-12">
-        <label for="SecretToken" class="form-label">Secret Token</label>
-        @Html.TextBoxFor(m => m.SecretToken, new { @class = "form-control" })
-    </div>
-
-    <div class="col-12 d-flex justify-content-end gap-2">
-        <a href="@Url.Action("BankTransactions", "Bank")" class="btn btn-outline-secondary">İptal</a>
-        <button type="submit" class="btn btn-primary">Güncelle</button>
-    </div>
-</form>
+</div>

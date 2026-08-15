@@ -1,72 +1,77 @@
 ﻿@model IEnumerable<EntityLayer.Concrete.Customer>
 @{
-    ViewBag.Title = "CustomerList";
+    ViewBag.Title = "Cari Listesi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-center my-4 fw-bold text-primary">Cari Listesi</h2>
-
-<div class="mb-3 d-flex justify-content-between align-items-center">
-    <div class="input-group w-50">
-        <span class="input-group-text bg-white border-end-0">
-            <i class="bi bi-search"></i>
-        </span>
-        <input type="text" class="form-control border-start-0" placeholder="Cari adı veya kodu ile ara..." />
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h2 class="fw-bold text-dark mb-1">Cari Listesi</h2>
+        <p class="text-muted fs-14 mb-0">Sistemde kayıtlı müşterileri ve cari hesapları yönetin.</p>
     </div>
-
     <div class="d-flex gap-2">
-        <a href="@Url.Action("ExportToExcel", "Customer")" class="btn btn-success px-3 shadow-sm d-inline-flex align-items-center gap-2">
+        <a href="@Url.Action("ExportToExcel", "Customer")" class="btn btn-success d-inline-flex align-items-center gap-1 shadow-sm px-3">
             <i class="feather-file-text"></i> Excel'e Aktar
         </a>
-
-        <a href="@Url.Action("AddCustomer", "Customer")" class="btn btn-primary px-4 fw-semibold">
-            + Yeni Cari Ekle
+        <a href="@Url.Action("AddCustomer", "Customer")" class="btn btn-primary">
+            <i class="feather-plus me-1"></i> Yeni Cari Ekle
         </a>
     </div>
 </div>
 
-<div class="table-responsive shadow-sm rounded">
-    <table class="table table-bordered table-hover align-middle">
-        <thead class="table-primary text-center fw-bold">
-            <tr>
-                <th style="width: 5%;">#</th>
-                <th style="width: 20%;">Cari Adı</th>
-                <th style="width: 15%;">Cari Kodu</th>
-                <th style="width: 10%;">Tür</th>
-                <th style="width: 15%;">Telefon</th>
-                <th style="width: 15%;">E-Posta</th>
-                <th style="width: 10%;">İşlemler</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr class="text-center">
-                    <td>@item.CariID</td>
-                    <td>@item.CariAdi</td>
-                    <td>@item.CariKodu</td>
-                    <td>@item.CariTipi</td>
-                    <td>@item.Telefon</td>
-                    <td>@item.Email</td>
-                    <td>
-                      
-                    </td>
-                    <<td>
-    <a href="@Url.Action("EditCustomer", "Customer", new { id = item.CariID })" class="btn btn-sm btn-warning">
-        Düzenle
-    </a>
+<div class="card border-0 shadow-sm p-3" style="border-radius: 16px !important;">
+    <div class="mb-3">
+        <input type="text" class="form-control w-25" placeholder="Cari adı veya kodu ile ara..." />
+    </div>
 
-    @using (Html.BeginForm("DeleteCustomer", "Customer", new { id = item.CariID }, FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
-        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Silmek istediğinize emin misiniz?');">
-            Sil
-        </button>
-    }
-</td>
-
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light text-muted fs-12">
+                <tr>
+                    <th>#</th>
+                    <th>Cari Adı</th>
+                    <th>Cari Kodu</th>
+                    <th>Tür</th>
+                    <th>Telefon</th>
+                    <th>E-Posta</th>
+                    <th style="width: 15%;">İşlemler</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-muted">@item.CariID</td>
+                            <td class="fw-semibold text-dark">@item.CariAdi</td>
+                            <td><span class="badge bg-soft-primary text-primary">@item.CariKodu</span></td>
+                            <td><span class="badge bg-soft-info text-info">@item.CariTipi</span></td>
+                            <td>@item.Telefon</td>
+                            <td class="text-muted">@item.Email</td>
+                            <td>
+                                <div class="d-flex gap-2 align-items-center">
+                                    <a href="@Url.Action("EditCustomer", "Customer", new { id = item.CariID })" class="btn btn-sm btn-soft-warning text-warning px-2">Düzenle</a>
+
+                                    @using (Html.BeginForm("DeleteCustomer", "Customer", new { id = item.CariID }, FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-soft-danger text-danger px-2" onclick="return confirm('Silmek istediğinize emin misiniz?');">
+                                            Sil
+                                        </button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-4">Kayıtlı cari hesap bulunmuyor.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

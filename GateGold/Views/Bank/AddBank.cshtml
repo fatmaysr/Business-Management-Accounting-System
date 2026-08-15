@@ -5,47 +5,60 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-primary mb-4">Yeni Banka Ekle</h2>
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-6">
+        <div class="card border-0 shadow-sm p-4" style="border-radius: 16px !important;">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold text-dark mb-1">Yeni Banka Ekle</h3>
+                <p class="text-muted fs-14 mb-0">Sisteme yeni bir banka tanımlayın.</p>
+            </div>
 
-@using (Html.BeginForm("AddBank", "Bank", FormMethod.Post))
-{
-    @Html.AntiForgeryToken() @* <-- CSRF Token Eklendi *@
+            @using (Html.BeginForm("AddBank", "Bank", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
 
-    <div class="mb-3">
-        @Html.LabelFor(m => m.BankName)
-        @Html.TextBoxFor(m => m.BankName, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.BankName)
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.BankName, new { @class = "form-label text-muted fs-13 fw-semibold" })
+                    @Html.TextBoxFor(m => m.BankName, new { @class = "form-control", placeholder = "Örn: Garanti BBVA" })
+                    @Html.ValidationMessageFor(m => m.BankName, "", new { @class = "text-danger fs-12" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.Label("Müşteri (Cari)", new { @class = "form-label text-muted fs-13 fw-semibold" })
+                    @Html.DropDownList("CariID",
+                        new SelectList((IEnumerable<EntityLayer.Concrete.Customer>)ViewBag.Customers, "CariID", "CariAdi"),
+                        "Müşteri seçin", new { @class = "form-select" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Branch, new { @class = "form-label text-muted fs-13 fw-semibold" })
+                    @Html.TextBoxFor(m => m.Branch, new { @class = "form-control", placeholder = "Şube adı" })
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.Phone, new { @class = "form-label text-muted fs-13 fw-semibold" })
+                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", placeholder = "0212..." })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.LabelFor(m => m.Status, new { @class = "form-label text-muted fs-13 fw-semibold" })
+                        @Html.DropDownListFor(m => m.Status, new SelectList(new[] {
+                            new { Text = "Aktif", Value = 1 },
+                            new { Text = "Pasif", Value = 0 }
+                        }, "Value", "Text"), "Durum Seç", new { @class = "form-select" })
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    @Html.LabelFor(m => m.Address, new { @class = "form-label text-muted fs-13 fw-semibold" })
+                    @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Açık adres" })
+                </div>
+
+                <div class="d-flex gap-2">
+                    <a href="@Url.Action("BankList","Bank")" class="btn btn-outline-secondary w-50">İptal</a>
+                    <button type="submit" class="btn btn-primary w-50">Kaydet</button>
+                </div>
+            }
+        </div>
     </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(m => m.Branch)
-        @Html.TextBoxFor(m => m.Branch, new { @class = "form-control" })
-    </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(m => m.Phone)
-        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
-    </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(m => m.Address)
-        @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
-    </div>
-
-    <div class="mb-3">
-        @Html.Label("Müşteri (Cari)")
-        @Html.DropDownList("CariID",
-            new SelectList((IEnumerable<EntityLayer.Concrete.Customer>)ViewBag.Customers, "CariID", "CariAdi"),
-            "Müşteri seçin", new { @class = "form-control" })
-    </div>
-    <div class="mb-3">
-        @Html.LabelFor(m => m.Status)
-        @Html.DropDownListFor(m => m.Status, new SelectList(new[] {
-            new { Text = "Aktif", Value = 1 },
-            new { Text = "Pasif", Value = 0 }
-        }, "Value", "Text"), "Durum Seç", new { @class = "form-control" })
-    </div>
-
-    <button type="submit" class="btn btn-success">Kaydet</button>
-    <a href="@Url.Action("BankList","Bank")" class="btn btn-secondary">Geri</a>
-}
+</div>

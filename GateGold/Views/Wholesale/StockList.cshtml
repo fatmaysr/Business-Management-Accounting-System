@@ -5,66 +5,58 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="mb-4 text-primary text-center fw-bold">
-    Stok Listesi
-</h2>
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h2 class="fw-bold text-dark mb-1">Stok Yönetimi</h2>
+        <p class="text-muted fs-14 mb-0">Deponuzdaki mevcut envanteri ve birim fiyatları takip edin.</p>
+    </div>
+    <a href="@Url.Action("AddStock", "Wholesale")" class="btn btn-primary">
+        <i class="feather-plus me-1"></i> Yeni Stok Ekle
+    </a>
+</div>
 
-<div class="container" style="max-width: 1000px;">
-    <div class="card shadow-sm border-0">
-        <div class="card-body p-4">
-            <table class="table table-hover align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th> Stok ID</th>
-                        <th> Stok Adı</th>
-                        <th> Miktar</th>
-                        <th> Birim Fiyat</th>
-                        <th> Oluşturma Tarihi</th>
-                        <th class="text-center"> İşlemler</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model != null && Model.Any())
-                    {
-                        foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>@item.StockId</td>
-                                <td>@item.StockName</td>
-                                <td>@item.Quantity</td>
-                                <td>@item.Price.ToString("C")</td>
-                                <td>@item.CreatedDate.ToString("dd MMM yyyy")</td>
-                                <td class="text-center">
-                                    <a href="@Url.Action("EditStock", "Wholesale", new { id = item.StockId })"
-                                       class="btn btn-sm btn-warning me-1">
-                                        <i class="bi bi-pencil-square"></i> Düzenle
-                                    </a>
-                                    <a href="@Url.Action("DeleteStock", "Wholesale", new { id = item.StockId })"
-                                       class="btn btn-sm btn-danger"
-                                       onclick="return confirm('Bu kaydı silmek istediğinize emin misiniz?');">
-                                        <i class="bi bi-trash3"></i> Sil
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    }
-                    else
+<div class="card border-0 shadow-sm p-3" style="border-radius: 16px !important;">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light text-muted fs-12">
+                <tr>
+                    <th style="width: 8%;">ID</th>
+                    <th>Stok Adı</th>
+                    <th>Miktar</th>
+                    <th>Birim Fiyat</th>
+                    <th>Oluşturma Tarihi</th>
+                    <th style="width: 20%;">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
                     {
                         <tr>
-                            <td colspan="6" class="text-center text-muted py-4">
-                                <i class="bi bi-exclamation-circle"></i> Henüz stok bulunmamaktadır.
+                            <td class="text-muted">@item.StockId</td>
+                            <td class="fw-semibold text-dark">@item.StockName</td>
+                            <td>
+                                <span class="badge bg-soft-info text-info">@item.Quantity Adet</span>
+                            </td>
+                            <td class="fw-bold text-success">@item.Price.ToString("C")</td>
+                            <td class="text-muted">@item.CreatedDate.ToString("dd MMM yyyy")</td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a href="@Url.Action("EditStock", "Wholesale", new { id = item.StockId })" class="btn btn-sm btn-soft-warning text-warning px-3">Düzenle</a>
+                                    <a href="@Url.Action("DeleteStock", "Wholesale", new { id = item.StockId })" class="btn btn-sm btn-soft-danger text-danger px-3" onclick="return confirm('Bu kaydı silmek istediğinize emin misiniz?');">Sil</a>
+                                </div>
                             </td>
                         </tr>
                     }
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="text-center mt-4">
-        <a href="@Url.Action("AddStock", "Wholesale")"
-           class="btn btn-primary btn-lg shadow-sm">
-            <i class="bi bi-plus-circle"></i> Yeni Stok Ekle
-        </a>
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">Henüz kayıtlı stok bulunmamaktadır.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>

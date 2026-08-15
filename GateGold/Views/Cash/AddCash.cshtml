@@ -5,49 +5,59 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-center my-4 fw-bold text-primary">Nakit Kasa Ekle</h2>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card border-0 shadow-sm p-4" style="border-radius: 16px !important;">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold text-dark mb-1">Nakit Kasa Ekle</h3>
+                <p class="text-muted fs-14 mb-0">İşlemlerinizi takip etmek için yeni bir kasa tanımlayın.</p>
+            </div>
 
-@using (Html.BeginForm("AddCash", "Cash", FormMethod.Post, new { @class = "row g-3 mt-3" }))
-{
-    @Html.AntiForgeryToken() @* <-- CSRF Token Eklendi *@
-
-    <div class="col-md-4">
-        @Html.LabelFor(m => m.CaseName, "Kasa Adı", htmlAttributes: new { @class = "form-label" })
-        @Html.TextBoxFor(m => m.CaseName, new { @class = "form-control", placeholder = "Kasa adı giriniz" })
-        @Html.ValidationMessageFor(m => m.CaseName, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="col-md-4">
-        @Html.LabelFor(m => m.CaseCode, "Kasa Kodu", htmlAttributes: new { @class = "form-label" })
-        @Html.TextBoxFor(m => m.CaseCode, new { @class = "form-control", placeholder = "Kasa kodu giriniz" })
-        @Html.ValidationMessageFor(m => m.CaseCode, "", new { @class = "text-danger" })
-    </div>
-
-    <div class="col-md-4">
-        @Html.Label("Müşteri (Cari)", htmlAttributes: new { @class = "form-label" })
-        @Html.DropDownList("CariID", (SelectList)ViewBag.Customers, "Müşteri seçin", new { @class = "form-select" })
-    </div>
-
-    <div class="col-md-4">
-        @Html.LabelFor(m => m.Currency, "Para Birimi", htmlAttributes: new { @class = "form-label" })
-        @Html.DropDownListFor(m => m.Currency,
-            new SelectList(new[]
+            @using (Html.BeginForm("AddCash", "Cash", FormMethod.Post, new { @class = "row g-3" }))
             {
-                "TRY","USD","EUR","GBP","CHF","CAD","AUD","JPY","CNY","AED","SAR","RUB","SEK","NOK","DKK","INR","ZAR","BRL","MXN","KRW"
-            }),
-            "Seçiniz",
-            new { @class = "form-select" })
-        @Html.ValidationMessageFor(m => m.Currency, "", new { @class = "text-danger" })
-    </div>
+                @Html.AntiForgeryToken()
 
-    <div class="col-md-12">
-        <div class="form-check">
-            <input type="checkbox" name="Status" value="1" @(Model != null && Model.Status == 1 ? "checked" : "") class="form-check-input" />
-            <label class="form-check-label" for="aktifMi">Aktif olarak kullanılsın</label>
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.CaseName, "Kasa Adı", htmlAttributes: new { @class = "form-label text-muted fs-13 fw-semibold" })
+                    @Html.TextBoxFor(m => m.CaseName, new { @class = "form-control", placeholder = "Kasa adı giriniz" })
+                    @Html.ValidationMessageFor(m => m.CaseName, "", new { @class = "text-danger fs-12" })
+                </div>
+
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.CaseCode, "Kasa Kodu", htmlAttributes: new { @class = "form-label text-muted fs-13 fw-semibold" })
+                    @Html.TextBoxFor(m => m.CaseCode, new { @class = "form-control", placeholder = "Kasa kodu giriniz" })
+                    @Html.ValidationMessageFor(m => m.CaseCode, "", new { @class = "text-danger fs-12" })
+                </div>
+
+                <div class="col-md-6">
+                    @Html.Label("Müşteri (Cari)", htmlAttributes: new { @class = "form-label text-muted fs-13 fw-semibold" })
+                    @Html.DropDownList("CariID", (SelectList)ViewBag.Customers, "Müşteri seçin", new { @class = "form-select" })
+                </div>
+
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.Currency, "Para Birimi", htmlAttributes: new { @class = "form-label text-muted fs-13 fw-semibold" })
+                    @Html.DropDownListFor(m => m.Currency,
+                        new SelectList(new[]
+                        {
+                            "TRY","USD","EUR","GBP","CHF","CAD","AUD","JPY","CNY","AED","SAR","RUB","SEK","NOK","DKK","INR","ZAR","BRL","MXN","KRW"
+                        }),
+                        "Seçiniz",
+                        new { @class = "form-select" })
+                    @Html.ValidationMessageFor(m => m.Currency, "", new { @class = "text-danger fs-12" })
+                </div>
+
+                <div class="col-md-12 mt-3">
+                    <div class="form-check">
+                        <input type="checkbox" name="Status" value="1" @(Model != null && Model.Status == 1 ? "checked" : "") class="form-check-input" id="aktifMi" />
+                        <label class="form-check-label text-muted fs-14" for="aktifMi">Aktif olarak kullanılsın</label>
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex gap-2 mt-4">
+                    <a href="@Url.Action("CashList", "Cash")" class="btn btn-outline-secondary w-50">İptal</a>
+                    <button type="submit" class="btn btn-primary w-50">Kasa Oluştur</button>
+                </div>
+            }
         </div>
     </div>
-
-    <div class="col-12 mt-3">
-        <button type="submit" class="btn btn-primary w-100">Kasa Oluştur</button>
-    </div>
-}
+</div>

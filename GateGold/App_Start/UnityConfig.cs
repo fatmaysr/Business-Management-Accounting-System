@@ -14,7 +14,6 @@ namespace GateGold
         {
             var container = new UnityContainer();
 
-            // ===== DataAccessLayer (DAL) Kayýtlarý =====
             container.RegisterType<IBankDal, EfBankDal>();
             container.RegisterType<IBankAccountDal, EfBankAccountDal>();
             container.RegisterType<IBankTransactionDal, EfBankTransactionDal>();
@@ -26,19 +25,13 @@ namespace GateGold
             container.RegisterType<IFastSaleProductDal, EfFastSaleProductDal>();
             container.RegisterType<IStockDal, EfStockDal>();
             container.RegisterType<IUserDal, EfUserDal>();
-
-
             container.RegisterType<ISaleDal, EfSaleDal>();
             container.RegisterType<ISaleService, SaleManager>();
-
-
-            // ===== BusinessLayer (Service) Kayýtlarý =====
             container.RegisterType<IBankService, BankManager>();
             container.RegisterType<IBankAccountService, BankAccountManager>();
             container.RegisterType<IBankTransactionService, BankTransactionManager>();
             container.RegisterType<ICaseTransactionService, CaseTransactionManager>();
             container.RegisterType<ICashCaseService, CashCaseManager>();
-           
             container.RegisterType<ICustomerService, CustomerManager>();
             container.RegisterType<IFastSaleService, FastSaleManager>();
             container.RegisterType<IFastSaleCategoryService, FastSaleCategoryManager>();

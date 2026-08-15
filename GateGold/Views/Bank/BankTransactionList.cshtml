@@ -1,65 +1,72 @@
 ﻿@model IEnumerable<EntityLayer.Concrete.BankTransaction>
 
 @{
-    ViewBag.Title = "BankTransactions";
+    ViewBag.Title = "Banka Hareketleri";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="mb-4 text-primary text-center">Banka Hareketleri</h2>
-
-<div class="card mb-4 shadow-sm">
-    <div class="card-body">
-        <a href="@Url.Action("AddBankTransaction", "Bank")" class="btn btn-primary px-4">
-            <i class="bi bi-plus-lg me-2"></i>Yeni Banka Hareketi Ekle
-        </a>
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h2 class="fw-bold text-dark mb-1">Banka Hareketleri</h2>
+        <p class="text-muted fs-14 mb-0">Gerçekleşen tüm banka işlemlerini ve transferleri takip edin.</p>
     </div>
+    <a href="@Url.Action("AddBankTransaction", "Bank")" class="btn btn-primary">
+        <i class="feather-plus me-1"></i> Yeni Banka Hareketi Ekle
+    </a>
 </div>
 
-<div class="table-responsive shadow-sm rounded">
-    <table class="table table-bordered table-hover align-middle text-center mb-0">
-        <thead class="table-primary">
-            <tr>
-                <th>ID</th>
-                <th>Tarih</th>
-                <th>Banka ID</th>
-                <th>Müşteri ID</th>
-                <th>Hesap ID</th>
-                <th>Para Birimi</th>
-                <th>Tutar</th>
-                <th>Tür</th>
-                <th>İçerik</th>
-                <th>Metot</th>
-                <th>Durum</th>
-                <th>İşlem</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+<div class="card border-0 shadow-sm p-3" style="border-radius: 16px !important;">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light text-muted fs-12">
                 <tr>
-                    <td>@item.Id</td>
-                    <td>@item.Date.ToString("dd.MM.yyyy")</td>
-                    <td>@item.BankId</td>
-                    <td>@item.CustomerId</td>
-                    <td>@item.BankAccountId</td>
-                    <td>@item.Cuurency</td>
-                    <td>@item.Price</td>
-                    <td>@item.Type</td>
-                    <td>@item.Content</td>
-                    <td>@item.Method</td>
-                    <td>@item.Status</td>
-                    <td>
-                        <a href="@Url.Action("EditBankTransaction", "Bank", new { id = item.Id })" class="btn btn-sm btn-warning">
-                            <i class="bi bi-pencil-square"></i>
-                        </a>
-                        <a href="@Url.Action("DeleteBankTransaction", "Bank", new { id = item.Id })"
-                           onclick="return confirm('Bu hareketi silmek istediğinize emin misiniz?');"
-                           class="btn btn-sm btn-danger">
-                            <i class="bi bi-trash"></i>
-                        </a>
-                    </td>
+                    <th>ID</th>
+                    <th>Tarih</th>
+                    <th>Banka ID</th>
+                    <th>Müşteri ID</th>
+                    <th>Hesap ID</th>
+                    <th>Para Birimi</th>
+                    <th>Tutar</th>
+                    <th>Tür</th>
+                    <th>İçerik</th>
+                    <th>Durum</th>
+                    <th style="width: 15%;">İşlemler</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-muted">@item.Id</td>
+                            <td>@item.Date.ToString("dd.MM.yyyy")</td>
+                            <td><span class="badge bg-soft-primary text-primary">#@item.BankId</span></td>
+                            <td>#@item.CustomerId</td>
+                            <td>#@item.BankAccountId</td>
+                            <td class="fw-semibold">@item.Cuurency</td>
+                            <td class="fw-bold text-dark">@item.Price</td>
+                            <td>@item.Type</td>
+                            <td class="text-muted">@item.Content</td>
+                            <td>
+                                <span class="badge bg-soft-success text-success">@item.Status</span>
+                            </td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a href="@Url.Action("EditBankTransaction", "Bank", new { id = item.Id })" class="btn btn-sm btn-soft-warning text-warning px-2">Düzenle</a>
+                                    <a href="@Url.Action("DeleteBankTransaction", "Bank", new { id = item.Id })" onclick="return confirm('Bu hareketi silmek istediğinize emin misiniz?');" class="btn btn-sm btn-soft-danger text-danger px-2">Sil</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="11" class="text-center text-muted py-4">Kayıtlı banka hareketi bulunmuyor.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

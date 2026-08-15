@@ -4,78 +4,81 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-center my-4 fw-bold text-primary">Kasa Hareketi Ekle</h2>
+<div class="row justify-content-center">
+    <div class="col-md-9">
+        <div class="card border-0 shadow-sm p-4" style="border-radius: 16px !important;">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold text-dark mb-1">Kasa Hareketi Ekle</h3>
+                <p class="text-muted fs-14 mb-0">Kasaya yeni bir giriş veya çıkış hareketi işleyin.</p>
+            </div>
 
-@using (Html.BeginForm("AddCashTransaction", "Cash", FormMethod.Post, new { @class = "row g-3 mt-3" }))
-{
-    @Html.AntiForgeryToken()
+            @using (Html.BeginForm("AddCashTransaction", "Cash", FormMethod.Post, new { @class = "row g-3" }))
+            {
+                @Html.AntiForgeryToken()
 
-    <!-- Kasa -->
-    <div class="col-md-4">
-        @Html.LabelFor(m => m.CaseId, "Kasa", new { @class = "form-label" })
-        @Html.DropDownList("CaseId", (SelectList)ViewBag.CashCases, "Seçiniz", new { @class = "form-select" })
-        @Html.ValidationMessageFor(m => m.CaseId, "", new { @class = "text-danger" })
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.CaseId, "Kasa", new { @class = "form-label text-muted fs-13 fw-semibold" })
+                    @Html.DropDownList("CaseId", (SelectList)ViewBag.CashCases, "Seçiniz", new { @class = "form-select" })
+                    @Html.ValidationMessageFor(m => m.CaseId, "", new { @class = "text-danger fs-12" })
+                </div>
+
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.CariID, "Cari", new { @class = "form-label text-muted fs-13 fw-semibold" })
+                    @Html.DropDownList("CariID", (SelectList)ViewBag.Customers, "Seçiniz", new { @class = "form-select" })
+                    @Html.ValidationMessageFor(m => m.CariID, "", new { @class = "text-danger fs-12" })
+                </div>
+
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Currency, "Para Birimi", new { @class = "form-label text-muted fs-13 fw-semibold" })
+                    @Html.DropDownListFor(m => m.Currency, new SelectList(new[]
+                    {
+                        new { Value="TRY", Text="₺ - Türk Lirası (TRY)" },
+                        new { Value="USD", Text="$ - Amerikan Doları (USD)" },
+                        new { Value="EUR", Text="€ - Euro (EUR)" },
+                        new { Value="GBP", Text="£ - İngiliz Sterlini (GBP)" },
+                        new { Value="CHF", Text="Fr. - İsviçre Frangı (CHF)" },
+                        new { Value="CAD", Text="C$ - Kanada Doları (CAD)" },
+                        new { Value="AUD", Text="A$ - Avustralya Doları (AUD)" },
+                        new { Value="JPY", Text="¥ - Japon Yeni (JPY)" },
+                        new { Value="CNY", Text="¥ - Çin Yuanı (CNY)" },
+                        new { Value="AED", Text="د.إ - BAE Dirhemi (AED)" },
+                        new { Value="SAR", Text="﷼ - Suudi Riyali (SAR)" },
+                        new { Value="RUB", Text="₽ - Rus Rublesi (RUB)" },
+                        new { Value="SEK", Text="kr - İsveç Kronu (SEK)" },
+                        new { Value="NOK", Text="kr - Norveç Kronu (NOK)" },
+                        new { Value="DKK", Text="kr - Danimarka Kronu (DKK)" },
+                        new { Value="INR", Text="₹ - Hindistan Rupisi (INR)" },
+                        new { Value="ZAR", Text="R - Güney Afrika Randı (ZAR)" },
+                        new { Value="BRL", Text="R$ - Brezilya Reali (BRL)" },
+                        new { Value="MXN", Text="$ - Meksika Pesosu (MXN)" },
+                        new { Value="KRW", Text="₩ - Güney Kore Wonu (KRW)" }
+                    }, "Value", "Text"), "Seçiniz", new { @class = "form-select" })
+                    @Html.ValidationMessageFor(m => m.Currency, "", new { @class = "text-danger fs-12" })
+                </div>
+
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Amount, "Tutar", new { @class = "form-label text-muted fs-13 fw-semibold" })
+                    @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", placeholder = "0.00" })
+                    @Html.ValidationMessageFor(m => m.Amount, "", new { @class = "text-danger fs-12" })
+                </div>
+
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Type, "Tür", new { @class = "form-label text-muted fs-13 fw-semibold" })
+                    @Html.DropDownListFor(m => m.Type, new SelectList(new[] { "Giriş", "Çıkış" }), "Seçiniz", new { @class = "form-select" })
+                    @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger fs-12" })
+                </div>
+
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Description, "Açıklama", new { @class = "form-label text-muted fs-13 fw-semibold" })
+                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control", placeholder = "İşlem açıklaması" })
+                    @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger fs-12" })
+                </div>
+
+                <div class="col-12 d-flex gap-2 mt-4">
+                    <a href="@Url.Action("CashTransactions", "Cash")" class="btn btn-outline-secondary w-50">İptal</a>
+                    <button type="submit" class="btn btn-primary w-50">Tanımla</button>
+                </div>
+            }
+        </div>
     </div>
-
-    <!-- Cari -->
-    <div class="col-md-4">
-        @Html.LabelFor(m => m.CariID, "Cari", new { @class = "form-label" })
-        @Html.DropDownList("CariID", (SelectList)ViewBag.Customers, "Seçiniz", new { @class = "form-select" })
-        @Html.ValidationMessageFor(m => m.CariID, "", new { @class = "text-danger" })
-    </div>
-
-    <!-- Para Birimi -->
-    <div class="col-md-4">
-        @Html.LabelFor(m => m.Currency, "Para Birimi", new { @class = "form-label" })
-        @Html.DropDownListFor(m => m.Currency, new SelectList(new[]
-        {
-            new { Value="TRY", Text="₺ - Türk Lirası (TRY)" },
-            new { Value="USD", Text="$ - Amerikan Doları (USD)" },
-            new { Value="EUR", Text="€ - Euro (EUR)" },
-            new { Value="GBP", Text="£ - İngiliz Sterlini (GBP)" },
-            new { Value="CHF", Text="Fr. - İsviçre Frangı (CHF)" },
-            new { Value="CAD", Text="C$ - Kanada Doları (CAD)" },
-            new { Value="AUD", Text="A$ - Avustralya Doları (AUD)" },
-            new { Value="JPY", Text="¥ - Japon Yeni (JPY)" },
-            new { Value="CNY", Text="¥ - Çin Yuanı (CNY)" },
-            new { Value="AED", Text="د.إ - BAE Dirhemi (AED)" },
-            new { Value="SAR", Text="﷼ - Suudi Riyali (SAR)" },
-            new { Value="RUB", Text="₽ - Rus Rublesi (RUB)" },
-            new { Value="SEK", Text="kr - İsveç Kronu (SEK)" },
-            new { Value="NOK", Text="kr - Norveç Kronu (NOK)" },
-            new { Value="DKK", Text="kr - Danimarka Kronu (DKK)" },
-            new { Value="INR", Text="₹ - Hindistan Rupisi (INR)" },
-            new { Value="ZAR", Text="R - Güney Afrika Randı (ZAR)" },
-            new { Value="BRL", Text="R$ - Brezilya Reali (BRL)" },
-            new { Value="MXN", Text="$ - Meksika Pesosu (MXN)" },
-            new { Value="KRW", Text="₩ - Güney Kore Wonu (KRW)" }
-        }, "Value", "Text"), "Seçiniz", new { @class = "form-select" })
-        @Html.ValidationMessageFor(m => m.Currency, "", new { @class = "text-danger" })
-    </div>
-
-    <!-- Tutar -->
-    <div class="col-md-4">
-        @Html.LabelFor(m => m.Amount, "Tutar", new { @class = "form-label" })
-        @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", placeholder = "Tutar giriniz" })
-        @Html.ValidationMessageFor(m => m.Amount, "", new { @class = "text-danger" })
-    </div>
-
-    <!-- Tür (Gelir / Gider) -->
-    <div class="col-md-4">
-        @Html.LabelFor(m => m.Type, "Tür", new { @class = "form-label" })
-        @Html.DropDownListFor(m => m.Type, new SelectList(new[] { "Giriş", "Çıkış" }), "Seçiniz", new { @class = "form-select" })
-        @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger" })
-    </div>
-
-    <!-- Açıklama -->
-    <div class="col-md-4">
-        @Html.LabelFor(m => m.Description, "Açıklama", new { @class = "form-label" })
-        @Html.TextBoxFor(m => m.Description, new { @class = "form-control", placeholder = "Açıklama giriniz" })
-        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
-    </div>
-
-    <!-- Tanımla Butonu -->
-    <div class="col-12 mt-3">
-        <button type="submit" class="btn btn-primary w-100">Tanımla</button>
-    </div>
-}
+</div>

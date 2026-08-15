@@ -5,79 +5,99 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-center my-4 fw-bold text-primary">Kasa Hareketleri</h2>
-
-<!-- 🎯 Filtreleme Alanı -->
-@using (Html.BeginForm("CashTransactions", "Cash", FormMethod.Get))
-{
-    <div class="row g-3 mb-4">
-        <!-- Para Birimi -->
-        <div class="col-md-3">
-            @Html.Label("Para Birimi", new { @class = "form-label" })
-            @Html.DropDownList("currency", new SelectList(new List<SelectListItem>
-            {
-                new SelectListItem { Text="Seçiniz", Value="" },
-                new SelectListItem { Text="₺ - TRY", Value="TRY" },
-                new SelectListItem { Text="$ - USD", Value="USD" },
-                new SelectListItem { Text="€ - EUR", Value="EUR" },
-                new SelectListItem { Text="£ - GBP", Value="GBP" }
-            }, "Value", "Text"), new { @class = "form-select" })
-        </div>
-
-        <!-- Cari -->
-        <div class="col-md-3">
-            @Html.Label("Cari", new { @class = "form-label" })
-            @Html.DropDownList("CariID", (IEnumerable<SelectListItem>)ViewBag.Customers, "Seçiniz", new { @class = "form-select" })
-
-        </div>
-
-        <!-- Tarih -->
-        <div class="col-md-3">
-            @Html.Label("Tarih", new { @class = "form-label" })
-            <input type="date" name="date" class="form-control" />
-        </div>
-
-        <!-- Buton -->
-        <div class="col-md-3 d-flex align-items-end">
-            <button type="submit" class="btn btn-primary w-100">Filtrele</button>
-        </div>
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h2 class="fw-bold text-dark mb-1">Kasa Hareketleri</h2>
+        <p class="text-muted fs-14 mb-0">Tüm giriş ve çıkış finansal hareketleri filtreleyin ve takip edin.</p>
     </div>
-}
+    <a href="@Url.Action("AddCashTransaction", "Cash")" class="btn btn-primary">
+        <i class="feather-plus me-1"></i> Kasa Hareketi Ekle
+    </a>
+</div>
 
-<!-- 📋 Kasa Hareketleri Tablosu -->
-<table class="table table-bordered table-striped">
-    <thead class="table-primary">
-        <tr>
-            <th>ID</th>
-            <th>Tarih</th>
-            <th>Cari</th>
-            <th>Açıklama</th>
-            <th>Verilen</th>
-            <th>Alınan</th>
-            <th>Para Birimi</th>
-            <th>Kur</th>
-            <th>Has Fiyatı</th>
-            <th>İşlem</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.CaseTransactionId</td>
-                <td>@item.Date.ToString("dd.MM.yyyy")</td>
-                <td>@item.Customer?.Name</td>
-                <td>@item.Description</td>
-                <td>@(item.Type=="Gider" ? item.Amount.ToString("N2") : "-")</td>
-                <td>@(item.Type=="Gelir" ? item.Amount.ToString("N2") : "-")</td>
-                <td>@item.Currency</td>
-                <td>@item.ExchangeRate.ToString("N2")</td>
-                <td>@(item.Amount * item.ExchangeRate)</td>
-                <td>
-                    @Html.ActionLink("Düzenle", "EditCashTransaction", new { id = item.CaseTransactionId }, new { @class = "btn btn-sm btn-warning" })
-                    @Html.ActionLink("Sil", "DeleteCashTransaction", new { id = item.CaseTransactionId }, new { @class = "btn btn-sm btn-danger", onclick = "return confirm('Silmek istediğinize emin misiniz?');" })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<!-- Filtreleme Alanı -->
+<div class="card border-0 shadow-sm p-4 mb-4" style="border-radius: 16px !important;">
+    @using (Html.BeginForm("CashTransactions", "Cash", FormMethod.Get))
+    {
+        <div class="row g-3 align-items-end">
+            <div class="col-md-3">
+                @Html.Label("Para Birimi", new { @class = "form-label text-muted fs-13 fw-semibold" })
+                @Html.DropDownList("currency", new SelectList(new List<SelectListItem>
+                {
+                    new SelectListItem { Text="Seçiniz", Value="" },
+                    new SelectListItem { Text="₺ - TRY", Value="TRY" },
+                    new SelectListItem { Text="$ - USD", Value="USD" },
+                    new SelectListItem { Text="€ - EUR", Value="EUR" },
+                    new SelectListItem { Text="£ - GBP", Value="GBP" }
+                }, "Value", "Text"), new { @class = "form-select" })
+            </div>
+
+            <div class="col-md-3">
+                @Html.Label("Cari", new { @class = "form-label text-muted fs-13 fw-semibold" })
+                @Html.DropDownList("CariID", (IEnumerable<SelectListItem>)ViewBag.Customers, "Seçiniz", new { @class = "form-select" })
+            </div>
+
+            <div class="col-md-3">
+                @Html.Label("Tarih", new { @class = "form-label text-muted fs-13 fw-semibold" })
+                <input type="date" name="date" class="form-control" />
+            </div>
+
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary w-100">Filtrele</button>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Kasa Hareketleri Tablosu -->
+<div class="card border-0 shadow-sm p-3" style="border-radius: 16px !important;">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light text-muted fs-12">
+                <tr>
+                    <th>ID</th>
+                    <th>Tarih</th>
+                    <th>Cari</th>
+                    <th>Açıklama</th>
+                    <th class="text-end">Verilen</th>
+                    <th class="text-end">Alınan</th>
+                    <th>Para Birimi</th>
+                    <th>Kur</th>
+                    <th class="text-end">Has Fiyatı</th>
+                    <th style="width: 15%;">İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-muted">@item.CaseTransactionId</td>
+                            <td>@item.Date.ToString("dd.MM.yyyy")</td>
+                            <td class="fw-semibold text-dark">@item.Customer?.Name</td>
+                            <td class="text-muted">@item.Description</td>
+                            <td class="text-end text-danger fw-semibold">@(item.Type=="Gider" ? item.Amount.ToString("N2") : "-")</td>
+                            <td class="text-end text-success fw-semibold">@(item.Type=="Gelir" ? item.Amount.ToString("N2") : "-")</td>
+                            <td><span class="badge bg-soft-secondary text-dark">@item.Currency</span></td>
+                            <td>@item.ExchangeRate.ToString("N2")</td>
+                            <td class="text-end fw-bold">@((item.Amount * item.ExchangeRate).ToString("N2"))</td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    @Html.ActionLink("Düzenle", "EditCashTransaction", new { id = item.CaseTransactionId }, new { @class = "btn btn-sm btn-soft-warning text-warning px-2" })
+                                    @Html.ActionLink("Sil", "DeleteCashTransaction", new { id = item.CaseTransactionId }, new { @class = "btn btn-sm btn-soft-danger text-danger px-2", onclick = "return confirm('Silmek istediğinize emin misiniz?');" })
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="10" class="text-center text-muted py-4">Kayıtlı kasa hareketi bulunmuyor.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

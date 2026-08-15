@@ -1,36 +1,47 @@
 ﻿@model List<GateGold.Controllers.CashStatusRow>
 @{
-    ViewBag.Title = "CashStatus";
+    ViewBag.Title = "Kasa Durum Raporu";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="mb-4 text-primary text-center">Kasa Durum Raporu</h2>
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h2 class="fw-bold text-dark mb-1">Kasa Durum Raporu</h2>
+        <p class="text-muted fs-14 mb-0">Para birimi bazlı toplam giriş, çıkış ve güncel bakiye özetleri.</p>
+    </div>
+</div>
 
-<table class="table table-bordered table-hover align-middle text-center">
-    <thead class="table-primary">
-        <tr>
-            <th>Para Birimi</th>
-            <th>Kasaya Giriş</th>
-            <th>Kasadan Çıkış</th>
-            <th>Bakiye</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (!Model.Any())
-        {
-            <tr><td colspan="4" class="text-muted">Henüz kasa hareketi yok.</td></tr>
-        }
-        else
-        {
-            foreach (var row in Model)
-            {
+<div class="card border-0 shadow-sm p-3" style="border-radius: 16px !important;">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light text-muted fs-12">
                 <tr>
-                    <td>@row.Currency</td>
-                    <td class="text-success">@row.TotalIn.ToString("N2")</td>
-                    <td class="text-danger">@row.TotalOut.ToString("N2")</td>
-                    <td class="fw-bold">@row.Balance.ToString("N2")</td>
+                    <th>Para Birimi</th>
+                    <th class="text-end">Kasaya Giriş</th>
+                    <th class="text-end">Kasadan Çıkış</th>
+                    <th class="text-end">Net Bakiye</th>
                 </tr>
-            }
-        }
-    </tbody>
-</table>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="4" class="text-center text-muted py-4">Henüz kasa hareketi bulunmuyor.</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var row in Model)
+                    {
+                        <tr>
+                            <td><span class="badge bg-soft-primary text-primary px-3">@row.Currency</span></td>
+                            <td class="text-end text-success fw-semibold">@row.TotalIn.ToString("N2")</td>
+                            <td class="text-end text-danger fw-semibold">@row.TotalOut.ToString("N2")</td>
+                            <td class="text-end fw-bold text-dark fs-15">@row.Balance.ToString("N2")</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

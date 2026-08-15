@@ -1,57 +1,66 @@
 ﻿@model EntityLayer.Concrete.BankAccount
 @{
-    ViewBag.Title = "EditBankAccount";
+    ViewBag.Title = "Banka Hesabı Düzenle";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="mb-4 text-primary text-center">Banka Hesabı Düzenle</h2>
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+        <div class="card border-0 shadow-sm p-4" style="border-radius: 16px !important;">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold text-dark mb-1">Banka Hesabı Düzenle</h3>
+                <p class="text-muted fs-14 mb-0">Hesap detaylarını ve IBAN bilgilerini güncelleyin.</p>
+            </div>
 
-<form method="post" action="@Url.Action("EditBankAccount","Bank")" class="row g-3">
-    @Html.AntiForgeryToken() @* <-- CSRF Token Eklendi *@
-    <input type="hidden" name="BankAccountId" value="@Model.BankAccountId" />
+            <form method="post" action="@Url.Action("EditBankAccount","Bank")" class="row g-3">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="BankAccountId" value="@Model.BankAccountId" />
 
-    <div class="col-md-6">
-        <label for="bankId" class="form-label">Banka <span class="text-danger">*</span></label>
-        <select id="bankId" name="BankId" class="form-select" required>
-            <option value="">-- Banka Seçin --</option>
-            <option value="@Model.BankId" selected>@Model.BankId</option>
-        </select>
+                <div class="col-md-6">
+                    <label for="bankId" class="form-label text-muted fs-13 fw-semibold">BANKA <span class="text-danger">*</span></label>
+                    <select id="bankId" name="BankId" class="form-select" required>
+                        <option value="">-- Banka Seçin --</option>
+                        <option value="@Model.BankId" selected>Banka ID: @Model.BankId</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="accountName" class="form-label text-muted fs-13 fw-semibold">HESAP SAHİBİ <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="accountName" name="AccountName" value="@Model.AccountName" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="accountNumber" class="form-label text-muted fs-13 fw-semibold">HESAP NUMARASI <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="accountNumber" name="AccountNumber" value="@Model.AccountNumber" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="iban" class="form-label text-muted fs-13 fw-semibold">IBAN <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="iban" name="Iban" value="@Model.Iban" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label for="currency" class="form-label text-muted fs-13 fw-semibold">PARA BİRİMİ</label>
+                    <select id="currency" name="Currency" class="form-select">
+                        <option value="TRY" @(Model.Currency == "TRY" ? "selected" : "")>₺ - Türk Lirası (TRY)</option>
+                        <option value="USD" @(Model.Currency == "USD" ? "selected" : "")>$ - Amerikan Doları (USD)</option>
+                        <option value="EUR" @(Model.Currency == "EUR" ? "selected" : "")>€ - Euro (EUR)</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="status" class="form-label text-muted fs-13 fw-semibold">DURUM</label>
+                    <select class="form-select" id="status" name="Status">
+                        <option value="1" @(Model.Status == 1 ? "selected" : "")>Aktif</option>
+                        <option value="0" @(Model.Status == 0 ? "selected" : "")>Pasif</option>
+                    </select>
+                </div>
+
+                <div class="col-12 d-flex gap-2 mt-4">
+                    <a href="@Url.Action("BankAccountList","Bank")" class="btn btn-outline-secondary w-50">İptal</a>
+                    <button type="submit" class="btn btn-primary w-50">Güncelle</button>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <div class="col-md-6">
-        <label for="accountName" class="form-label">Hesap Sahibi Adı <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" id="accountName" name="AccountName" value="@Model.AccountName" required />
-    </div>
-
-    <div class="col-md-6">
-        <label for="accountNumber" class="form-label">Hesap Numarası <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" id="accountNumber" name="AccountNumber" value="@Model.AccountNumber" required />
-    </div>
-
-    <div class="col-md-6">
-        <label for="iban" class="form-label">IBAN <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" id="iban" name="Iban" value="@Model.Iban" required />
-    </div>
-
-    <div class="col-md-6">
-        <label for="currency" class="form-label">Para Birimi</label>
-        <select id="currency" name="Currency" class="form-select">
-            <option value="TRY" @(Model.Currency == "TRY" ? "selected" : "")>₺ - Türk Lirası (TRY)</option>
-            <option value="USD" @(Model.Currency == "USD" ? "selected" : "")>$ - Amerikan Doları (USD)</option>
-            <option value="EUR" @(Model.Currency == "EUR" ? "selected" : "")>€ - Euro (EUR)</option>
-        </select>
-    </div>
-
-    <div class="col-md-6">
-        <label for="status" class="form-label">Durum</label>
-        <select class="form-select" id="status" name="Status">
-            <option value="1" @(Model.Status == 1 ? "selected" : "")>Aktif</option>
-            <option value="0" @(Model.Status == 0 ? "selected" : "")>Pasif</option>
-        </select>
-    </div>
-
-    <div class="col-12 d-flex justify-content-end gap-2">
-        <a href="@Url.Action("BankAccountList","Bank")" class="btn btn-outline-secondary">İptal</a>
-        <button type="submit" class="btn btn-primary">Güncelle</button>
-    </div>
-</form>
+</div>

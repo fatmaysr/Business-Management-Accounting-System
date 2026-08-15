@@ -5,48 +5,57 @@
     var categories = ViewBag.Categories as List<EntityLayer.Concrete.FastSaleCategory>;
 }
 
-<h2 class="mb-4 text-center">Yeni Ürün Ekle</h2>
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card border-0 shadow-sm p-4" style="border-radius: 16px !important;">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold text-dark mb-1">Yeni Ürün Ekle</h3>
+                <p class="text-muted fs-14 mb-0">Hızlı satış menüsüne yeni ürün tanımlayın.</p>
+            </div>
 
-<div class="container" style="max-width: 500px;">
-    @using (Html.BeginForm("AddProduct", "Retail", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken() @* <-- CSRF Token Eklendi *@
-
-        <div class="mb-3">
-            <label for="ProductName" class="form-label">Ürün Adı</label>
-            @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control", placeholder = "Ürün adını girin", required = "required" })
-        </div>
-
-        <div class="mb-3">
-            <label for="Category" class="form-label">Kategori Seçiniz</label>
-            <select id="Category" name="Category" class="form-select" required>
-                <option value="" disabled selected>Bir kategori seçin</option>
-                @if (categories != null)
-                {
-                    foreach (var cat in categories)
-                    {
-                        <option value="@cat.CategoryName">@cat.CategoryName</option>
-                    }
-                }
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label for="Value" class="form-label">Değer / Fiyat</label>
-            @Html.TextBoxFor(m => m.Value, new { @class = "form-control", placeholder = "Ürün değerini girin", required = "required" })
-        </div>
-
-        <button type="submit" class="btn btn-primary w-100">Kaydet</button>
-        <a href="@Url.Action("AllProducts", "Retail")" class="btn btn-secondary w-100 mt-2">İptal</a>
-    }
-
-    @if (!ViewData.ModelState.IsValid)
-    {
-        <div class="alert alert-danger mt-3">
-            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            @using (Html.BeginForm("AddProduct", "Retail", FormMethod.Post))
             {
-                <p>@error.ErrorMessage</p>
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <label for="ProductName" class="form-label text-muted fs-13 fw-semibold">ÜRÜN ADI</label>
+                    @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control", placeholder = "Örn: 22 Ayar Bilezik", required = "required" })
+                </div>
+
+                <div class="mb-3">
+                    <label for="Category" class="form-label text-muted fs-13 fw-semibold">KATEGORİ SEÇİNİZ</label>
+                    <select id="Category" name="Category" class="form-select" required>
+                        <option value="" disabled selected>Bir kategori seçin</option>
+                        @if (categories != null)
+                        {
+                            foreach (var cat in categories)
+                            {
+                                <option value="@cat.CategoryName">@cat.CategoryName</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Value" class="form-label text-muted fs-13 fw-semibold">DEĞER / FİYAT (₺)</label>
+                    @Html.TextBoxFor(m => m.Value, new { @class = "form-control", placeholder = "0.00", required = "required" })
+                </div>
+
+                <div class="d-flex gap-2 mt-4">
+                    <a href="@Url.Action("AllProducts", "Retail")" class="btn btn-outline-secondary w-50">İptal</a>
+                    <button type="submit" class="btn btn-primary w-50">Kaydet</button>
+                </div>
+            }
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger mt-3 rounded-3 border-0 shadow-sm fs-13">
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <p class="mb-0">@error.ErrorMessage</p>
+                    }
+                </div>
             }
         </div>
-    }
+    </div>
 </div>

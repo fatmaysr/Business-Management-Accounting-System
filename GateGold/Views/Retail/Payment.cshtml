@@ -3,39 +3,76 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-center text-primary mb-4">Ödeme Yap</h2>
-
-<div class="card mx-auto" style="max-width: 500px;">
-    <div class="card-body">
-        <p>Seçilen Kategori: <strong>@ViewBag.SelectedCategory</strong></p>
-        <p>Seçilen Ürün: <strong>@ViewBag.SelectedProduct</strong></p>
-
-        <form method="post" action="/Retail/ProcessPayment">
-            @Html.AntiForgeryToken()
-            <input type="hidden" name="category" value="@ViewBag.SelectedCategory" />
-            <input type="hidden" name="product" value="@ViewBag.SelectedProduct" />
-
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="paymentType" id="paymentNakit" value="Nakit" required />
-                <label class="form-check-label" for="paymentNakit">Nakit Ödeme</label>
-            </div>
-            <div class="form-check mb-3">
-                <input class="form-check-input" type="radio" name="paymentType" id="paymentKart" value="Kart" required />
-                <label class="form-check-label" for="paymentKart">Kart ile Ödeme</label>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm p-4" style="border-radius: 16px !important;">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold text-dark mb-1">Ödemeyi Tamamla</h3>
+                <p class="text-muted fs-14 mb-0">İşlem detaylarını kontrol edip ödeme tipini seçin.</p>
             </div>
 
-            <button type="submit" class="btn btn-primary w-100">Ödemeyi Tamamla</button>
-        </form>
+            <div class="bg-light p-3 rounded-3 mb-4 fs-14">
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Seçilen Kategori:</span>
+                    <strong class="text-dark">@ViewBag.SelectedCategory</strong>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="text-muted">Seçilen Ürün:</span>
+                    <strong class="text-dark">@ViewBag.SelectedProduct</strong>
+                </div>
+            </div>
+
+            <form method="post" action="/Retail/ProcessPayment">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="category" value="@ViewBag.SelectedCategory" />
+                <input type="hidden" name="product" value="@ViewBag.SelectedProduct" />
+
+                <label class="form-label text-muted fs-13 fw-semibold mb-3">ÖDEME YÖNTEMİ SEÇİN</label>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-6">
+                        <input class="btn-check" type="radio" name="paymentType" id="paymentNakit" value="Nakit" required />
+                        <label class="btn btn-outline-light text-dark w-100 py-3 border d-flex flex-column align-items-center justify-content-center gap-2 rounded-3 payment-box" for="paymentNakit">
+                            <i class="feather-dollar-sign fs-4 text-success"></i>
+                            <span class="fw-semibold">Nakit Ödeme</span>
+                        </label>
+                    </div>
+                    <div class="col-6">
+                        <input class="btn-check" type="radio" name="paymentType" id="paymentKart" value="Kart" required />
+                        <label class="btn btn-outline-light text-dark w-100 py-3 border d-flex flex-column align-items-center justify-content-center gap-2 rounded-3 payment-box" for="paymentKart">
+                            <i class="feather-credit-card fs-4 text-primary"></i>
+                            <span class="fw-semibold">Kart ile Ödeme</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="javascript:history.back()" class="btn btn-outline-secondary px-4">&laquo; Geri</a>
+                    <button type="submit" class="btn btn-primary px-5">Ödemeyi Onayla</button>
+                </div>
+            </form>
+        </div>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger mt-3 rounded-3 border-0 shadow-sm">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <p class="mb-0">@error.ErrorMessage</p>
+                }
+            </div>
+        }
     </div>
 </div>
 
-@if (!ViewData.ModelState.IsValid)
-{
-    <div class="alert alert-danger mt-3">
-        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-        {
-            <p>@error.ErrorMessage</p>
-        }
-    </div>
-}
+<style>
+    .payment-box {
+        transition: all 0.2s ease;
+    }
 
+    .btn-check:checked + .payment-box {
+        border-color: #6366f1 !important;
+        background-color: #e0e7ff !important;
+        color: #4338ca !important;
+    }
+</style>

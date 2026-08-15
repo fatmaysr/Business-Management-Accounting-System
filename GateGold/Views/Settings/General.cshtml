@@ -4,54 +4,66 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-primary text-center mb-4">Genel Ayarlar</h2>
-<div class="container" style="max-width: 700px;">
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h2 class="fw-bold text-dark mb-1">Genel Ayarlar</h2>
+        <p class="text-muted fs-14 mb-0">Firma bilgilerinizi ve sistem genelindeki finansal tercihleri yönetin.</p>
+    </div>
+</div>
 
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success">@TempData["Success"]</div>
-    }
+<div class="row justify-content-center">
+    <div class="col-md-9 col-lg-8">
+        <div class="card border-0 shadow-sm p-4" style="border-radius: 16px !important;">
 
-    @using (Html.BeginForm("General", "Settings", FormMethod.Post, new { @class = "p-4 border rounded shadow-sm bg-light" }))
-    {
-        @Html.AntiForgeryToken()
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success border-0 shadow-sm rounded-3 fs-13 mb-4">
+                    <i class="feather-check-circle me-1"></i> @TempData["Success"]
+                </div>
+            }
 
-        <h5 class="text-secondary mb-3">Firma Bilgileri</h5>
-        <div class="row g-3 mb-4">
-            <div class="col-md-6">
-                <label class="form-label">Firma Adı</label>
-                @Html.TextBoxFor(m => m.FirmaAdi, new { @class = "form-control", placeholder = "Firma adı giriniz" })
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">E-posta</label>
-                @Html.TextBoxFor(m => m.FirmaEmail, new { @class = "form-control", type = "email", placeholder = "ornek@firma.com" })
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Telefon</label>
-                @Html.TextBoxFor(m => m.FirmaTelefon, new { @class = "form-control", placeholder = "0 5xx xxx xx xx" })
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Adres</label>
-                @Html.TextBoxFor(m => m.FirmaAdres, new { @class = "form-control", placeholder = "Firma adresi" })
-            </div>
+            @using (Html.BeginForm("General", "Settings", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <h6 class="text-primary fw-bold border-bottom pb-2 mb-3">Firma Bilgileri</h6>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label text-muted fs-13 fw-semibold">FİRMA ADI</label>
+                        @Html.TextBoxFor(m => m.FirmaAdi, new { @class = "form-control", placeholder = "Firma adı giriniz" })
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted fs-13 fw-semibold">E-POSTA</label>
+                        @Html.TextBoxFor(m => m.FirmaEmail, new { @class = "form-control", type = "email", placeholder = "ornek@firma.com" })
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted fs-13 fw-semibold">TELEFON</label>
+                        @Html.TextBoxFor(m => m.FirmaTelefon, new { @class = "form-control", placeholder = "0 5xx xxx xx xx" })
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted fs-13 fw-semibold">ADRES</label>
+                        @Html.TextBoxFor(m => m.FirmaAdres, new { @class = "form-control", placeholder = "Firma adresi" })
+                    </div>
+                </div>
+
+                <h6 class="text-primary fw-bold border-bottom pb-2 mb-3">Finansal Ayarlar</h6>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label text-muted fs-13 fw-semibold">VARSAYILAN PARA BİRİMİ</label>
+                        @Html.DropDownListFor(m => m.ParaBirimi, new[]
+                        {
+                            new SelectListItem { Value = "TRY", Text = "₺ - Türk Lirası (TRY)" },
+                            new SelectListItem { Value = "USD", Text = "$ - Amerikan Doları (USD)" },
+                            new SelectListItem { Value = "EUR", Text = "€ - Euro (EUR)" },
+                            new SelectListItem { Value = "GBP", Text = "£ - İngiliz Sterlini (GBP)" }
+                        }, new { @class = "form-select" })
+                    </div>
+                </div>
+
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-primary px-5 py-2">Değişiklikleri Kaydet</button>
+                </div>
+            }
         </div>
-
-        <h5 class="text-secondary mb-3">Finansal Ayarlar</h5>
-        <div class="row g-3 mb-4">
-            <div class="col-md-6">
-                <label class="form-label">Varsayılan Para Birimi</label>
-                @Html.DropDownListFor(m => m.ParaBirimi, new[]
-               {
-                   new SelectListItem { Value = "TRY", Text = "₺ - Türk Lirası (TRY)" },
-                   new SelectListItem { Value = "USD", Text = "$ - Amerikan Doları (USD)" },
-                   new SelectListItem { Value = "EUR", Text = "€ - Euro (EUR)" },
-                   new SelectListItem { Value = "GBP", Text = "£ - İngiliz Sterlini (GBP)" }
-               }, new { @class = "form-select" })
-            </div>
-        </div>
-
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary px-5">Kaydet</button>
-        </div>
-    }
+    </div>
 </div>
